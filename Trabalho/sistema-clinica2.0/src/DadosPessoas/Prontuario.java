@@ -46,5 +46,4 @@ public class Prontuario {
         this.prescricao = prescricao;
     }
     
-    
 }

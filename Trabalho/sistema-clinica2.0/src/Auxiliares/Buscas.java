@@ -17,7 +17,7 @@ import java.util.List;
 //Classe especifica para métodos de busca
 public class Buscas {
     
-    public Paciente buscaPaciente(List<Paciente> pacientes, String cpf) {
+    public static Paciente buscaPaciente(List<Paciente> pacientes, String cpf) {
         for(Paciente x : pacientes) {
             if(x.getCpf().equals(cpf)) {
                 return x;
@@ -26,7 +26,7 @@ public class Buscas {
         return null;
     }
     
-    public Medico buscaMedico(List<Medico> medicos, String crm) {
+    public static Medico buscaMedico(List<Medico> medicos, String crm) {
         for(Medico x : medicos) {
             if(x.getCrm().equals(crm)) {
                 return x;
@@ -35,7 +35,7 @@ public class Buscas {
         return null;
     }
     
-    public Consulta buscaConsulta(List<Consulta> consultas, String cpf) {
+    public static Consulta buscaConsulta(List<Consulta> consultas, String cpf) {
         for(Consulta x : consultas) {
             if(x.getPaciente().getCpf().equals(cpf)) {
                 return x;
@@ -44,7 +44,7 @@ public class Buscas {
         return null;
     }
     
-    public Prontuario buscaProntuario(List<Prontuario> prontuarios, String data){
+    public static Prontuario buscaProntuario(List<Prontuario> prontuarios, String data){
         for(Prontuario x : prontuarios){
             if(x.getData().equals(data)){
                 return x;

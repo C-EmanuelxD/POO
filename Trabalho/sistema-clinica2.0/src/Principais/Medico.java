@@ -9,7 +9,6 @@ public class Medico {
     private String nome;
     private String crm;
     private List<Paciente> pacientes;
-    private Buscas busca;
     
     public Medico(String nome, String crm) {
         this.nome = nome;
@@ -17,62 +16,59 @@ public class Medico {
         this.pacientes = null;
     }
     
-    
-    public void addDadosAdcionais(String cpf, boolean fuma, boolean bebe, boolean colesterol,
+    public void cadastraDadosAdicionais(String cpf, boolean fuma, boolean bebe, boolean colesterol,
         boolean diabete, boolean doencaCardiaca, List<String> cirurgias, List<String> alergias){
         
-        Paciente paciente = busca.buscaPaciente(pacientes, cpf);
+        Paciente paciente = Buscas.buscaPaciente(pacientes, cpf);
         paciente.setDadosAdicionais(new DadosAdicionais(fuma, bebe, colesterol, diabete, doencaCardiaca, cirurgias, alergias));
         
     }
     
-    public void attDadosAdicionais(String cpf,boolean fuma, boolean bebe, boolean colesterol,
+    public void atualizaDadosAdicionais(String cpf,boolean fuma, boolean bebe, boolean colesterol,
         boolean diabete, boolean doencaCardiaca, String cirurgia, String alergia){
-        Paciente paciente = busca.buscaPaciente(pacientes, cpf);
+        Paciente paciente = Buscas.buscaPaciente(pacientes, cpf);
         
         paciente.getDadosAdicionais().setFuma(fuma);
         paciente.getDadosAdicionais().setBebe(bebe);
         paciente.getDadosAdicionais().setColesterol(colesterol);
         paciente.getDadosAdicionais().setDiabete(diabete);
         paciente.getDadosAdicionais().setDoencaCardiaca(doencaCardiaca);
-        paciente.getDadosAdicionais().addCirurgias(cirurgia); // NAO TEM COMO DESFAZER CIRURGIAS
-        paciente.getDadosAdicionais().addAlergias(alergia); // NAO TEM COMO CURAR ALERGIAS
+        paciente.getDadosAdicionais().cadastraCirurgia(cirurgia); // NAO TEM COMO DESFAZER CIRURGIAS
+        paciente.getDadosAdicionais().cadastraAlergia(alergia); // NAO TEM COMO CURAR ALERGIAS
         
     }
     
     public void removeDadosAdicionais(String cpf){
-        Paciente paciente = busca.buscaPaciente(pacientes, cpf);
+        Paciente paciente = Buscas.buscaPaciente(pacientes, cpf);
         
         paciente.setDadosAdicionais(null);
         
     }
     
-    
-    public void addProntuario(String cpf, String sintomas, String diagnostico, String preescricaoTratamento, String dataAdd){
-        Paciente paciente = busca.buscaPaciente(pacientes, cpf);
+    public void cadastraProntuario(String cpf, String sintomas, String diagnostico, String preescricaoTratamento, String dataAdd){
+        Paciente paciente = Buscas.buscaPaciente(pacientes, cpf);
         
         paciente.addProntuarios(new Prontuario(sintomas, diagnostico, preescricaoTratamento, dataAdd));
         
     }
     
-    public void removeProntuario(String cpf, String data){
-        Paciente paciente = busca.buscaPaciente(pacientes, cpf);
-        int index;
-        index = paciente.getProntuarios().indexOf(busca.buscaProntuario(paciente.getProntuarios(), data));
-        paciente.getProntuarios().remove(index);
-        
-    }
-    
-    public void attProntuario(String cpf, String data, String dataAlterar, String diagnostico, String Preescricao, String Sintoma){
-        Paciente paciente = busca.buscaPaciente(pacientes, cpf);
-        int index;
-        index = paciente.getProntuarios().indexOf(busca.buscaProntuario(paciente.getProntuarios(), data));
+    public void atualizaProntuario(String cpf, String data, String dataAlterar, String diagnostico, String Preescricao, String Sintoma){
+        Paciente paciente = Buscas.buscaPaciente(pacientes, cpf);
+
+        int index = paciente.getProntuarios().indexOf(Buscas.buscaProntuario(paciente.getProntuarios(), data));
         paciente.getProntuarios().get(index).setData(dataAlterar);
         paciente.getProntuarios().get(index).setDiagnostico(diagnostico);
         paciente.getProntuarios().get(index).setPrescricao(Preescricao);
         paciente.getProntuarios().get(index).setSintomas(Sintoma);
     }
     
+    public void removeProntuario(String cpf, String data){
+        Paciente paciente = Buscas.buscaPaciente(pacientes, cpf);
+        
+        int index = paciente.getProntuarios().indexOf(Buscas.buscaProntuario(paciente.getProntuarios(), data));
+        paciente.getProntuarios().remove(index);
+        
+    }
     
     public String getNome() {
         return nome;

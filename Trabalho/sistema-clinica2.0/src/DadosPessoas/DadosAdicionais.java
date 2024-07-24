@@ -23,16 +23,13 @@ public class DadosAdicionais {
         this.alergias = alergias;
     }
 
-    
-    
-    public void addCirurgias(String cirurgia){
+    public void cadastraCirurgia(String cirurgia){
         cirurgias.add(cirurgia);
     }
     
-    public void addAlergias(String alergia){
+    public void cadastraAlergia(String alergia){
         alergias.add(alergia);
     }
-    
     
     public boolean isFuma() {
         return fuma;
