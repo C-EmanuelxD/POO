@@ -2,8 +2,6 @@ package Principais;
 //GERENCIAR PACIENTES E CONSULTA FEITO
 import Auxiliares.Buscas;
 import java.util.ArrayList;
-import Principais.Medico;
-import Principais.Paciente;
 import clinica.tipos.TipoConsulta;
 import clinica.tipos.TipoConvenio;
 import java.util.List;
@@ -13,7 +11,6 @@ public class Secretaria {
     private List<Paciente> pacientes;
     private List<Consulta> consultas;
     private List<Medico> medicos;
-    private Buscas busca;
 
     public Secretaria(String nome) {
         this.nome = nome;
@@ -48,85 +45,69 @@ public class Secretaria {
     public List<Medico> getMedicos() {
         return medicos;
     }
-    
-    //public Paciente buscaPaciente(String cpf) {
-        //for(Paciente x : pacientes) {
-            //if(x.getCpf().equals(cpf)) {
-                //return x;
-            //}
-        //}
-        //return null;
-    //}
-    
-    //public Medico buscaMedico(String crm) {
-        //for(Medico x : medicos) {
-            //if(x.getCrm().equals(crm)) {
-                //return x;
-            //}
-        //}
-        //return null;
-    //}
-    
-    //public Consulta buscaConsulta(String cpf) {
-        //for(Consulta x : consultas) {
-            //if(x.getPaciente().getCpf().equals(cpf)) {
-                //return x;
-            //}
-        //}
-        //return null;
-    //}
 
     public void cadastraPaciente(String cpf, String nome, String dataNascimento, String endereco, String email, String sms, TipoConvenio tipoConvenio) {
         Paciente novoPaciente = new Paciente(cpf, nome, dataNascimento, endereco, email, sms, tipoConvenio);
-        pacientes.add(novoPaciente);
+        if (cpf != null) {
+            pacientes.add(novoPaciente);
+            return;
+        }
+        System.out.println("Campo cpf vazio");
     }
     
     public void atualizaPaciente(String cpf, String nome, String dataNascimento, String endereco, String email, String sms, TipoConvenio tipoConvenio) {
-        for (Paciente paciente : pacientes) {
-            if (paciente.getCpf().equals(cpf)) {
-                paciente.setNome(nome);
-                paciente.setDataNascimento(dataNascimento);
-                paciente.setEndereco(endereco);
-                paciente.setEmail(email);
-                paciente.setSms(sms);
-                paciente.setTipoConvenio(tipoConvenio);
-                System.out.println("Paciente atualizado com sucesso.");
-                return;
-            }
-        }
+        Paciente atualizaPaciente = Buscas.buscaPaciente(pacientes, cpf);
+        if (atualizaPaciente != null) {
+            atualizaPaciente.setNome(nome);
+            atualizaPaciente.setDataNascimento(dataNascimento);
+            atualizaPaciente.setEndereco(endereco);
+            atualizaPaciente.setEmail(email);
+            atualizaPaciente.setSms(sms);
+            atualizaPaciente.setTipoConvenio(tipoConvenio);
+            System.out.println("Paciente atualizado com sucesso.");
+            return;
+         }
         System.out.println("Paciente não encontrado.");
     }
-    
 
     public void removePaciente(String cpf) {
-        for (Paciente paciente : pacientes) {
-            if (paciente.getCpf().equals(cpf)) {
-                pacientes.remove(paciente);
-                return;
-            }
+        Paciente removerPaciente = Buscas.buscaPaciente(pacientes, cpf);
+        if (removerPaciente != null) {
+            pacientes.remove(removerPaciente);
+            return;
         }
         System.out.println("Paciente não encontrado.");
     }
     
     public void cadastraConsulta(String data, String horario, String crm, String cpf, TipoConsulta tipoConsulta) {
-        Paciente paciente = busca.buscaPaciente(pacientes,cpf);
-        Medico medico = busca.buscaMedico(medicos, crm);
-        Consulta novaConsulta = new Consulta(data, horario, medico, paciente, tipoConsulta);
-        consultas.add(novaConsulta);
+        Paciente paciente = Buscas.buscaPaciente(pacientes, cpf);
+        Medico medico = Buscas.buscaMedico(medicos, crm);
+        
+        if (paciente != null && medico != null) {
+            Consulta novaConsulta = new Consulta(data, horario, medico, paciente, tipoConsulta);
+            consultas.add(novaConsulta);
+            return;
+        }
+        System.out.println("Paciente e/ou Médico não encontrado");
     }
     
     public void atualizaConsulta(String cpf, String data, String horario, TipoConsulta tipoConsulta) {
-        for(Consulta x : consultas) {
-            if(x.getPaciente().getCpf().equals(cpf)) {
-                x.setData(data);
-                x.setHorario(horario);
-                x.setTipoConsulta(tipoConsulta);
-            }
+        Consulta atualizarConsulta = Buscas.buscaConsulta(consultas, cpf);
+        if (atualizarConsulta != null) {
+            atualizarConsulta.setData(data);
+            atualizarConsulta.setHorario(horario);
+            atualizarConsulta.setTipoConsulta(tipoConsulta);
+            return;
         }
+        System.out.println("Consulta não encontrada");
     }
     
     public void removeConsulta(String cpf) {
-        Consulta consultaRemovida = busca.buscaConsulta(consultas, cpf);
-        consultas.remove(consultaRemovida);
+        Consulta consultaRemovida = Buscas.buscaConsulta(consultas, cpf);
+        if (consultaRemovida != null) {
+            consultas.remove(consultaRemovida);
+            return;
+        }
+        System.out.println("Consulta não encontrada");
     }
 }
