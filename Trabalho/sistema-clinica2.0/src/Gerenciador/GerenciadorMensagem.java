@@ -1,8 +1,10 @@
-package clinica.gerenciador;
+package Gerenciador;
 
-import clinica.secretaria.Consulta;
+import Principais.Consulta;
 import java.util.List;
 
+
+//não feito ainda
 public class GerenciadorMensagem {
     private List<Consulta> consultas;
 

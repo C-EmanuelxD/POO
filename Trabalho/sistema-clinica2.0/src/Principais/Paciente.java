@@ -1,10 +1,10 @@
-package clinica.pessoas;
+package Principais;
 
-import clinica.pessoas.dados.Prontuario;
-import clinica.pessoas.dados.DadosAdicionais;
+import DadosPessoas.Prontuario;
+import DadosPessoas.DadosAdicionais;
 import clinica.tipos.TipoConvenio;
 import java.util.List;
-
+// NAO FEITO AINA
 public class Paciente {
     private String cpf;
     private String nome;
@@ -55,10 +55,25 @@ public class Paciente {
     public List<Prontuario> getProntuarios() {
         return prontuarios;
     }
+
+    public void setProntuarios(List<Prontuario> prontuarios) {
+        this.prontuarios = prontuarios;
+    }
     
+    public void addProntuarios(Prontuario prontuario){
+        prontuarios.add(prontuario);
+    }
+
     public DadosAdicionais getDadosAdicionais() {
         return dadosAdicionais;
     }
+
+    public void setDadosAdicionais(DadosAdicionais dadosAdicionais) {
+        this.dadosAdicionais = dadosAdicionais;
+    }
+    
+    
+    
     
     public String getNome() {
         return nome;
@@ -103,5 +118,13 @@ public class Paciente {
     public void imprimirPaciente() {
         System.out.println(this.cpf + ", " + this.nome + ", " + this.dataNascimento + ", " + this.email + ", " + this.endereco + ", " + this.sms + ", " + this.tipoConvenio);
     }
+
+  
+
+    
+
+
+
+    
 
 }

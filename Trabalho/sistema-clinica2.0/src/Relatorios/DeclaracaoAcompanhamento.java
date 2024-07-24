@@ -1,29 +1,10 @@
-package clinica.pessoas.relatorios;
+package Relatorios;
 
-import clinica.pessoas.Paciente;
+import Principais.Paciente;
 
-public class Atestado extends Relatorio {
-    private String dataInicio;
-    private String dataFim;
+public class DeclaracaoAcompanhamento extends Relatorio {
     private String justificativa;
 
-    public String getDataInicio() {
-        return dataInicio;
-    }
-
-    public void setDataInicio(String dataInicio) {
-        this.dataInicio = dataInicio;
-    }
-
-    public String getDataFim() {
-        return dataFim;
-    }
-
-    public void setDataFim(String dataFim) {
-        this.dataFim = dataFim;
-    }
-
-    
     public String getJustificativa() {
         return justificativa;
     }
@@ -47,4 +28,7 @@ public class Atestado extends Relatorio {
     public void setPaciente(Paciente paciente) {
         this.paciente = paciente;
     }
+    
+    
+    
 }

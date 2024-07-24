@@ -1,8 +1,8 @@
-package clinica.Programa;
+package main;
 
-import clinica.pessoas.Medico;
-import clinica.pessoas.Paciente;
-import clinica.secretaria.Secretaria;
+import Principais.Medico;
+import Principais.Paciente;
+import Principais.Secretaria;
 import clinica.tipos.TipoConvenio;
 import java.util.ArrayList;
 import java.util.List;

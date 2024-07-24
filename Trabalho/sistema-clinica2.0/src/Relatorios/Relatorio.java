@@ -1,10 +1,12 @@
-package clinica.pessoas.relatorios;
+package Relatorios;
 
-import clinica.pessoas.Paciente;
+import Principais.Medico;
+import Principais.Paciente;
 
 public abstract class Relatorio {
     protected String data;
     protected Paciente paciente;
+    protected Medico medico;
     
     public void imprimir() {}
 }

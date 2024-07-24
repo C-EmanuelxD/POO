@@ -1,16 +1,27 @@
-package clinica.pessoas.dados;
-
+package DadosPessoas;
+//NAO FEITO AINDA
 public class Prontuario {
     private String sintomas;
     private String diagnostico;
     private String prescricao;
+    private String data;
 
-    public Prontuario(String sintomas, String diagnostico, String prescricao) {
+    public Prontuario(String sintomas, String diagnostico, String prescricao, String data) {
         this.sintomas = sintomas;
         this.diagnostico = diagnostico;
         this.prescricao = prescricao;
+        this.data = data; //CHAVE PRIMARIA PARA BUSCAS DE PRONTUARIO
     }
 
+    public String getData() {
+        return data;
+    }
+
+    public void setData(String data) {
+        this.data = data;
+    }
+    
+    
     public String getSintomas() {
         return sintomas;
     }

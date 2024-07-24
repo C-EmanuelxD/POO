@@ -1,8 +1,9 @@
-package clinica.secretaria;
-
+package Principais;
+//GERENCIAR PACIENTES E CONSULTA FEITO
+import Auxiliares.Buscas;
 import java.util.ArrayList;
-import clinica.pessoas.Medico;
-import clinica.pessoas.Paciente;
+import Principais.Medico;
+import Principais.Paciente;
 import clinica.tipos.TipoConsulta;
 import clinica.tipos.TipoConvenio;
 import java.util.List;
@@ -12,6 +13,7 @@ public class Secretaria {
     private List<Paciente> pacientes;
     private List<Consulta> consultas;
     private List<Medico> medicos;
+    private Buscas busca;
 
     public Secretaria(String nome) {
         this.nome = nome;
@@ -47,32 +49,32 @@ public class Secretaria {
         return medicos;
     }
     
-    public Paciente buscaPaciente(String cpf) {
-        for(Paciente x : pacientes) {
-            if(x.getCpf().equals(cpf)) {
-                return x;
-            }
-        }
-        return null;
-    }
+    //public Paciente buscaPaciente(String cpf) {
+        //for(Paciente x : pacientes) {
+            //if(x.getCpf().equals(cpf)) {
+                //return x;
+            //}
+        //}
+        //return null;
+    //}
     
-    public Medico buscaMedico(String crm) {
-        for(Medico x : medicos) {
-            if(x.getCrm().equals(crm)) {
-                return x;
-            }
-        }
-        return null;
-    }
+    //public Medico buscaMedico(String crm) {
+        //for(Medico x : medicos) {
+            //if(x.getCrm().equals(crm)) {
+                //return x;
+            //}
+        //}
+        //return null;
+    //}
     
-    public Consulta buscaConsulta(String cpf) {
-        for(Consulta x : consultas) {
-            if(x.getPaciente().getCpf().equals(cpf)) {
-                return x;
-            }
-        }
-        return null;
-    }
+    //public Consulta buscaConsulta(String cpf) {
+        //for(Consulta x : consultas) {
+            //if(x.getPaciente().getCpf().equals(cpf)) {
+                //return x;
+            //}
+        //}
+        //return null;
+    //}
 
     public void cadastraPaciente(String cpf, String nome, String dataNascimento, String endereco, String email, String sms, TipoConvenio tipoConvenio) {
         Paciente novoPaciente = new Paciente(cpf, nome, dataNascimento, endereco, email, sms, tipoConvenio);
@@ -107,8 +109,8 @@ public class Secretaria {
     }
     
     public void cadastraConsulta(String data, String horario, String crm, String cpf, TipoConsulta tipoConsulta) {
-        Paciente paciente = buscaPaciente(cpf);
-        Medico medico = buscaMedico(crm);
+        Paciente paciente = busca.buscaPaciente(pacientes,cpf);
+        Medico medico = busca.buscaMedico(medicos, crm);
         Consulta novaConsulta = new Consulta(data, horario, medico, paciente, tipoConsulta);
         consultas.add(novaConsulta);
     }
@@ -124,7 +126,7 @@ public class Secretaria {
     }
     
     public void removeConsulta(String cpf) {
-        Consulta consultaRemovida = buscaConsulta(cpf);
+        Consulta consultaRemovida = busca.buscaConsulta(consultas, cpf);
         consultas.remove(consultaRemovida);
     }
 }

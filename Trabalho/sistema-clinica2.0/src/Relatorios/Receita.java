@@ -1,6 +1,6 @@
-package clinica.pessoas.relatorios;
+package Relatorios;
 
-import clinica.pessoas.Paciente;
+import Principais.Paciente;
 import java.util.List;
 
 public class Receita extends Relatorio {

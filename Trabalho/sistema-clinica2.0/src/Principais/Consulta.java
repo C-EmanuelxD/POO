@@ -1,9 +1,9 @@
-package clinica.secretaria;
+package Principais;
 
 import clinica.tipos.TipoConsulta;
-import clinica.pessoas.Medico;
-import clinica.pessoas.Paciente;
-
+import Principais.Medico;
+import Principais.Paciente;
+// nao feito ainda
 public class Consulta {
     private String data;
     private String horario;
