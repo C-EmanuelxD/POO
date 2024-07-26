@@ -53,13 +53,14 @@ public class Secretaria {
     
     public void atualizaPaciente(String cpf, String nome, String dataNascimento, String endereco, String email, String sms, TipoConvenio tipoConvenio) {
         Paciente atualizaPaciente = Buscas.buscaPaciente(pacientes, cpf);
-        if (atualizaPaciente != null) {
-            atualizaPaciente.setNome(nome);
-            atualizaPaciente.setDataNascimento(dataNascimento);
-            atualizaPaciente.setEndereco(endereco);
-            atualizaPaciente.setEmail(email);
-            atualizaPaciente.setSms(sms);
-            atualizaPaciente.setTipoConvenio(tipoConvenio);
+        int index = consultas.indexOf(atualizaPaciente);
+        if (index != -1) {
+            pacientes.get(index).setNome(nome);
+            pacientes.get(index).setDataNascimento(dataNascimento);
+            pacientes.get(index).setEndereco(endereco);
+            pacientes.get(index).setEmail(email);
+            pacientes.get(index).setSms(sms);
+            pacientes.get(index).setTipoConvenio(tipoConvenio);
             System.out.println("Paciente atualizado com sucesso");
             return;
          }
@@ -91,10 +92,11 @@ public class Secretaria {
     
     public void atualizaConsulta(String cpf, String data, String horario, TipoConsulta tipoConsulta) {
         Consulta atualizarConsulta = Buscas.buscaConsulta(consultas, cpf);
-        if (atualizarConsulta != null) {
-            atualizarConsulta.setData(data);
-            atualizarConsulta.setHorario(horario);
-            atualizarConsulta.setTipoConsulta(tipoConsulta);
+        int index = consultas.indexOf(atualizarConsulta);
+        if (index != -1) {
+            consultas.get(index).setData(data);
+            consultas.get(index).setHorario(horario);
+            consultas.get(index).setTipoConsulta(tipoConsulta);
             return;
         }
         System.out.println("Consulta não encontrada");
