@@ -1,6 +1,7 @@
 package main;
 
 import Principais.Clinica;
+import Principais.Consulta;
 import Principais.Medico;
 import Principais.Paciente;
 import Principais.Secretaria;
@@ -28,6 +29,14 @@ public class Main {
         sec.cadastraConsulta("24/02/2024", "09:30", "21234", "231.345.123-54", TipoConsulta.NORMAL, clinica.getMedicos());
         sec.cadastraConsulta("24/02/2024", "07:30", "21234", "123.456.789-10", TipoConsulta.NORMAL, clinica.getMedicos());
         sec.cadastraConsulta("15/03/2024", "10:30", "12345", "123.456.789-10", TipoConsulta.NORMAL, clinica.getMedicos());
+        sec.atualizaConsulta("231.345.123-54", "26/02/2024", "07:30", TipoConsulta.NORMAL);
+        
+        System.out.println();
+        System.out.println("Imprimindo consultas cadastradas em Secretaria:");
+        for(Consulta obj : sec.getConsultas()) {
+            obj.imprimirConsulta();
+            System.out.println();
+        }
         
         System.out.println();
         System.out.println("Imprimindo pacientes cadastrados em Secretaria:");

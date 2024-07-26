@@ -106,12 +106,13 @@ public class Medico {
     }
     
     public void imprimirMedico() {
-        System.out.println("Nome: " + nome + ", Crm: " + crm + ", Especialidade: " + especialidade);
+         System.out.println("Nome: " + nome + ", Crm: " + crm + ", Especialidade: " + especialidade);
     }
     
     public void imprimirPacientes() {
         for(Paciente x : pacientes) {
-            x.imprimirPaciente();
+            System.out.println("\tNome: " + x.getNome() + ", Cpf: " + x.getCpf()+ ", Data de nascimento: " + x.getDataNascimento() +
+                    ", Endereço: " + x.getEndereco() + ", Plano: " + x.getTipoPlano());
         }
     }
 }

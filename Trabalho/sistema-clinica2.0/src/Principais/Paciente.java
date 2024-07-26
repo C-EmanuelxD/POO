@@ -109,7 +109,7 @@ public class Paciente {
     }
     
     public void imprimirPaciente() {
-        System.out.println("\tNome: " + nome + ", Cpf: " + cpf + ", Data de Nascimento: " + dataNascimento + ", Email: " + email + ", Endereco: " + endereco + ", SMS: " + sms + ", Convenio: " + tipoConvenio);
+        System.out.println("\tNome: " + nome + ", Cpf: " + cpf + ", Data de Nascimento: " + dataNascimento + ", Endereco: " + endereco +", Email: " + email + ", SMS: " + sms + ", Convenio: " + tipoConvenio);
     }
 
 }
