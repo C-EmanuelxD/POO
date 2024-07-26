@@ -1,8 +1,6 @@
 package Principais;
 
 import clinica.tipos.TipoConsulta;
-import Principais.Medico;
-import Principais.Paciente;
 // nao feito ainda
 public class Consulta {
     private String data;

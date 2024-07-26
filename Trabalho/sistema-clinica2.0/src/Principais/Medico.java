@@ -3,17 +3,20 @@ package Principais;
 import Auxiliares.Buscas;
 import DadosPessoas.DadosAdicionais;
 import DadosPessoas.Prontuario;
+import java.util.ArrayList;
 import java.util.List;
 //NAO FEITO AINDA
 public class Medico {
     private String nome;
     private String crm;
+    private String especialidade;
     private List<Paciente> pacientes;
     
-    public Medico(String nome, String crm) {
+    public Medico(String nome, String crm, String especialidade) {
         this.nome = nome;
         this.crm = crm;
-        this.pacientes = null;
+        this.especialidade = especialidade;
+        this.pacientes = new ArrayList<>();
     }
     
     public void cadastraDadosAdicionais(String cpf, boolean fuma, boolean bebe, boolean colesterol,
@@ -48,7 +51,7 @@ public class Medico {
     public void cadastraProntuario(String cpf, String sintomas, String diagnostico, String preescricaoTratamento, String dataAdd){
         Paciente paciente = Buscas.buscaPaciente(pacientes, cpf);
         
-        paciente.addProntuarios(new Prontuario(sintomas, diagnostico, preescricaoTratamento, dataAdd));
+        paciente.setProntuarios(new Prontuario(sintomas, diagnostico, preescricaoTratamento, dataAdd));
         
     }
     
@@ -90,8 +93,25 @@ public class Medico {
         return pacientes;
     }
 
-    public void setPaciente(List<Paciente> pacientes) {
-        this.pacientes = pacientes;
+    public void setPaciente(Paciente paciente) {
+         this.pacientes.add(paciente);
     }
 
+    public String getEspecialidade() {
+        return especialidade;
+    }
+
+    public void setEspecialidade(String especialidade) {
+        this.especialidade = especialidade;
+    }
+    
+    public void imprimirMedico() {
+        System.out.println("Nome: " + nome + ", Crm: " + crm + ", Especialidade: " + especialidade);
+    }
+    
+    public void imprimirPacientes() {
+        for(Paciente x : pacientes) {
+            x.imprimirPaciente();
+        }
+    }
 }

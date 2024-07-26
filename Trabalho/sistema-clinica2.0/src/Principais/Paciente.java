@@ -56,11 +56,7 @@ public class Paciente {
         return prontuarios;
     }
 
-    public void setProntuarios(List<Prontuario> prontuarios) {
-        this.prontuarios = prontuarios;
-    }
-    
-    public void addProntuarios(Prontuario prontuario){
+    public void setProntuarios(Prontuario prontuario){
         prontuarios.add(prontuario);
     }
 
@@ -71,9 +67,6 @@ public class Paciente {
     public void setDadosAdicionais(DadosAdicionais dadosAdicionais) {
         this.dadosAdicionais = dadosAdicionais;
     }
-    
-    
-    
     
     public String getNome() {
         return nome;
@@ -116,15 +109,7 @@ public class Paciente {
     }
     
     public void imprimirPaciente() {
-        System.out.println(this.cpf + ", " + this.nome + ", " + this.dataNascimento + ", " + this.email + ", " + this.endereco + ", " + this.sms + ", " + this.tipoConvenio);
+        System.out.println("\tNome: " + nome + ", Cpf: " + cpf + ", Data de Nascimento: " + dataNascimento + ", Email: " + email + ", Endereco: " + endereco + ", SMS: " + sms + ", Convenio: " + tipoConvenio);
     }
-
-  
-
-    
-
-
-
-    
 
 }

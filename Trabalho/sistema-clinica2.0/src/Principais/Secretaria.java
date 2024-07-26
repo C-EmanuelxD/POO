@@ -10,7 +10,6 @@ public class Secretaria {
     private String nome;
     private List<Paciente> pacientes;
     private List<Consulta> consultas;
-    private List<Medico> medicos;
 
     public Secretaria(String nome) {
         this.nome = nome;
@@ -34,22 +33,19 @@ public class Secretaria {
         pacientes.add(paciente);
     }
 
-    public List<Consulta> getConsulta() {
+    public List<Consulta> getConsultas() {
         return consultas;
     }
 
-    public void setConsulta(List<Consulta> consultas) {
-        this.consultas = consultas;
-    }
-
-    public List<Medico> getMedicos() {
-        return medicos;
+    public void setConsultas(Consulta consulta) {
+        this.consultas.add(consulta);
     }
 
     public void cadastraPaciente(String cpf, String nome, String dataNascimento, String endereco, String email, String sms, TipoConvenio tipoConvenio) {
         Paciente novoPaciente = new Paciente(cpf, nome, dataNascimento, endereco, email, sms, tipoConvenio);
         if (cpf != null) {
             pacientes.add(novoPaciente);
+            System.out.println("Paciente cadastrado com sucesso");
             return;
         }
         System.out.println("Campo cpf vazio");
@@ -64,10 +60,10 @@ public class Secretaria {
             atualizaPaciente.setEmail(email);
             atualizaPaciente.setSms(sms);
             atualizaPaciente.setTipoConvenio(tipoConvenio);
-            System.out.println("Paciente atualizado com sucesso.");
+            System.out.println("Paciente atualizado com sucesso");
             return;
          }
-        System.out.println("Paciente não encontrado.");
+        System.out.println("Paciente não encontrado");
     }
 
     public void removePaciente(String cpf) {
@@ -76,16 +72,18 @@ public class Secretaria {
             pacientes.remove(removerPaciente);
             return;
         }
-        System.out.println("Paciente não encontrado.");
+        System.out.println("Paciente não encontrado");
     }
     
-    public void cadastraConsulta(String data, String horario, String crm, String cpf, TipoConsulta tipoConsulta) {
+    public void cadastraConsulta(String data, String horario, String crm, String cpf, TipoConsulta tipoConsulta, List<Medico> medicos) {
         Paciente paciente = Buscas.buscaPaciente(pacientes, cpf);
         Medico medico = Buscas.buscaMedico(medicos, crm);
         
         if (paciente != null && medico != null) {
             Consulta novaConsulta = new Consulta(data, horario, medico, paciente, tipoConsulta);
             consultas.add(novaConsulta);
+            medico.setPaciente(paciente);
+            System.out.println("Consulta cadastrada com sucesso");
             return;
         }
         System.out.println("Paciente e/ou Médico não encontrado");
