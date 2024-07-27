@@ -83,7 +83,7 @@ public class Secretaria {
         if (paciente != null && medico != null) {
             Consulta novaConsulta = new Consulta(data, horario, medico, paciente, tipoConsulta);
             consultas.add(novaConsulta);
-            medico.setPaciente(paciente);
+            medico.setConsulta(novaConsulta);
             System.out.println("Consulta cadastrada com sucesso");
             return;
         }

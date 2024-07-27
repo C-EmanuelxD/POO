@@ -6,18 +6,20 @@ import DadosPessoas.Prontuario;
 import Relatorios.Atestado;
 import Relatorios.Receita;
 import Relatorios.DeclaracaoAcompanhamento;
+import java.util.ArrayList;
 import java.util.List;
 //NAO FEITO AINDA
 public class Medico {
     private String nome;
     private String crm;
     private String especialidade;
-    private List<Paciente> pacientes;
+    private List<Consulta> consultas;
     
     public Medico(String nome, String crm, String especialidade) {
         this.nome = nome;
         this.crm = crm;
         this.especialidade = especialidade;
+        this.consultas = new ArrayList<>();
     }
     
     public void cadastraDadosAdicionais(String cpf, boolean fuma, boolean bebe, boolean colesterol,
@@ -74,12 +76,15 @@ public class Medico {
         
     }
     
-    public void adicionaPaciente(Paciente paciente){
-        pacientes.add(paciente);    
-    }
-    
-    public void PacienteMes(){
-        
+    public void pacienteMes(String mes){
+        for(int i = 0; i < consultas.size(); i++){
+            Consulta consulta = consultas.get(i);
+            String data = consulta.getData();
+            String[] parte = data.split("/");
+            if (mes == parte[1]){
+                System.out.print(consulta.getPaciente().getNome());
+            }
+        }
     }
     
     
@@ -122,12 +127,12 @@ public class Medico {
         this.crm = crm;
     }
 
-    public List<Paciente> getPaciente() {
-        return pacientes;
+    public List<Consulta> getConsulta() {
+        return consultas;
     }
 
-    public void setPaciente(Paciente paciente) {
-         this.pacientes.add(paciente);
+    public void setConsulta(Consulta consulta) {
+         this.consultas.add(consulta);
     }
 
     public String getEspecialidade() {
