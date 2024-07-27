@@ -6,7 +6,6 @@ import DadosPessoas.Prontuario;
 import Relatorios.Atestado;
 import Relatorios.Receita;
 import Relatorios.DeclaracaoAcompanhamento;
-import java.util.ArrayList;
 import java.util.List;
 //NAO FEITO AINDA
 public class Medico {
@@ -19,7 +18,6 @@ public class Medico {
         this.nome = nome;
         this.crm = crm;
         this.especialidade = especialidade;
-        this.pacientes = new ArrayList<>();
     }
     
     public void cadastraDadosAdicionais(String cpf, boolean fuma, boolean bebe, boolean colesterol,
@@ -75,6 +73,16 @@ public class Medico {
         paciente.getProntuarios().remove(index);
         
     }
+    
+    public void adicionaPaciente(Paciente paciente){
+        pacientes.add(paciente);    
+    }
+    
+    public void PacienteMes(){
+        
+    }
+    
+    
     
     public void geraAtestado(String dataInicio, String dataFim, String justificativa, String cpf){
         Paciente paciente = Buscas.buscaPaciente(pacientes, cpf);
