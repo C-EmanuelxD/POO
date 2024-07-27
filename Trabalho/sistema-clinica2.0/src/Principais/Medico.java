@@ -3,6 +3,9 @@ package Principais;
 import Auxiliares.Buscas;
 import DadosPessoas.DadosAdicionais;
 import DadosPessoas.Prontuario;
+import Relatorios.Atestado;
+import Relatorios.Receita;
+import Relatorios.DeclaracaoAcompanhamento;
 import java.util.ArrayList;
 import java.util.List;
 //NAO FEITO AINDA
@@ -73,6 +76,28 @@ public class Medico {
         
     }
     
+    public void geraAtestado(String dataInicio, String dataFim, String justificativa, String cpf){
+        Paciente paciente = Buscas.buscaPaciente(pacientes, cpf);
+        
+        Atestado atestado = new Atestado(dataInicio, dataFim, justificativa);
+        atestado.imprimir(paciente.getNome(), nome);    
+    }
+    
+    public void geraReceita(Map remedios, String infoExtra, String data, String cpf){
+        Paciente paciente =  Buscas.buscaPaciente(pacientes, crm);
+        
+        Receita receita = new Receita(remedios, infoExtra, data);
+        receita.imprimir(paciente.getNome(), nome);
+    }
+    
+    public void geraDeclaracaoAcompanhamento(String justificativa, String acompanhante, String data, String cpf){
+        Paciente paciente = Buscas.buscaPaciente(pacientes, cpf);
+
+        DeclaracaoAcompanhamento acompanhante1 = new DeclaracaoAcompanhamento(justificativa, acompanhante, data);
+        acompanhante1.imprimir(paciente.getNome(), nome);
+    }
+    
+ 
     public String getNome() {
         return nome;
     }

@@ -1,12 +1,16 @@
 package Relatorios;
 
-import Principais.Paciente;
-
 public class Atestado extends Relatorio {
     private String dataInicio;
     private String dataFim;
     private String justificativa;
-
+    
+    public Atestado(String dataInicio, String dataFim, String justificativa){
+        this.dataInicio = dataInicio;
+        this.dataFim = dataFim;
+        this.justificativa = justificativa;
+    }
+   
     public String getDataInicio() {
         return dataInicio;
     }
@@ -22,7 +26,6 @@ public class Atestado extends Relatorio {
     public void setDataFim(String dataFim) {
         this.dataFim = dataFim;
     }
-
     
     public String getJustificativa() {
         return justificativa;
@@ -39,12 +42,12 @@ public class Atestado extends Relatorio {
     public void setData(String data) {
         this.data = data;
     }
-
-    public Paciente getPaciente() {
-        return paciente;
-    }
-
-    public void setPaciente(Paciente paciente) {
-        this.paciente = paciente;
+    
+    @Override
+    public void imprimir(String paciente, String medico){
+        System.out.println("Atestado para: "+ paciente + "valido de" + dataInicio +", ate " + dataFim);
+        System.out.println("Pelo motivo de:" + justificativa + ".");
+        System.out.println("Assinado por" + medico);
+        
     }
 }
