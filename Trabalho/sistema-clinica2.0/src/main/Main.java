@@ -35,28 +35,14 @@ public class Main {
         
         System.out.println();
         System.out.println("Imprimindo consultas cadastradas em Secretaria:");
-        for(Consulta obj : sec.getConsultas()) {
-            obj.imprimirConsulta();
-            System.out.println();
-        }
+        clinica.imprimirSecretariaConsultas();
         
         System.out.println();
         System.out.println("Imprimindo pacientes cadastrados em Secretaria:");
-        for(Paciente obj : sec.getPacientes()) {
-            obj.imprimirPaciente();
-        }
+        clinica.imprimirSecretariaPacientes();
         
         System.out.println();
         System.out.println("Imprimindo os medicos da Clinica e seus respectivos pacientes:");
-        for(Medico obj : clinica.getMedicos()) {
-            System.out.print("Doutor -> ");
-            obj.imprimirMedico();
-            
-            System.out.println("Pacientes:");
-            obj.imprimirPacientes();
-            
-            System.out.println();
-        }
-     
+        clinica.imprimirMedicosPacientes();
     }
 }

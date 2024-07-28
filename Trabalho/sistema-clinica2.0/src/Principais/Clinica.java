@@ -57,5 +57,28 @@ public class Clinica {
         }
         System.out.println("Campo crm vazio");
     }
+    public void imprimirMedicosPacientes() {
+        for(Medico obj : medicos) {
+            System.out.print("Doutor -> ");
+            obj.imprimirMedico();
+            
+            System.out.println("Pacientes:");
+            obj.imprimirPacientes();
+            
+            System.out.println();
+        }
+    }
     
+    public void imprimirSecretariaPacientes() {
+        for(Paciente obj : secretaria.getPacientes()) {
+            obj.imprimirPaciente();
+        }
+    }
+    
+    public void imprimirSecretariaConsultas() {
+        for(Consulta obj : secretaria.getConsultas()) {
+            obj.imprimirConsulta();
+            System.out.println();
+        }
+    }
 }
