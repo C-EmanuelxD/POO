@@ -84,8 +84,8 @@ public class Medico {
             Consulta consulta = consultas.get(i);
             String data = consulta.getData();
             String[] parte = data.split("/");
-            if (mes == parte[1]){
-                System.out.print(consulta.getPaciente().getNome());
+            if (mes.equals(parte[1])){
+                consulta.getPaciente().imprimirPaciente();
             }
         }
     }
