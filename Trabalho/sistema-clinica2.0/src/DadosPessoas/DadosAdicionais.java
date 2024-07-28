@@ -1,6 +1,7 @@
 package DadosPessoas;
 //NAO FEITO AINDA
 
+import java.util.Arrays;
 import java.util.List;
 
 public class DadosAdicionais {
@@ -87,6 +88,16 @@ public class DadosAdicionais {
         this.alergias = alergias;
     }
     
-    
+    public void imprimirDadosAdicionais() {
+        String fumaStr = (this.fuma) ? "Fuma; " : "";
+        String bebeStr = (this.bebe) ? "Bebe; " : "";
+        String colesterolStr = (this.colesterol) ? "Colesterol; " : "";
+        String diabeteStr = (this.diabete) ? "Diabete; " : "";
+        String doencaCardiacaStr = (this.doencaCardiaca) ? "Doença Cardiaca; " : "";
+        String cirurgiasStr = (this.cirurgias != null) ? this.cirurgias.toString() : List.of("").toString();
+        String alergiasStr = (this.alergias != null) ? this.alergias.toString() : List.of("").toString();
+        String res = fumaStr + bebeStr + colesterolStr + diabeteStr + doencaCardiacaStr;
+        System.out.println("Dados adicionais do paciente: " + res + "Cirurgias: " + cirurgiasStr + "; " + "Alergias: " + alergiasStr + ";");
+    }
 
 }

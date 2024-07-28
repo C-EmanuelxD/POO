@@ -7,8 +7,10 @@ import Relatorios.Atestado;
 import Relatorios.Receita;
 import Relatorios.DeclaracaoAcompanhamento;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 //NAO FEITO AINDA
 public class Medico {
     private String nome;
@@ -145,10 +147,20 @@ public class Medico {
          System.out.println("Nome: " + nome + ", Crm: " + crm + ", Especialidade: " + especialidade);
     }
     
+    // imprime todos os pacientes do medico, sem duplicacao.
     public void imprimirPacientes() {
-        for(Consulta x : consultas) {
-            System.out.println("\tNome: " + x.getPaciente().getNome() + ", Cpf: " + x.getPaciente().getCpf()+ ", Data de nascimento: " + x.getPaciente().getDataNascimento() +
-                    ", Endereço: " + x.getPaciente().getEndereco() + ", Plano: " + x.getPaciente().getTipoPlano());
+        Set<Paciente> pacientesImpressos = new HashSet<>();
+
+        for (Consulta consulta : consultas) {
+            Paciente paciente = consulta.getPaciente();
+            if (!pacientesImpressos.contains(paciente)) {
+                pacientesImpressos.add(paciente);
+                System.out.println("\tNome: " + paciente.getNome() +
+                                   ", Cpf: " + paciente.getCpf() +
+                                   ", Data de nascimento: " + paciente.getDataNascimento()
+
+                );
+            }
         }
     }
 }
