@@ -45,23 +45,22 @@ public class Secretaria {
         Paciente novoPaciente = new Paciente(cpf, nome, dataNascimento, endereco, email, sms, tipoConvenio);
         if (cpf != null) {
             pacientes.add(novoPaciente);
-            System.out.println("Paciente cadastrado com sucesso");
+            //System.out.println("Paciente cadastrado com sucesso");
             return;
         }
         System.out.println("Campo cpf vazio");
     }
     
-    public void atualizaPaciente(String cpf, String nome, String dataNascimento, String endereco, String email, String sms, TipoConvenio tipoConvenio) {
+    public void atualizaPaciente(String cpf, String nome, String endereco, String email, String sms, TipoConvenio tipoConvenio) {
         Paciente atualizaPaciente = Buscas.buscaPaciente(pacientes, cpf);
         int index = consultas.indexOf(atualizaPaciente);
         if (index != -1) {
             pacientes.get(index).setNome(nome);
-            pacientes.get(index).setDataNascimento(dataNascimento);
             pacientes.get(index).setEndereco(endereco);
             pacientes.get(index).setEmail(email);
             pacientes.get(index).setSms(sms);
             pacientes.get(index).setTipoConvenio(tipoConvenio);
-            System.out.println("Paciente atualizado com sucesso");
+            //System.out.println("Paciente atualizado com sucesso");
             return;
          }
         System.out.println("Paciente não encontrado");
@@ -84,7 +83,7 @@ public class Secretaria {
             Consulta novaConsulta = new Consulta(data, horario, medico, paciente, tipoConsulta);
             consultas.add(novaConsulta);
             medico.setConsulta(novaConsulta);
-            System.out.println("Consulta cadastrada com sucesso");
+            //System.out.println("Consulta cadastrada com sucesso");
             return;
         }
         System.out.println("Paciente e/ou Médico não encontrado");
@@ -110,30 +109,41 @@ public class Secretaria {
         }
         System.out.println("Consulta não encontrada");
     }
-    public void gerarRelatorioConsulta(List<Consulta> consultas, String data, String email, String sms){
-        String[] partes = data.split("/");
+    
+    public List<Consulta> consultasDiaSeguinte(String dataAtual) {
+        String[] partes = dataAtual.split("/");
         int dia = Integer.parseInt(partes[0]);
         int mes = Integer.parseInt(partes[1]);
         int ano = Integer.parseInt(partes[2]);
-        dia += 1;
+        
         if (dia == 31){
             mes += 1;
             dia = 1;
-        }    
-            
-        if (mes == 12 && dia == 31) {
+        } else if (mes == 12 && dia == 31) {
             ano += 1;
             mes = 1;
+        } else {
+            dia+=1;
         }
-            
+                
         String prox_dia = String.format("%02d/%02d/%d", dia, mes, ano);
+        List<Consulta> consultasDiaSeguinte = new ArrayList<>();
         
         for(Consulta x : consultas) {
-            if (x.getPaciente() != null && (x.getPaciente().getSms() != null || x.getPaciente().getEmail() != null)) {
-                if (x.getData() == prox_dia){
-                   x.imprimirConsulta();
+            if (x.getPaciente().getEmail() != null || x.getPaciente().getSms() != null) {
+                if (x.getData().equals(prox_dia)){
+                    consultasDiaSeguinte.add(x);
                 }
-            }    
+            }
+        }
+        return consultasDiaSeguinte;
+    }
+    
+    public void gerarRelatorioConsulta(String dataAtual){
+        List<Consulta> consultasDiaSeguinte = this.consultasDiaSeguinte(dataAtual);
+        for(Consulta x : consultasDiaSeguinte) {
+            x.imprimirConsulta();
+            System.out.println();
         }
     }     
 }      

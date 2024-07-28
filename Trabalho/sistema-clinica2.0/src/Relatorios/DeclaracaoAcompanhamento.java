@@ -5,6 +5,7 @@ import Principais.Paciente;
 public class DeclaracaoAcompanhamento extends Relatorio {
     private String justificativa;
     private String acompanhante;
+    
     public DeclaracaoAcompanhamento(String justificativa, String acompanhante, String data){
         this.justificativa = justificativa;
         this.acompanhante = acompanhante;
@@ -36,7 +37,8 @@ public class DeclaracaoAcompanhamento extends Relatorio {
     }
     
     
-    public void imprimir(String paciente, String medico){
+    @Override
+    public void imprimir(String pacienteNome, String medicoNome){
         System.out.println("Declaro que " + acompanhante + "esteve no dia " + data+ "acompanhando " + paciente + "no atendimento");
         System.out.println("Assinado por" + medico + ".");
  

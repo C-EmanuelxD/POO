@@ -58,9 +58,9 @@ public class Consulta {
     }
     
     public void imprimirConsulta() {
-        System.out.println("\tData: " + data + ", Horario: " + horario + "Tipo Consulta: " + tipoConsulta);
+        System.out.println("\tData: " + data + ", Horario: " + horario + ", Tipo Consulta: " + tipoConsulta);
         System.out.println("\tMedico -> " + "Nome: " + medico.getNome() + ", Crm: " + medico.getCrm() + ", Especialidade: " + medico.getEspecialidade()); 
         System.out.println("\tPaciente -> " + "Nome: " + paciente.getNome() + ", Cpf: " + paciente.getCpf() + ", Data de nascimento: " +
-                paciente.getDataNascimento() + ", Endereço: " + paciente.getEndereco() + ", Plano: " + paciente.getTipoPlano());
+                paciente.getDataNascimento() + ", Endereço: " + paciente.getEndereco() + ", Convênio: " + paciente.getTipoPlano());
     }
 }

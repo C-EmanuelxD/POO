@@ -88,8 +88,6 @@ public class Medico {
         }
     }
     
-    
-    
     public void geraAtestado(String dataInicio, String dataFim, String justificativa, String cpf){
         Paciente paciente = Buscas.buscaPacienteConsulta(consultas, cpf);
         
@@ -110,7 +108,6 @@ public class Medico {
         DeclaracaoAcompanhamento acompanhante1 = new DeclaracaoAcompanhamento(justificativa, acompanhante, data);
         acompanhante1.imprimir(paciente.getNome(), nome);
     }
-    
  
     public String getNome() {
         return nome;

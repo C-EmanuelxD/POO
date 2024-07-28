@@ -1,18 +1,33 @@
 package Gerenciador;
 
 import Principais.Consulta;
+import Principais.Secretaria;
+import java.util.ArrayList;
 import java.util.List;
-
 
 //não feito ainda
 public class GerenciadorMensagem {
-    private List<Consulta> consultas;
-
-    public List<Consulta> getConsultas() {
-        return consultas;
+    private Secretaria secretaria;
+    
+    public GerenciadorMensagem(Secretaria secretaria) {
+        this.secretaria = secretaria;
     }
 
-    public void setConsultas(List<Consulta> consultas) {
-        this.consultas = consultas;
+    public Secretaria getSecretaria() {
+        return secretaria;
     }
+
+    public void setSecretaria(Secretaria secretaria) {
+        this.secretaria = secretaria;
+    }
+    
+    public void enviarEmail(String dataAtual) {
+        List<Consulta> consultasMensagem = secretaria.consultasDiaSeguinte(dataAtual);
+    }
+    
+    public void enviarSMS(String dataAtual) {
+        List<Consulta> consultasMensagem = secretaria.consultasDiaSeguinte(dataAtual);
+    }
+    
+    
 }

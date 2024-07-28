@@ -31,8 +31,8 @@ public class Receita extends Relatorio {
         this.medico = medico;
     }
     
-
-    public void imprimir(String paciente, String medico){
+    @Override
+    public void imprimir(String pacienteNome, String medicoNome){
         for (String key : remedios.keySet()){
             System.out.println(key + "=" + remedios.get(key));
         }

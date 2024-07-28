@@ -43,7 +43,8 @@ public class Atestado extends Relatorio {
         this.data = data;
     }
     
-    public void imprimir(String paciente, String medico){
+    @Override
+    public void imprimir(String pacienteNome, String medicoNome){
         System.out.println("Atestado para: "+ paciente + "valido de" + dataInicio +", ate " + dataFim);
         System.out.println("Pelo motivo de:" + justificativa + ".");
         System.out.println("Assinado por" + medico);
