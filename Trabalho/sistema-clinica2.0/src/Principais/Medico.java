@@ -14,26 +14,26 @@ public class Medico {
     private String nome;
     private String crm;
     private String especialidade;
-    private List<Paciente> pacientes;
+    private List<Consulta> consultas;
     
     public Medico(String nome, String crm, String especialidade) {
         this.nome = nome;
         this.crm = crm;
         this.especialidade = especialidade;
-        this.pacientes = new ArrayList<>();
+        this.consultas = new ArrayList<>();
     }
     
     public void cadastraDadosAdicionais(String cpf, boolean fuma, boolean bebe, boolean colesterol,
         boolean diabete, boolean doencaCardiaca, List<String> cirurgias, List<String> alergias){
         
-        Paciente paciente = Buscas.buscaPaciente(pacientes, cpf);
+        Paciente paciente = Buscas.buscaPacienteConsulta(consultas, cpf);
         paciente.setDadosAdicionais(new DadosAdicionais(fuma, bebe, colesterol, diabete, doencaCardiaca, cirurgias, alergias));
         
     }
     
     public void atualizaDadosAdicionais(String cpf,boolean fuma, boolean bebe, boolean colesterol,
         boolean diabete, boolean doencaCardiaca, String cirurgia, String alergia){
-        Paciente paciente = Buscas.buscaPaciente(pacientes, cpf);
+        Paciente paciente = Buscas.buscaPacienteConsulta(consultas, cpf);
         
         paciente.getDadosAdicionais().setFuma(fuma);
         paciente.getDadosAdicionais().setBebe(bebe);
@@ -46,21 +46,21 @@ public class Medico {
     }
     
     public void removeDadosAdicionais(String cpf){
-        Paciente paciente = Buscas.buscaPaciente(pacientes, cpf);
+        Paciente paciente = Buscas.buscaPacienteConsulta(consultas, cpf);
         
         paciente.setDadosAdicionais(null);
         
     }
     
     public void cadastraProntuario(String cpf, String sintomas, String diagnostico, String preescricaoTratamento, String dataAdd){
-        Paciente paciente = Buscas.buscaPaciente(pacientes, cpf);
+        Paciente paciente = Buscas.buscaPacienteConsulta(consultas, cpf);
         
         paciente.setProntuarios(new Prontuario(sintomas, diagnostico, preescricaoTratamento, dataAdd));
         
     }
     
     public void atualizaProntuario(String cpf, String data, String dataAlterar, String diagnostico, String Preescricao, String Sintoma){
-        Paciente paciente = Buscas.buscaPaciente(pacientes, cpf);
+        Paciente paciente = Buscas.buscaPacienteConsulta(consultas, cpf);
 
         int index = paciente.getProntuarios().indexOf(Buscas.buscaProntuario(paciente.getProntuarios(), data));
         paciente.getProntuarios().get(index).setData(dataAlterar);
@@ -70,42 +70,42 @@ public class Medico {
     }
     
     public void removeProntuario(String cpf, String data){
-        Paciente paciente = Buscas.buscaPaciente(pacientes, cpf);
+        Paciente paciente = Buscas.buscaPacienteConsulta(consultas, cpf);
         
         int index = paciente.getProntuarios().indexOf(Buscas.buscaProntuario(paciente.getProntuarios(), data));
         paciente.getProntuarios().remove(index);
         
     }
     
-    //public void pacienteMes(String mes){
-      //  for(int i = 0; i < consultas.size(); i++){
-        //    Consulta consulta = consultas.get(i);
-          //  String data = consulta.getData();
-            //String[] parte = data.split("/");
-           // if (mes == parte[1]){
-              //  System.out.print(consulta.getPaciente().getNome());
-       //     }
-     //   }
-   // }
+    public void pacienteMes(String mes){
+        for(int i = 0; i < consultas.size(); i++){
+            Consulta consulta = consultas.get(i);
+            String data = consulta.getData();
+            String[] parte = data.split("/");
+            if (mes == parte[1]){
+                System.out.print(consulta.getPaciente().getNome());
+            }
+        }
+    }
     
     
     
     public void geraAtestado(String dataInicio, String dataFim, String justificativa, String cpf){
-        Paciente paciente = Buscas.buscaPaciente(pacientes, cpf);
+        Paciente paciente = Buscas.buscaPacienteConsulta(consultas, cpf);
         
         Atestado atestado = new Atestado(dataInicio, dataFim, justificativa);
         atestado.imprimir(paciente.getNome(), nome);    
     }
     
     public void geraReceita(Map remedios, String infoExtra, String data, String cpf){
-        Paciente paciente =  Buscas.buscaPaciente(pacientes, crm);
+        Paciente paciente = Buscas.buscaPacienteConsulta(consultas, cpf);
         
         Receita receita = new Receita(remedios, infoExtra, data);
         receita.imprimir(paciente.getNome(), nome);
     }
     
     public void geraDeclaracaoAcompanhamento(String justificativa, String acompanhante, String data, String cpf){
-        Paciente paciente = Buscas.buscaPaciente(pacientes, cpf);
+        Paciente paciente = Buscas.buscaPacienteConsulta(consultas, cpf);
 
         DeclaracaoAcompanhamento acompanhante1 = new DeclaracaoAcompanhamento(justificativa, acompanhante, data);
         acompanhante1.imprimir(paciente.getNome(), nome);
@@ -128,12 +128,12 @@ public class Medico {
         this.crm = crm;
     }
 
-    public List<Paciente> getPaciente() {
-        return pacientes;
+    public List<Consulta> getConsulta() {
+        return consultas;
     }
 
-    public void setPaciente(Paciente paciente) {
-         this.pacientes.add(paciente);
+    public void setConsulta(Consulta consulta) {
+         this.consultas.add(consulta);
     }
 
     public String getEspecialidade() {
@@ -149,9 +149,9 @@ public class Medico {
     }
     
     public void imprimirPacientes() {
-        for(Paciente x : pacientes) {
-            System.out.println("\tNome: " + x.getNome() + ", Cpf: " + x.getCpf()+ ", Data de nascimento: " + x.getDataNascimento() +
-                    ", Endereço: " + x.getEndereco() + ", Plano: " + x.getTipoPlano());
+        for(Consulta x : consultas) {
+            System.out.println("\tNome: " + x.getPaciente().getNome() + ", Cpf: " + x.getPaciente().getCpf()+ ", Data de nascimento: " + x.getPaciente().getDataNascimento() +
+                    ", Endereço: " + x.getPaciente().getEndereco() + ", Plano: " + x.getPaciente().getTipoPlano());
         }
     }
 }

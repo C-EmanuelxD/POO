@@ -53,4 +53,14 @@ public class Buscas {
         return null;
     }
     
+    public static Paciente buscaPacienteConsulta(List<Consulta> consultas, String cpf){
+        for(Consulta x : consultas) {
+            if(x.getPaciente().getCpf().equals(cpf)) {
+                Paciente y = x.getPaciente();
+                return y;
+            }
+        }
+        return null;
+    }
+    
 }
