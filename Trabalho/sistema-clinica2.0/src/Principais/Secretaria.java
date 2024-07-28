@@ -129,13 +129,22 @@ public class Secretaria {
         String prox_dia = String.format("%02d/%02d/%d", dia, mes, ano);
         List<Consulta> consultasDiaSeguinte = new ArrayList<>();
         
+        // Adiciona as consultas dos pacientes que tem email ou celular
         for(Consulta x : consultas) {
-            if (x.getPaciente().getEmail() != null || x.getPaciente().getSms() != null) {
-                if (x.getData().equals(prox_dia)){
-                    consultasDiaSeguinte.add(x);
-                }
+            if (x.getData().equals(prox_dia)){
+                if (x.getPaciente().getEmail() != null || x.getPaciente().getSms() != null)
+                consultasDiaSeguinte.add(x);
             }
         }
+        
+        // Adiciona as consultas dos pacientes que nao tem email e celular
+        for(Consulta x : consultas) {
+            if (x.getData().equals(prox_dia)){
+                if (x.getPaciente().getEmail() == null && x.getPaciente().getSms() == null)
+                consultasDiaSeguinte.add(x);
+            }
+        }
+        
         return consultasDiaSeguinte;
     }
     
