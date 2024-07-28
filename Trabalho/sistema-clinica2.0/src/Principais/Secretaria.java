@@ -110,4 +110,34 @@ public class Secretaria {
         }
         System.out.println("Consulta não encontrada");
     }
-}
+    public void gerarRelatorioConsulta(List<Consulta> consultas, String data, String email, String sms){
+        String[] partes = data.split("/");
+        int dia = Integer.parseInt(partes[0]);
+        int mes = Integer.parseInt(partes[1]);
+        int ano = Integer.parseInt(partes[2]);
+        dia += 1;
+        if (dia == 31){
+            mes += 1;
+            dia = 1;
+        }    
+            
+        if (mes == 12 && dia == 31) {
+            ano += 1;
+            mes = 1;
+        }
+            
+        String prox_dia = String.format("%02d/%02d/%d", dia, mes, ano);
+        
+        for(Consulta x : consultas) {
+            if (x.getPaciente() != null && (x.getPaciente().getSms() != null || x.getPaciente().getEmail() != null)) {
+                if (x.getData() == prox_dia){
+                   x.imprimirConsulta();
+                }
+            }    
+        }
+    }     
+}      
+
+    
+
+
