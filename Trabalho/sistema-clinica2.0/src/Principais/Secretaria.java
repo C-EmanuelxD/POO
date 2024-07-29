@@ -123,6 +123,7 @@ public class Secretaria {
         } else if (mes == 12 && dia == 31) {
             ano += 1;
             mes = 1;
+            dia = 1;
         } else {
             dia+=1;
         }
