@@ -89,26 +89,38 @@ public class Medico {
             }
         }
     }
-    
     public void geraAtestado(String dataInicio, String dataFim, String justificativa, String cpf){
         Paciente paciente = Buscas.buscaPacienteConsulta(consultas, cpf);
         
-        Atestado atestado = new Atestado(dataInicio, dataFim, justificativa);
-        atestado.imprimir(paciente.getNome(), nome);    
+        System.out.println("Atestado para: "+ paciente.getNome()+ "valido de" + dataInicio +", ate " + dataFim);
+        System.out.println("Pelo motivo de:" + justificativa + ".");
+        System.out.println("Assinado por" + nome);        
+        //Atestado atestado = new Atestado(dataInicio, dataFim, justificativa);
+        //atestado.imprimir(paciente.getNome(), nome);    
     }
     
-    public void geraReceita(Map remedios, String infoExtra, String data, String cpf){
+    public void geraReceita(Map<String, String> remedios, String infoExtra, String data, String cpf){
         Paciente paciente = Buscas.buscaPacienteConsulta(consultas, cpf);
         
-        Receita receita = new Receita(remedios, infoExtra, data);
-        receita.imprimir(paciente.getNome(), nome);
+        for (String key : remedios.keySet()){
+            System.out.println(key + "=" + remedios.get(key));
+        }
+        System.out.println(infoExtra);
+        System.out.println("Para o paciente:" + paciente.getNome());
+        System.out.println(nome + data);       
+        //Receita receita = new Receita(remedios, infoExtra, data);
+        //receita.imprimir(paciente.getNome(), nome);
     }
     
     public void geraDeclaracaoAcompanhamento(String justificativa, String acompanhante, String data, String cpf){
         Paciente paciente = Buscas.buscaPacienteConsulta(consultas, cpf);
+        
+        System.out.println("Declaro que " + acompanhante + "esteve no dia " + data+ "acompanhando " + paciente.getNome() + "no atendimento");
+        System.out.println("Assinado por" + nome + ".");
 
-        DeclaracaoAcompanhamento acompanhante1 = new DeclaracaoAcompanhamento(justificativa, acompanhante, data);
-        acompanhante1.imprimir(paciente.getNome(), nome);
+        
+        //DeclaracaoAcompanhamento acompanhante1 = new DeclaracaoAcompanhamento(justificativa, acompanhante, data);
+        //acompanhante1.imprimir(paciente.getNome(), nome);
     }
  
     public String getNome() {
