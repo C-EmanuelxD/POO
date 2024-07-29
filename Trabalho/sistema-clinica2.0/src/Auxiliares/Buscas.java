@@ -35,9 +35,9 @@ public class Buscas {
         return null;
     }
     
-    public static Consulta buscaConsulta(List<Consulta> consultas, String cpf) {
+    public static Consulta buscaConsulta(List<Consulta> consultas, String crm, String data, String horario) {
         for(Consulta x : consultas) {
-            if(x.getPaciente().getCpf().equals(cpf)) {
+            if(x.getMedico().getCrm().equals(crm) && x.getData().equals(data) && x.getHorario().equals(horario)) {
                 return x;
             }
         }
