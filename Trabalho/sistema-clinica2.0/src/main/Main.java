@@ -33,6 +33,12 @@ public class Main {
         sec.cadastraConsulta("02/03/2024", "07:30", "21234", "123.456.789-10", TipoConsulta.NORMAL, clinica.getMedicos());
         sec.cadastraConsulta("02/03/2024", "10:30", "12345", "123.456.789-10", TipoConsulta.NORMAL, clinica.getMedicos());
         sec.cadastraConsulta("05/03/2024", "11:30", "12345", "123.456.789-10", TipoConsulta.NORMAL, clinica.getMedicos());
+        sec.atualizaConsulta("21234", "02/03/2024", "09:30", "02/03/2024", "17:00", TipoConsulta.NORMAL);
+        
+        
+        // atualiza paciente
+        sec.atualizaPaciente("123.456.789-10", "zé", "Alecrim Dourado, 220", "jose@gmail.com", "8842-3233", TipoConvenio.PLANO);
+        
         System.out.println("Gerando relatorios de consulta no dia seguinte: ");
         sec.gerarRelatorioConsulta("01/03/2024");
         
@@ -50,19 +56,18 @@ public class Main {
         
         Scanner sc = new Scanner(System.in);
         med.cadastraDadosAdicionais("123.456.789-10", false, false, false, true, true, Arrays.asList("Apendicite", "Pedra no rim"), null);
-        //menuMedicoPacientes(med, sc);
-        
-        byte c;
-        
-        do {
-            System.out.println("Selecione uma das opções de acesso abaixo: ");
-            System.out.println("(0) Sair (1) Secretaria (2) Médico");
-            c = sc.nextByte();
-            switch (c){
-                case 1 -> menuSecretaria(clinica, sc);
-                case 2 -> menuAcessoMedico(clinica, sc);
-            }
-        } while(c != 0);
+
+          byte c;
+
+          do {
+              System.out.println("Selecione uma das opções de acesso abaixo: ");
+              System.out.println("(0) Sair (1) Secretaria (2) Médico");
+              c = sc.nextByte();
+              switch (c){
+                  case 1 -> menuSecretaria(clinica, sc);
+                  case 2 -> menuAcessoMedico(clinica, sc);
+              }
+          } while(c != 0);
     }
     
     // menu para acessar medico, digita o crm para acessar a "conta" do medico

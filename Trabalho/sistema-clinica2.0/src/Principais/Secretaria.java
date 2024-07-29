@@ -53,7 +53,7 @@ public class Secretaria {
     
     public void atualizaPaciente(String cpf, String nome, String endereco, String email, String sms, TipoConvenio tipoConvenio) {
         Paciente atualizaPaciente = Buscas.buscaPaciente(pacientes, cpf);
-        int index = consultas.indexOf(atualizaPaciente);
+        int index = pacientes.indexOf(atualizaPaciente);
         if (index != -1) {
             pacientes.get(index).setNome(nome);
             pacientes.get(index).setEndereco(endereco);
@@ -89,22 +89,23 @@ public class Secretaria {
         System.out.println("Paciente e/ou Médico não encontrado");
     }
     
-    public void atualizaConsulta(String cpf, String data, String horario, TipoConsulta tipoConsulta) {
-        Consulta atualizarConsulta = Buscas.buscaConsulta(consultas, cpf);
+    public void atualizaConsulta(String crm, String data, String horario, String dataNova, String horarioNovo, TipoConsulta tipoConsulta) {
+        Consulta atualizarConsulta = Buscas.buscaConsulta(consultas, crm, data, horario);
         int index = consultas.indexOf(atualizarConsulta);
         if (index != -1) {
-            consultas.get(index).setData(data);
-            consultas.get(index).setHorario(horario);
+            consultas.get(index).setData(dataNova);
+            consultas.get(index).setHorario(horarioNovo);
             consultas.get(index).setTipoConsulta(tipoConsulta);
             return;
         }
         System.out.println("Consulta não encontrada");
     }
     
-    public void removeConsulta(String cpf) {
-        Consulta consultaRemovida = Buscas.buscaConsulta(consultas, cpf);
+    public void removeConsulta(String crm, String data, String horario) {
+        Consulta consultaRemovida = Buscas.buscaConsulta(consultas, crm, data, horario);
         if (consultaRemovida != null) {
             consultas.remove(consultaRemovida);
+            consultaRemovida.getMedico().getConsulta().remove(consultaRemovida);
             return;
         }
         System.out.println("Consulta não encontrada");
