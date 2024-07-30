@@ -80,14 +80,18 @@ public class Medico {
     }
     
     public void pacienteMes(String mes){
+        int numPacientes = 0;
+        
         for(int i = 0; i < consultas.size(); i++){
             Consulta consulta = consultas.get(i);
             String data = consulta.getData();
             String[] parte = data.split("/");
             if (mes.equals(parte[1])){
                 consulta.getPaciente().imprimirPaciente();
+                numPacientes++;
             }
         }
+        System.out.println("\tNúmero de pacientes atendidos no mês: " + numPacientes);
     }
     public void geraAtestado(String dataInicio, String dataFim, String justificativa, String cpf){
         Paciente paciente = Buscas.buscaPacienteConsulta(consultas, cpf);

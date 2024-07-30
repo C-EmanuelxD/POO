@@ -152,6 +152,11 @@ public class Secretaria {
     
     public void gerarRelatorioConsulta(String dataAtual){
         List<Consulta> consultasDiaSeguinte = this.consultasDiaSeguinte(dataAtual);
+        
+        if (consultasDiaSeguinte.isEmpty()) {
+            System.out.println("Nenhuma consulta");
+        }
+        
         for(Consulta x : consultasDiaSeguinte) {
             x.imprimirConsulta();
             System.out.println();
