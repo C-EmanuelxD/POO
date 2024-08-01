@@ -27,7 +27,6 @@ public class GerenciadorMensagem {
     
     public void enviarEmail(String dataAtual) {
         List<Consulta> consultasMensagem = secretaria.consultasDiaSeguinte(dataAtual);
-        List<Consulta> consultasParaRemover = new ArrayList<>();
         
         int index = 0;
         while (index < consultasMensagem.size()) {
@@ -35,20 +34,14 @@ public class GerenciadorMensagem {
             Paciente paciente = consulta.getPaciente();
             if (paciente.getEmail() != null) {
                 email.enviaEmail(consulta);
-                consultasParaRemover.add(consulta);
-            } else {
-                index++;
             }
+            index++;
         }
         
-        for (Consulta consulta : consultasParaRemover) {
-            secretaria.removeConsulta(consulta.getMedico().getCrm(), consulta.getData(), consulta.getHorario());
-        }
     }
     
     public void enviarSMS(String dataAtual) {
         List<Consulta> consultasMensagem = secretaria.consultasDiaSeguinte(dataAtual);
-        List<Consulta> consultasParaRemover = new ArrayList<>();
         
         int index = 0;
         while (index < consultasMensagem.size()) {
@@ -56,14 +49,8 @@ public class GerenciadorMensagem {
             Paciente paciente = consulta.getPaciente();
             if (paciente.getSms() != null) {
                 sms.enviaSMS(consulta);
-                consultasParaRemover.add(consulta);
-            } else {
-                index++;
             }
-        }
-        
-        for (Consulta consulta : consultasParaRemover) {
-            secretaria.removeConsulta(consulta.getMedico().getCrm(), consulta.getData(), consulta.getHorario());
+            index++;
         }
     }
 }

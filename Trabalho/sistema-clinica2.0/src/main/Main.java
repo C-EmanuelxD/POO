@@ -27,7 +27,7 @@ public class Main {
         Medico med = Buscas.buscaMedico(clinica.getMedicos(), "21234");
         
         // cadastrando os pacientes na secretaria
-        sec.cadastraPaciente("231", "Antonio", "02/07/2001", "Mauricio Fé, 357", null, null, TipoConvenio.PLANO);
+        sec.cadastraPaciente("231", "Antonio", "02/07/2001", "Mauricio Fé, 357", null, "9999-4444", TipoConvenio.PLANO);
         sec.cadastraPaciente("123", "José", "02/04/1965", "Alecrim Dourado, 321", null, "8842-3233", TipoConvenio.PARTICULAR);
         
         // cadastra consulta na secretaria, passando como parametro a lista de medicos que clinica possui
@@ -56,27 +56,31 @@ public class Main {
         clinica.imprimirMedicosPacientes();
         
         med.cadastraDadosAdicionais("123", false, false, false, true, true, Arrays.asList("Apendicite", "Pedra no rim"), null);
-        sec.removeConsulta("21234", "02/03/2024", "17:00");
+        //sec.removeConsulta("21234", "02/03/2024", "17:00");
         clinica.imprimirSecretariaConsultas();
-        System.out.println(med.getConsulta().size());
         
         Scanner sc = new Scanner(System.in).useDelimiter("\n"); // .useDelimiter("\n") para pegar Strings que tem espaço no input como endereco
         
         byte c = 0;
         do {
+            System.out.println("Clinica " + clinica.getNome());
             menu(clinica, sc, c);
         } while(c != 0);
     }
     
     public static void menu(Clinica clinica, Scanner sc, byte c) {
         System.out.println("Selecione uma das opções de acesso abaixo: ");
-        System.out.println("(0) Sair (1) Secretaria (2) Médico");
+        System.out.println("(0) Sair (1) Secretaria (2) Médico (3) Gerenciador de mensagens (4) Cadastrar médico (5) Imprimir médicos");
         c = sc.nextByte();
         System.out.println();
         switch (c){
+            case 0 -> System.exit(c);
             case 1 -> menuSecretaria(clinica, sc);
             case 2 -> menuAcessoMedico(clinica, sc);
-            default -> System.exit(0);
+            case 3 -> menuGerenciadorMensagem(clinica, sc, c);
+            case 4 -> menuCadastrarMedico(clinica, sc, c);
+            case 5 -> menuImprimirMedicos(clinica, sc, c);
+            default -> menu(clinica, sc, c);
         }
     }
     
@@ -153,7 +157,6 @@ public class Main {
     
     // dados adicionais do paciente, cadastrar atualizar, remover e imprimir
     public static void menuDadosAdicionaisPaciente(Clinica clinica, Medico medico, Paciente paciente, Scanner sc) {
-        
         System.out.println("Dados adicionais de: " + paciente.getNome());
         System.out.println("Selecione uma das opções: ");
         System.out.println("(1) Cadastrar dados adicionais");
@@ -213,7 +216,6 @@ public class Main {
     }
     
     public static void menuAtualizarDadosAdicionaisPaciente(Clinica clinica, Medico medico, Paciente paciente, Scanner sc) {
-        
         if(paciente.getDadosAdicionais() != null) {
             System.out.println("Insira os dados adicionais do paciente para atualizar os dados (escreva true para sim e false para não)");
 
@@ -327,7 +329,7 @@ public class Main {
         Prontuario prontRemovido = Buscas.buscaProntuario(paciente.getProntuarios(), data);
         if (prontRemovido != null) {
             medico.removeProntuario(paciente.getCpf(), data);
-            System.out.println("Prontuário do dia "+ data+ " foi removido");
+            System.out.println("Prontuário do dia "+ data + " foi removido");
         } else {
             System.out.println("Não existe prontuário para o dia: " + data);
         }
@@ -467,7 +469,6 @@ public class Main {
         }
         
         menuSecretaria(clinica, sc);
-
     }
     
     public static void menuRemovePaciente(Clinica clinica, Scanner sc) {
@@ -579,5 +580,38 @@ public class Main {
         
         System.out.println();
         menuSecretaria(clinica, sc);
+    }
+    
+    public static void menuGerenciadorMensagem(Clinica clinica, Scanner sc, byte c) {
+        System.out.println("Digite a data atual: ");
+        String data = sc.next();
+        System.out.println("Enviando emails aos pacientes...");
+        clinica.getGerenciador().enviarEmail(data);
+        System.out.println("\nEnviando Sms aos pacientes...");
+        clinica.getGerenciador().enviarSMS(data);
+
+        System.out.println();
+        menu(clinica, sc, c);
+    }
+    
+    public static void menuCadastrarMedico(Clinica clinica, Scanner sc, byte c) {
+        System.out.println("Cadastro de novo médico: ");
+        System.out.print("Nome: ");
+        String nome = sc.next();
+        System.out.print("Crm: ");
+        String crm = sc.next();
+        System.out.print("Especialidade: ");
+        String especialidade = sc.next();
+        clinica.cadastraMedico(crm, nome, especialidade);
+        
+        System.out.println();
+        menu(clinica, sc, c);
+    }
+    
+    public static void menuImprimirMedicos(Clinica clinica, Scanner scanner, byte c) {
+        System.out.println("Médicos da clinica "+ clinica.getNome());
+        clinica.imprimirMedicos();
+        
+        menu(clinica, scanner, c);
     }
 }

@@ -52,11 +52,20 @@ public class Clinica {
     public void cadastraMedico(String crm, String nome, String especialidade) {
         if (crm != null) { 
             this.setMedicos(new Medico(nome, crm, especialidade));
-            //System.out.println("Medico cadastrado com sucesso");
+            System.out.println("Medico cadastrado com sucesso");
             return;
         }
         System.out.println("Campo crm vazio");
     }
+    
+    public void imprimirMedicos() {
+        for(Medico obj : medicos) {
+            System.out.print("Doutor -> ");
+            obj.imprimirMedico();
+            System.out.println();
+        }
+    }
+    
     public void imprimirMedicosPacientes() {
         for(Medico obj : medicos) {
             System.out.print("Doutor -> ");
