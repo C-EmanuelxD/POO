@@ -1,6 +1,7 @@
 package main;
 
 import Auxiliares.Buscas;
+import DadosPessoas.Prontuario;
 import Principais.Clinica;
 import Principais.Medico;
 import Principais.Paciente;
@@ -8,6 +9,7 @@ import Principais.Secretaria;
 import clinica.tipos.TipoConsulta;
 import clinica.tipos.TipoConvenio;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -25,18 +27,18 @@ public class Main {
         Medico med = Buscas.buscaMedico(clinica.getMedicos(), "21234");
         
         // cadastrando os pacientes na secretaria
-        sec.cadastraPaciente("231.345.123-54", "Antonio", "02/07/2001", "Mauricio Fé, 357", null, null, TipoConvenio.PLANO);
-        sec.cadastraPaciente("123.456.789-10", "José", "02/04/1965", "Alecrim Dourado, 321", null, "8842-3233", TipoConvenio.PARTICULAR);
+        sec.cadastraPaciente("231", "Antonio", "02/07/2001", "Mauricio Fé, 357", null, null, TipoConvenio.PLANO);
+        sec.cadastraPaciente("123", "José", "02/04/1965", "Alecrim Dourado, 321", null, "8842-3233", TipoConvenio.PARTICULAR);
         
         // cadastra consulta na secretaria, passando como parametro a lista de medicos que clinica possui
-        sec.cadastraConsulta("02/03/2024", "09:30", "21234", "231.345.123-54", TipoConsulta.NORMAL, clinica.getMedicos());
-        sec.cadastraConsulta("02/03/2024", "07:30", "21234", "123.456.789-10", TipoConsulta.NORMAL, clinica.getMedicos());
-        sec.cadastraConsulta("02/03/2024", "10:30", "12345", "123.456.789-10", TipoConsulta.NORMAL, clinica.getMedicos());
-        sec.cadastraConsulta("05/03/2024", "11:30", "12345", "123.456.789-10", TipoConsulta.NORMAL, clinica.getMedicos());
+        sec.cadastraConsulta("02/03/2024", "09:30", "21234", "231", TipoConsulta.NORMAL, clinica.getMedicos());
+        sec.cadastraConsulta("02/03/2024", "07:30", "21234", "123", TipoConsulta.NORMAL, clinica.getMedicos());
+        sec.cadastraConsulta("02/03/2024", "10:30", "12345", "123", TipoConsulta.NORMAL, clinica.getMedicos());
+        sec.cadastraConsulta("05/03/2024", "11:30", "12345", "123", TipoConsulta.NORMAL, clinica.getMedicos());
         sec.atualizaConsulta("21234", "02/03/2024", "09:30", "02/03/2024", "17:00", TipoConsulta.NORMAL);
         
         // atualiza paciente
-        sec.atualizaPaciente("123.456.789-10", "zé", "Alecrim Dourado, 220", "jose@gmail.com", "8842-3233", TipoConvenio.PLANO);
+        sec.atualizaPaciente("123", "zé", "Alecrim Dourado, 220", "jose@gmail.com", "8842-3233", TipoConvenio.PLANO);
         
         System.out.println("Gerando relatorios de consulta no dia seguinte: ");
         sec.gerarRelatorioConsulta("01/03/2024");
@@ -53,7 +55,7 @@ public class Main {
         System.out.println("Imprimindo os medicos da Clinica e seus respectivos pacientes:");
         clinica.imprimirMedicosPacientes();
         
-        med.cadastraDadosAdicionais("123.456.789-10", false, false, false, true, true, Arrays.asList("Apendicite", "Pedra no rim"), null);
+        med.cadastraDadosAdicionais("123", false, false, false, true, true, Arrays.asList("Apendicite", "Pedra no rim"), null);
         sec.removeConsulta("21234", "02/03/2024", "17:00");
         clinica.imprimirSecretariaConsultas();
         System.out.println(med.getConsulta().size());
@@ -74,6 +76,7 @@ public class Main {
         switch (c){
             case 1 -> menuSecretaria(clinica, sc);
             case 2 -> menuAcessoMedico(clinica, sc);
+            default -> System.exit(0);
         }
     }
     
@@ -104,8 +107,8 @@ public class Main {
             case 1 -> menuAcessoPacientes(clinica, medico, sc);
             case 2 -> menuGeraRelatorioMes(clinica, medico, sc);
             case 3 -> menu(clinica, sc, c);
+            default -> menuMedico(clinica, medico, sc);
         }
-        
     }   
     
     // menu do medico para a imprimir, buscar e acessar a ficha de um paciente
@@ -144,6 +147,7 @@ public class Main {
             case 1 -> menuDadosAdicionaisPaciente(clinica, medico, paciente, sc);
             case 2 -> menuProntuario(clinica, medico,paciente, sc);
             case 6 -> menuMedico(clinica, medico, sc);
+            default -> menuPaciente(clinica, medico, paciente, sc);
         }
     }
     
@@ -165,21 +169,93 @@ public class Main {
             case 3 -> menuRemoverDadosAdicionaisPaciente(clinica, medico, paciente, sc);
             case 4 -> menuImprimirDadosAdicionaisPaciente(clinica, medico, paciente, sc);
             case 5 -> menuPaciente(clinica, medico, paciente, sc);
+            default -> menuDadosAdicionaisPaciente(clinica, medico, paciente, sc);
         }
         
         menuPaciente(clinica, medico, paciente, sc); // retorna pro menu anterior
     }
     
-    public static void menuCadastrarDadosAdicionaisPaciente(Clinica clinica, Medico medico, Paciente paciente, Scanner sc) {}
+    public static void menuCadastrarDadosAdicionaisPaciente(Clinica clinica, Medico medico, Paciente paciente, Scanner sc) {
+        
+        if(paciente.getDadosAdicionais() == null) { 
+            System.out.println("Insira os dados adicionais do paciente (escreva true para sim e false para não)");
+
+            System.out.print("Fuma: ");
+            boolean fuma = sc.nextBoolean();
+
+            System.out.print("Bebe: ");
+            boolean bebe = sc.nextBoolean();
+
+            System.out.print("Diabetes: ");
+            boolean diabetes = sc.nextBoolean();
+
+            System.out.print("Doença Cardíaca: ");
+            boolean doencaCardiaca = sc.nextBoolean();
+
+            System.out.print("Colesterol: ");
+            boolean colesterol = sc.nextBoolean();
+
+            System.out.println("Insira as cirurgias anteriores (separadas por vírgula): ");
+            String cirurgiasInput = sc.next();
+            List<String> cirurgias = Arrays.asList(cirurgiasInput.split("\\s*,\\s*")); // Divide a entrada por vírgulas, removendo espaços em branco
+
+            System.out.println("Insira as alergias (separadas por vírgula): ");
+            String alergiasInput = sc.next();
+            List<String> alergias = Arrays.asList(alergiasInput.split("\\s*,\\s*"));
+
+            medico.cadastraDadosAdicionais(paciente.getCpf(), fuma, bebe, colesterol, diabetes, doencaCardiaca, cirurgias, alergias);
+        } else {
+            System.out.println("Os dados adicionais do paciente já estão cadastrados ");
+        }
+        
+        System.out.println();
+        menuPaciente(clinica, medico, paciente, sc);
+    }
     
-    public static void menuAtualizarDadosAdicionaisPaciente(Clinica clinica, Medico medico, Paciente paciente, Scanner sc) {}
-    
-    public static void menuRemoverDadosAdicionaisPaciente(Clinica clinica, Medico medico, Paciente paciente, Scanner sc) {}
+    public static void menuAtualizarDadosAdicionaisPaciente(Clinica clinica, Medico medico, Paciente paciente, Scanner sc) {
+        
+        if(paciente.getDadosAdicionais() != null) {
+            System.out.println("Insira os dados adicionais do paciente para atualizar os dados (escreva true para sim e false para não)");
+
+            System.out.print("Fuma: ");
+            boolean fuma = sc.nextBoolean();
+
+            System.out.print("Bebe: ");
+            boolean bebe = sc.nextBoolean();
+
+            System.out.print("Diabetes: ");
+            boolean diabetes = sc.nextBoolean();
+
+            System.out.print("Doença Cardíaca: ");
+            boolean doencaCardiaca = sc.nextBoolean();
+
+            System.out.print("Colesterol: ");
+            boolean colesterol = sc.nextBoolean();
+
+            System.out.print("Cadastro de nova cirurgia: ");
+            String cirurgiasInput = sc.next();
+
+            System.out.print("Cadastro de nova alergia: ");
+            String alergiasInput = sc.next();
+
+            medico.atualizaDadosAdicionais(paciente.getCpf(), fuma, bebe, colesterol, diabetes, doencaCardiaca, cirurgiasInput, alergiasInput);
+            System.out.println("Dados adicionais de " + paciente.getNome() + " atualizados\n");
+        } else {
+            System.out.println("Os dados adicionais do paciente ainda não foram cadastrados\n");
+        }
+        menuPaciente(clinica, medico, paciente, sc);
+    }
+
+    public static void menuRemoverDadosAdicionaisPaciente(Clinica clinica, Medico medico, Paciente paciente, Scanner sc) {
+        medico.removeDadosAdicionais(paciente.getCpf());
+        System.out.println("Os dados adicionais de " + paciente.getNome() + " foram removidos.\n");
+        
+        menuPaciente(clinica, medico, paciente, sc);
+    }
     
     public static void menuImprimirDadosAdicionaisPaciente(Clinica clinica, Medico medico, Paciente paciente, Scanner sc) {
         if (paciente.getDadosAdicionais() != null) {
             paciente.getDadosAdicionais().imprimirDadosAdicionais();
-            
             System.out.println();
         } else {
             System.out.println("Dados adicionais não cadastrados\n");
@@ -202,18 +278,72 @@ public class Main {
             case 3 -> menuRemoverProntuarioPaciente(clinica, medico, paciente, sc);
             case 4 -> menuImprimirProntuarios(clinica, medico, paciente, sc);
             case 5 -> menuPaciente(clinica, medico, paciente, sc);
+            default -> menuProntuario(clinica, medico, paciente, sc);
         }
         
         menuPaciente(clinica, medico, paciente, sc); // retorna pro menu anterior
     }
     
-    public static void menuCadastrarProntuarioPaciente(Clinica clinica, Medico medico, Paciente paciente, Scanner sc) {}
+    public static void menuCadastrarProntuarioPaciente(Clinica clinica, Medico medico, Paciente paciente, Scanner sc) {
+        System.out.println("Insira os dados para o cadastro do prontuario:");
+        System.out.print("Data: ");
+        String data = sc.next();
+        System.out.print("Sintomas: ");
+        String sintomas = sc.next();
+        System.out.print("Diagnostico: ");
+        String diagnostico = sc.next();
+        System.out.print("Prescrição: ");
+        String prescricao = sc.next();
+        
+        medico.cadastraProntuario(paciente.getCpf(), sintomas, diagnostico, prescricao, data);
+        System.out.println("Prontuario cadastrado.\n");
+        
+        menuPaciente(clinica, medico, paciente, sc);
+    }
     
-    public static void menuAtualizarProntuarioPaciente(Clinica clinica, Medico medico, Paciente paciente, Scanner sc) {}
+    public static void menuAtualizarProntuarioPaciente(Clinica clinica, Medico medico, Paciente paciente, Scanner sc) {
+        System.out.println("Insira a data do prontuário buscado: ");
+        System.out.print("Data: ");
+        String data = sc.next();
+        Prontuario pront = Buscas.buscaProntuario(paciente.getProntuarios(), data);
+        if (!paciente.getProntuarios().isEmpty() && pront != null) {
+            System.out.println("Sintomas: ");
+            String sintomas = sc.next();
+            System.out.print("Diagnostico: ");
+            String diagnostico = sc.next();
+            System.out.print("Prescrição: ");
+            String prescricao = sc.next();
+            medico.atualizaProntuario(paciente.getCpf(), data, diagnostico, prescricao, sintomas);
+       } else {
+            System.out.println("Nenhum prontuário encontrado nesta data\n");
+        }
+        
+        menuPaciente(clinica, medico, paciente, sc);
+    }
 
-    public static void menuRemoverProntuarioPaciente(Clinica clinica, Medico medico, Paciente paciente, Scanner sc) {}
+    public static void menuRemoverProntuarioPaciente(Clinica clinica, Medico medico, Paciente paciente, Scanner sc) {
+        System.out.print("Insira a data do prontuário a ser removido: ");
+        String data = sc.next();
+        Prontuario prontRemovido = Buscas.buscaProntuario(paciente.getProntuarios(), data);
+        if (prontRemovido != null) {
+            medico.removeProntuario(paciente.getCpf(), data);
+            System.out.println("Prontuário do dia "+ data+ " foi removido");
+        } else {
+            System.out.println("Não existe prontuário para o dia: " + data);
+        }
+        
+        menuPaciente(clinica, medico, paciente, sc);
+    }
     
-    public static void menuImprimirProntuarios(Clinica clinica, Medico medico, Paciente paciente, Scanner sc) {}
+    public static void menuImprimirProntuarios(Clinica clinica, Medico medico, Paciente paciente, Scanner sc) {
+        System.out.println("Prontuarios referentes ao paciente: " + paciente.getNome());
+        if(!paciente.getProntuarios().isEmpty())
+            paciente.imprimirProntuarios();
+        else 
+            System.out.println("Nenhum prontuário cadastrado\n");
+        
+        menuPaciente(clinica, medico, paciente, sc);
+    }
     
     public static void menuGeraRelatorioMes(Clinica clinica, Medico medico, Scanner sc) {
         System.out.println("Digite o mês (Formato: 0x)");
@@ -238,6 +368,7 @@ public class Main {
             case 2 -> menuGerenciamentoConsultas(clinica, sc);
             case 3 -> menuRelatorioConsultas(clinica, sc);
             case 4 -> menu(clinica, sc, c);
+            default -> menuSecretaria(clinica, sc);
         }
     }
     
@@ -290,9 +421,9 @@ public class Main {
         String endereco = sc.next();
         System.out.print("Digite o email: ");
         String email = sc.next();
-        System.out.println("Digite o telefone: ");
+        System.out.print("Digite o telefone: ");
         String sms = sc.next();
-        System.out.println("Digite o convênio (PLANO ou PARTICULAR): ");
+        System.out.print("Digite o convênio (PLANO ou PARTICULAR): ");
         String convenio = sc.next();
          
         if (convenio.toUpperCase().equals(TipoConvenio.PLANO.toString())) {
@@ -380,7 +511,7 @@ public class Main {
         } else {
             System.out.println("Erro no cadastro");
         }
-        
+        System.out.println();
         menuSecretaria(clinica, sc);
     }
     
@@ -410,7 +541,8 @@ public class Main {
         } else {
             System.out.println("Erro na atualização");
         }
-    
+        
+        System.out.println();
         menuSecretaria(clinica, sc);
     }
     
@@ -424,7 +556,7 @@ public class Main {
         String crm = sc.next();
         
         clinica.getSecretaria().removeConsulta(crm, data, horario);
-        
+        System.out.println("\nConsulta Removida\n");
         menuSecretaria(clinica, sc);
     
     }

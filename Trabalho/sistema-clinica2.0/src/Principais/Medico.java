@@ -42,9 +42,13 @@ public class Medico {
         paciente.getDadosAdicionais().setColesterol(colesterol);
         paciente.getDadosAdicionais().setDiabete(diabete);
         paciente.getDadosAdicionais().setDoencaCardiaca(doencaCardiaca);
-        paciente.getDadosAdicionais().cadastraCirurgia(cirurgia); // NAO TEM COMO DESFAZER CIRURGIAS
-        paciente.getDadosAdicionais().cadastraAlergia(alergia); // NAO TEM COMO CURAR ALERGIAS
+        if (!"".equals(cirurgia)) {
+            paciente.getDadosAdicionais().cadastraCirurgia(cirurgia); // NAO TEM COMO DESFAZER CIRURGIAS
+        }
         
+        if (!"".equals(alergia)) {
+            paciente.getDadosAdicionais().cadastraAlergia(alergia); // NAO TEM COMO CURAR ALERGIAS
+        }
     }
     
     public void removeDadosAdicionais(String cpf){
@@ -61,11 +65,10 @@ public class Medico {
         
     }
     
-    public void atualizaProntuario(String cpf, String data, String dataAlterar, String diagnostico, String Preescricao, String Sintoma){
+    public void atualizaProntuario(String cpf, String data, String diagnostico, String Preescricao, String Sintoma){
         Paciente paciente = Buscas.buscaPacienteConsulta(consultas, cpf);
 
-        int index = paciente.getProntuarios().indexOf(Buscas.buscaProntuario(paciente.getProntuarios(), data));
-        paciente.getProntuarios().get(index).setData(dataAlterar);
+        int index = paciente.getProntuarios().indexOf(Buscas.buscaProntuario(paciente.getProntuarios(), data)); // data não pode ser atualizada
         paciente.getProntuarios().get(index).setDiagnostico(diagnostico);
         paciente.getProntuarios().get(index).setPrescricao(Preescricao);
         paciente.getProntuarios().get(index).setSintomas(Sintoma);
@@ -179,4 +182,5 @@ public class Medico {
             }
         }
     }
+    
 }

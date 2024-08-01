@@ -3,6 +3,7 @@ package Principais;
 import DadosPessoas.Prontuario;
 import DadosPessoas.DadosAdicionais;
 import clinica.tipos.TipoConvenio;
+import java.util.ArrayList;
 import java.util.List;
 // NAO FEITO AINA
 public class Paciente {
@@ -16,7 +17,7 @@ public class Paciente {
     private DadosAdicionais dadosAdicionais; // verificar esta implemtentação
     private List<Prontuario> prontuarios;
 
-    public Paciente( String cpf, String nome, String dataNascimento, String endereco, String email, String sms, TipoConvenio tipoConvenio) {
+    public Paciente(String cpf, String nome, String dataNascimento, String endereco, String email, String sms, TipoConvenio tipoConvenio) {
         this.cpf = cpf;
         this.nome = nome;
         this.dataNascimento = dataNascimento;
@@ -25,7 +26,7 @@ public class Paciente {
         this.sms = sms;
         this.tipoConvenio = tipoConvenio;
         this.dadosAdicionais = null;
-        this.prontuarios = null;
+        this.prontuarios = new ArrayList<>();
     }
 
     public String getEmail() {
@@ -110,6 +111,13 @@ public class Paciente {
     
     public void imprimirPaciente() {
         System.out.println("\tNome: " + nome + ", Cpf: " + cpf + ", Data de Nascimento: " + dataNascimento + ", Endereco: " + endereco +", Email: " + email + ", SMS: " + sms + ", Convenio: " + tipoConvenio);
+    }
+    
+    public void imprimirProntuarios() {
+        for(Prontuario obj : prontuarios) {
+            obj.imprimirProntuario();
+            System.out.println();
+        }
     }
 
 }
