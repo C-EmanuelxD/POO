@@ -39,7 +39,7 @@ public class DeclaracaoAcompanhamento extends Relatorio {
     
     @Override
     public void imprimir(String pacienteNome, String medicoNome){
-        System.out.println("Declaro que " + acompanhante + "esteve no dia " + data+ "acompanhando " + paciente + "no atendimento");
+        System.out.println("Declaro que " + acompanhante + " esteve no dia " + data+ " acompanhando " + paciente + " no atendimento");
         System.out.println("Assinado por" + medico + ".");
  
     }

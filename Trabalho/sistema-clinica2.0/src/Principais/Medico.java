@@ -99,9 +99,9 @@ public class Medico {
     public void geraAtestado(String dataInicio, String dataFim, String justificativa, String cpf){
         Paciente paciente = Buscas.buscaPacienteConsulta(consultas, cpf);
         
-        System.out.println("Atestado para: "+ paciente.getNome()+ "valido de" + dataInicio +", ate " + dataFim);
-        System.out.println("Pelo motivo de:" + justificativa + ".");
-        System.out.println("Assinado por" + nome);        
+        System.out.println("Atestado para: "+ paciente.getNome()+ "\nvalido de " + dataInicio +", ate " + dataFim);
+        System.out.println("Pelo motivo de: " + justificativa + ".");
+        System.out.println("Assinado por: " + nome+"\n");        
         //Atestado atestado = new Atestado(dataInicio, dataFim, justificativa);
         //atestado.imprimir(paciente.getNome(), nome);    
     }
@@ -113,7 +113,7 @@ public class Medico {
             System.out.println(key + "=" + remedios.get(key));
         }
         System.out.println(infoExtra);
-        System.out.println("Para o paciente:" + paciente.getNome());
+        System.out.println("Para o paciente: " + paciente.getNome());
         System.out.println(nome + data);       
         //Receita receita = new Receita(remedios, infoExtra, data);
         //receita.imprimir(paciente.getNome(), nome);
@@ -122,8 +122,8 @@ public class Medico {
     public void geraDeclaracaoAcompanhamento(String justificativa, String acompanhante, String data, String cpf){
         Paciente paciente = Buscas.buscaPacienteConsulta(consultas, cpf);
         
-        System.out.println("Declaro que " + acompanhante + "esteve no dia " + data+ "acompanhando " + paciente.getNome() + "no atendimento");
-        System.out.println("Assinado por" + nome + ".");
+        System.out.println("Declaro que " + acompanhante + " esteve no dia " + data+ " acompanhando " + paciente.getNome() + " no atendimento");
+        System.out.println("Assinado por " + nome + ".");
 
         
         //DeclaracaoAcompanhamento acompanhante1 = new DeclaracaoAcompanhamento(justificativa, acompanhante, data);

@@ -141,7 +141,7 @@ public class Main {
         System.out.println("(1) Dados adicionais");
         System.out.println("(2) Prontuario");
         
-        System.out.println("(3) Gerar receita");
+        System.out.println("(3) Gerar receita");// falta
         System.out.println("(4) Gerar atestado");
         System.out.println("(5) Gerar declaração de acompanhamento");
         System.out.println("(6) Voltar");
@@ -150,10 +150,55 @@ public class Main {
         switch (c){
             case 1 -> menuDadosAdicionaisPaciente(clinica, medico, paciente, sc);
             case 2 -> menuProntuario(clinica, medico,paciente, sc);
+            case 3 -> menuGerarReceita(clinica, medico, paciente, sc);
+            case 4 -> menuGerarAtestado(clinica, medico, paciente, sc);
+            case 5 -> menuGerarDeclaracaoAcomp(clinica, medico, paciente, sc);
             case 6 -> menuMedico(clinica, medico, sc);
             default -> menuPaciente(clinica, medico, paciente, sc);
         }
     }
+    
+    
+    public static void menuGerarReceita(Clinica clinica, Medico medico, Paciente paciente, Scanner sc){
+        
+        //Fabricio manja do fazimento
+        
+        //medico.geraReceita(remedios, infoExtra, data, cpf);
+        
+    }
+    
+    
+    public static void menuGerarAtestado(Clinica clinica, Medico medico, Paciente paciente, Scanner sc){
+        System.out.println("Digite as informações do atestado:");
+        System.out.print("Digite a data de inicio do atestado: ");
+        String dataini = sc.next();
+        System.out.print("Digite a data de fim do atestado: ");
+        String datafim = sc.next();
+        System.out.print("Digite a justificativa do atestado: ");
+        String justificativa = sc.next();
+        
+        System.out.println();
+        
+        medico.geraAtestado(dataini, datafim, justificativa, paciente.getCpf());
+        
+        menuPaciente(clinica, medico, paciente, sc);
+    }
+    
+    
+    public static void menuGerarDeclaracaoAcomp(Clinica clinica, Medico medico, Paciente paciente, Scanner sc){
+        System.out.println("Digite as informações da Declaração de Acompanhamento:");
+        System.out.print("Digite a justificativa: ");
+        String justificativa = sc.next();
+        System.out.print("Digite o nome do acompanhante: ");
+        String acompanhante = sc.next();
+        System.out.print("Digite a data: ");
+        String data = sc.next();
+        
+        System.out.println();
+        medico.geraDeclaracaoAcompanhamento(justificativa, acompanhante, data, paciente.getCpf());
+        menuPaciente(clinica, medico, paciente, sc);
+    }
+    
     
     // dados adicionais do paciente, cadastrar atualizar, remover e imprimir
     public static void menuDadosAdicionaisPaciente(Clinica clinica, Medico medico, Paciente paciente, Scanner sc) {
@@ -429,9 +474,9 @@ public class Main {
         String convenio = sc.next();
          
         if (convenio.toUpperCase().equals(TipoConvenio.PLANO.toString())) {
-            clinica.getSecretaria().cadastraPaciente(cpf, nome, dataNasc, endereco, email, sms, TipoConvenio.PLANO);
+            clinica.getSecretaria().cadastraPaciente(cpf, nome, dataNasc, endereco, trataVazio(email), trataVazio(sms), TipoConvenio.PLANO);
         }else if (convenio.toUpperCase().equals(TipoConvenio.PARTICULAR.toString())) {
-            clinica.getSecretaria().cadastraPaciente(cpf, nome, dataNasc, endereco, email, sms, TipoConvenio.PARTICULAR);
+            clinica.getSecretaria().cadastraPaciente(cpf, nome, dataNasc, endereco, trataVazio(email), trataVazio(sms), TipoConvenio.PARTICULAR);
         } else {
             System.out.println("Erro no cadastro");
         }
@@ -457,9 +502,9 @@ public class Main {
             String convenio = sc.next();
             
             if (convenio.toUpperCase().equals(TipoConvenio.PLANO.toString())) {
-                clinica.getSecretaria().atualizaPaciente(cpf, nome, endereco, email, sms, TipoConvenio.PLANO);
+                clinica.getSecretaria().atualizaPaciente(cpf, nome, endereco, trataVazio(email), trataVazio(sms), TipoConvenio.PLANO);
             } else if (convenio.toUpperCase().equals(TipoConvenio.PARTICULAR.toString())) {
-                clinica.getSecretaria().atualizaPaciente(cpf, nome, endereco, email, sms, TipoConvenio.PARTICULAR);
+                clinica.getSecretaria().atualizaPaciente(cpf, nome, endereco, trataVazio(email), trataVazio(sms), TipoConvenio.PARTICULAR);
             } else {
                 System.out.println("Erro no cadastro");
             }
@@ -613,5 +658,14 @@ public class Main {
         clinica.imprimirMedicos();
         
         menu(clinica, scanner, c);
+    }
+    
+    //método para teste e retorno de strings vazias
+    public static String trataVazio(String str){
+        if(str.isEmpty()){
+            return null;
+        }else{
+            return str;
+        }
     }
 }
