@@ -1,8 +1,10 @@
-package Principais;
+package atoresPrincipais;
 
 import Auxiliares.Buscas;
 import DadosPessoas.DadosAdicionais;
 import DadosPessoas.Prontuario;
+import atoresSecundários.Consulta;
+import atoresSecundários.Paciente;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;

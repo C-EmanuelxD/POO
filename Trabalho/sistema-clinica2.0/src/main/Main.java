@@ -2,10 +2,10 @@ package main;
 
 import Auxiliares.Buscas;
 import DadosPessoas.Prontuario;
-import Principais.Clinica;
-import Principais.Medico;
-import Principais.Paciente;
-import Principais.Secretaria;
+import atoresPrincipais.Clinica;
+import atoresPrincipais.Medico;
+import atoresSecundários.Paciente;
+import atoresPrincipais.Secretaria;
 import clinica.tipos.TipoConsulta;
 import clinica.tipos.TipoConvenio;
 import java.util.Arrays;
@@ -13,6 +13,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+
+
+// JA FORAM DEIADOS ALGUNS TESTES DE CADASTRO, OS TESTES PODEM SER REMOVIDOS E VÃO DA LINHA 25 ATÉ A LINHA 49
 
 public class Main {
     public static void main(String[] args) {

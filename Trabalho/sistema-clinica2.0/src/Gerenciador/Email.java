@@ -1,6 +1,6 @@
 package Gerenciador;
 
-import Principais.Consulta;
+import atoresSecundários.Consulta;
 
 public class Email {
         

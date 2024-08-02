@@ -1,4 +1,4 @@
-package Principais;
+package atoresSecundários;
 
 import DadosPessoas.Prontuario;
 import DadosPessoas.DadosAdicionais;

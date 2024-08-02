@@ -5,9 +5,9 @@
 package Auxiliares;
 
 import DadosPessoas.Prontuario;
-import Principais.Consulta;
-import Principais.Medico;
-import Principais.Paciente;
+import atoresSecundários.Consulta;
+import atoresPrincipais.Medico;
+import atoresSecundários.Paciente;
 import java.util.List;
 
 /**
@@ -43,6 +43,16 @@ public class Buscas {
         }
         return null;
     }
+    
+    public static Consulta buscaConsulta(List<Consulta> consultas, String cpf) {
+        for(Consulta x : consultas) {
+            if(x.getPaciente().getCpf().equals(cpf)) {
+                return x;
+            }
+        }
+        return null;
+    }
+    
     
     public static Prontuario buscaProntuario(List<Prontuario> prontuarios, String data){
         for(Prontuario x : prontuarios){

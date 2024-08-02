@@ -1,6 +1,9 @@
-package Principais;
+package atoresPrincipais;
 
 import Auxiliares.Buscas;
+import static Auxiliares.Buscas.buscaConsulta;
+import atoresSecundários.Consulta;
+import atoresSecundários.Paciente;
 import java.util.ArrayList;
 import clinica.tipos.TipoConsulta;
 import clinica.tipos.TipoConvenio;
@@ -66,10 +69,19 @@ public class Secretaria {
         System.out.println("Paciente não encontrado");
     }
 
-    public void removePaciente(String cpf) {
+    public void removePaciente(String cpf, Clinica clinica) {
         Paciente removerPaciente = Buscas.buscaPaciente(pacientes, cpf);
         if (removerPaciente != null) {
+            Consulta consulta = buscaConsulta(consultas, cpf);
+            Medico medico;
             pacientes.remove(removerPaciente);
+            while(consulta != null){
+                medico = consulta.getMedico();
+                medico.getConsulta().remove(consulta);
+                consultas.remove(consulta);
+                consulta = buscaConsulta(consultas, cpf);
+            }
+            System.out.println("Paciente Removido com sucesso");
             return;
         }
         System.out.println("Paciente não encontrado");

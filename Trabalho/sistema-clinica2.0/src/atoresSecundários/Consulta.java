@@ -1,5 +1,6 @@
-package Principais;
+package atoresSecundários;
 
+import atoresPrincipais.Medico;
 import clinica.tipos.TipoConsulta;
 
 public class Consulta {

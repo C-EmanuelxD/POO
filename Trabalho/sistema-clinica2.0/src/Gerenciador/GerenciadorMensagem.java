@@ -1,8 +1,8 @@
 package Gerenciador;
 
-import Principais.Consulta;
-import Principais.Paciente;
-import Principais.Secretaria;
+import atoresSecundários.Consulta;
+import atoresSecundários.Paciente;
+import atoresPrincipais.Secretaria;
 import java.util.List;
 
 public class GerenciadorMensagem {

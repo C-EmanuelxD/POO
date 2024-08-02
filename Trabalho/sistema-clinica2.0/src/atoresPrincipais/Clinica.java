@@ -1,6 +1,10 @@
-package Principais;
+package atoresPrincipais;
 
+import atoresPrincipais.Medico;
+import atoresPrincipais.Secretaria;
 import Gerenciador.GerenciadorMensagem;
+import atoresSecundários.Consulta;
+import atoresSecundários.Paciente;
 import java.util.ArrayList;
 import java.util.List;
 
