@@ -1,7 +1,7 @@
 package atoresSecundários;
 
 import atoresPrincipais.Medico;
-import clinica.tipos.TipoConsulta;
+import clinicaTipos.TipoConsulta;
 
 public class Consulta {
     private String data;

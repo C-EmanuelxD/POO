@@ -1,8 +1,8 @@
 package atoresSecundários;
 
-import DadosPessoas.Prontuario;
-import DadosPessoas.DadosAdicionais;
-import clinica.tipos.TipoConvenio;
+import dadosPessoas.Prontuario;
+import dadosPessoas.DadosAdicionais;
+import clinicaTipos.TipoConvenio;
 import java.util.ArrayList;
 import java.util.List;
 

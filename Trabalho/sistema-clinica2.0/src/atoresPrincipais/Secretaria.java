@@ -1,12 +1,12 @@
 package atoresPrincipais;
 
-import Auxiliares.Buscas;
-import static Auxiliares.Buscas.buscaConsulta;
+import classesAuxiliares.Buscas;
+import static classesAuxiliares.Buscas.buscaConsulta;
 import atoresSecundários.Consulta;
 import atoresSecundários.Paciente;
 import java.util.ArrayList;
-import clinica.tipos.TipoConsulta;
-import clinica.tipos.TipoConvenio;
+import clinicaTipos.TipoConsulta;
+import clinicaTipos.TipoConvenio;
 import java.util.List;
 
 public class Secretaria {
@@ -69,7 +69,7 @@ public class Secretaria {
         System.out.println("Paciente não encontrado");
     }
 
-    public void removePaciente(String cpf, Clinica clinica) {
+    public void removePaciente(String cpf) {
         Paciente removerPaciente = Buscas.buscaPaciente(pacientes, cpf);
         if (removerPaciente != null) {
             Consulta consulta = buscaConsulta(consultas, cpf);

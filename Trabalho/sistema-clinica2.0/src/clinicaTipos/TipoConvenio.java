@@ -1,4 +1,4 @@
-package clinica.tipos;
+package clinicaTipos;
 
 public enum TipoConvenio {
     PARTICULAR,

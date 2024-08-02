@@ -1,4 +1,4 @@
-package DadosPessoas;
+package dadosPessoas;
 //NAO FEITO AINDA
 
 import java.util.Arrays;

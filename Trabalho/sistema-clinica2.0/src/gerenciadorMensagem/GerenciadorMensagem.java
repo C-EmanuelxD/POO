@@ -1,4 +1,4 @@
-package Gerenciador;
+package gerenciadorMensagem;
 
 import atoresSecundários.Consulta;
 import atoresSecundários.Paciente;

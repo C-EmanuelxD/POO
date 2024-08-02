@@ -1,8 +1,8 @@
 package atoresPrincipais;
 
-import Auxiliares.Buscas;
-import DadosPessoas.DadosAdicionais;
-import DadosPessoas.Prontuario;
+import classesAuxiliares.Buscas;
+import dadosPessoas.DadosAdicionais;
+import dadosPessoas.Prontuario;
 import atoresSecundários.Consulta;
 import atoresSecundários.Paciente;
 import java.util.ArrayList;

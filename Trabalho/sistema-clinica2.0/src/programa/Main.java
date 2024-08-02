@@ -1,13 +1,13 @@
-package main;
+package programa;
 
-import Auxiliares.Buscas;
-import DadosPessoas.Prontuario;
+import classesAuxiliares.Buscas;
+import dadosPessoas.Prontuario;
 import atoresPrincipais.Clinica;
 import atoresPrincipais.Medico;
 import atoresSecundários.Paciente;
 import atoresPrincipais.Secretaria;
-import clinica.tipos.TipoConsulta;
-import clinica.tipos.TipoConvenio;
+import clinicaTipos.TipoConsulta;
+import clinicaTipos.TipoConvenio;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;

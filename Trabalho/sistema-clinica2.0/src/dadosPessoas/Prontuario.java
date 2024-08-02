@@ -1,4 +1,4 @@
-package DadosPessoas;
+package dadosPessoas;
 //NAO FEITO AINDA
 public class Prontuario {
     private String sintomas;
