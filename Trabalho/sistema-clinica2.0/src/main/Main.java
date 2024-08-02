@@ -9,7 +9,9 @@ import Principais.Secretaria;
 import clinica.tipos.TipoConsulta;
 import clinica.tipos.TipoConvenio;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 public class Main {
@@ -160,10 +162,26 @@ public class Main {
     
     
     public static void menuGerarReceita(Clinica clinica, Medico medico, Paciente paciente, Scanner sc){
+        Map<String, String> remedios = new HashMap<>();
         
-        //Fabricio manja do fazimento
+        System.out.print("Insira a quantiade de remedio a ser receitado");
+        byte c = sc.nextByte();
+        sc.nextLine();
+        System.out.println(c);
+        for(int i = 0; i < c;i++ ){
+            System.out.print("Insira o remedio: ");
+            String remedio = sc.next();
+            System.out.print("Insira a dosagem do remedio: ");
+            String dosagem = sc.next();
+            
+            remedios.put(remedio, dosagem);
+        }
+        System.out.print("Insira informacao extra: ");
+        String infoExtra = sc.next();
+        System.out.print("Digite a data");
+        String data =sc.next();
         
-        //medico.geraReceita(remedios, infoExtra, data, cpf);
+        medico.geraReceita(remedios, infoExtra, data, paciente.getCpf());
         
     }
     

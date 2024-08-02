@@ -110,11 +110,11 @@ public class Medico {
         Paciente paciente = Buscas.buscaPacienteConsulta(consultas, cpf);
         
         for (String key : remedios.keySet()){
-            System.out.println(key + "=" + remedios.get(key));
+            System.out.println(key + ": " + remedios.get(key));
         }
-        System.out.println(infoExtra);
-        System.out.println("Para o paciente: " + paciente.getNome());
-        System.out.println(nome + data);       
+        System.out.println(infoExtra + ".");
+        System.out.println("Para o paciente: " + paciente.getNome() + ".");
+        System.out.println("Medico: "+ nome + " " + data + ".");       
         //Receita receita = new Receita(remedios, infoExtra, data);
         //receita.imprimir(paciente.getNome(), nome);
     }
