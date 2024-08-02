@@ -5,7 +5,7 @@ import DadosPessoas.DadosAdicionais;
 import clinica.tipos.TipoConvenio;
 import java.util.ArrayList;
 import java.util.List;
-// NAO FEITO AINA
+
 public class Paciente {
     private String cpf;
     private String nome;
@@ -58,7 +58,7 @@ public class Paciente {
     }
 
     public void setProntuarios(Prontuario prontuario){
-        prontuarios.add(prontuario);
+        this.prontuarios.add(prontuario);
     }
 
     public DadosAdicionais getDadosAdicionais() {

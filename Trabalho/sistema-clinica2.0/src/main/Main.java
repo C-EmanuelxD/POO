@@ -42,32 +42,12 @@ public class Main {
         // atualiza paciente
         sec.atualizaPaciente("123", "zé", "Alecrim Dourado, 220", "jose@gmail.com", "8842-3233", TipoConvenio.PLANO);
         
-        System.out.println("Gerando relatorios de consulta no dia seguinte: ");
-        sec.gerarRelatorioConsulta("01/03/2024");
-        
-        System.out.println();
-        System.out.println("Imprimindo consultas cadastradas em Secretaria:");
-        clinica.imprimirSecretariaConsultas();
-        
-        System.out.println();
-        System.out.println("Imprimindo pacientes cadastrados em Secretaria:");
-        clinica.imprimirSecretariaPacientes();
-        
-        System.out.println();
-        System.out.println("Imprimindo os medicos da Clinica e seus respectivos pacientes:");
-        clinica.imprimirMedicosPacientes();
-        
         med.cadastraDadosAdicionais("123", false, false, false, true, true, Arrays.asList("Apendicite", "Pedra no rim"), null);
-        //sec.removeConsulta("21234", "02/03/2024", "17:00");
-        clinica.imprimirSecretariaConsultas();
         
         Scanner sc = new Scanner(System.in).useDelimiter("\n"); // .useDelimiter("\n") para pegar Strings que tem espaço no input como endereco
-        
         byte c = 0;
-        do {
-            System.out.println("Clinica " + clinica.getNome());
-            menu(clinica, sc, c);
-        } while(c != 0);
+        System.out.println("\nClinica " + clinica.getNome());
+        menu(clinica, sc, c);
     }
     
     public static void menu(Clinica clinica, Scanner sc, byte c) {
@@ -164,10 +144,8 @@ public class Main {
     public static void menuGerarReceita(Clinica clinica, Medico medico, Paciente paciente, Scanner sc){
         Map<String, String> remedios = new HashMap<>();
         
-        System.out.print("Insira a quantiade de remedio a ser receitado");
+        System.out.print("Insira a quantidade de remedio a ser receitado: ");
         byte c = sc.nextByte();
-        sc.nextLine();
-        System.out.println(c);
         for(int i = 0; i < c;i++ ){
             System.out.print("Insira o remedio: ");
             String remedio = sc.next();
@@ -178,15 +156,18 @@ public class Main {
         System.out.print("Insira informacao extra: ");
         String infoExtra = sc.next();
         System.out.print("Digite a data: ");
-        String data =sc.next();
+        String data = sc.next();
         
+        System.out.println();
         medico.geraReceita(remedios, infoExtra, data, paciente.getCpf());
+        System.out.println();
         
+        menuPaciente(clinica, medico, paciente, sc);
     }
     
     
     public static void menuGerarAtestado(Clinica clinica, Medico medico, Paciente paciente, Scanner sc){
-        System.out.println("Digite as informações do atestado:");
+        System.out.println("Digite as informações do atestado: ");
         System.out.print("Digite a data de inicio do atestado: ");
         String dataini = sc.next();
         System.out.print("Digite a data de fim do atestado: ");
@@ -213,6 +194,8 @@ public class Main {
         
         System.out.println();
         medico.geraDeclaracaoAcompanhamento(justificativa, acompanhante, data, paciente.getCpf());
+        System.out.println();
+        
         menuPaciente(clinica, medico, paciente, sc);
     }
     
@@ -491,13 +474,13 @@ public class Main {
         String convenio = sc.next();
          
         if (convenio.toUpperCase().equals(TipoConvenio.PLANO.toString())) {
-            clinica.getSecretaria().cadastraPaciente(cpf, nome, dataNasc, endereco, trataVazio(email), trataVazio(sms), TipoConvenio.PLANO);
+            clinica.getSecretaria().cadastraPaciente(trataVazio(cpf), nome, dataNasc, endereco, trataVazio(email), trataVazio(sms), TipoConvenio.PLANO);
         }else if (convenio.toUpperCase().equals(TipoConvenio.PARTICULAR.toString())) {
-            clinica.getSecretaria().cadastraPaciente(cpf, nome, dataNasc, endereco, trataVazio(email), trataVazio(sms), TipoConvenio.PARTICULAR);
+            clinica.getSecretaria().cadastraPaciente(trataVazio(cpf), nome, dataNasc, endereco, trataVazio(email), trataVazio(sms), TipoConvenio.PARTICULAR);
         } else {
             System.out.println("Erro no cadastro");
         }
-        
+        System.out.println();
         menuGerenciamentoPacientes(clinica, sc);
     }
     
@@ -529,8 +512,8 @@ public class Main {
         } else {
             System.out.println("Paciente não encontrado");
         }
-        
-        menuSecretaria(clinica, sc);
+        System.out.println();
+        menuGerenciamentoPacientes(clinica, sc);
     }
     
     public static void menuRemovePaciente(Clinica clinica, Scanner sc) {
@@ -543,7 +526,7 @@ public class Main {
             System.out.println("Paciente não encontrado");
         }
         
-        menuSecretaria(clinica, sc);
+        menuGerenciamentoPacientes(clinica, sc);
 
     }
     
@@ -575,7 +558,7 @@ public class Main {
             System.out.println("Erro no cadastro");
         }
         System.out.println();
-        menuSecretaria(clinica, sc);
+        menuGerenciamentoConsultas(clinica, sc);
     }
     
     public static void menuAtualizaConsulta(Clinica clinica, Scanner sc) {
@@ -606,7 +589,7 @@ public class Main {
         }
         
         System.out.println();
-        menuSecretaria(clinica, sc);
+        menuGerenciamentoConsultas(clinica, sc);
     }
     
     public static void menuRemoveConsulta(Clinica clinica, Scanner sc) {
@@ -620,7 +603,7 @@ public class Main {
         
         clinica.getSecretaria().removeConsulta(crm, data, horario);
         System.out.println("\nConsulta Removida\n");
-        menuSecretaria(clinica, sc);
+        menuGerenciamentoConsultas(clinica, sc);
     
     }
  
@@ -681,8 +664,7 @@ public class Main {
     public static String trataVazio(String str){
         if(str.isEmpty()){
             return null;
-        }else{
-            return str;
         }
+        return str;
     }
 }

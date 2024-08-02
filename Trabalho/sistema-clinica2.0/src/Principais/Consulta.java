@@ -1,7 +1,7 @@
 package Principais;
 
 import clinica.tipos.TipoConsulta;
-// nao feito ainda
+
 public class Consulta {
     private String data;
     private String horario;

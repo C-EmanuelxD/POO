@@ -3,7 +3,6 @@ package Gerenciador;
 import Principais.Consulta;
 import Principais.Paciente;
 import Principais.Secretaria;
-import java.util.ArrayList;
 import java.util.List;
 
 public class GerenciadorMensagem {

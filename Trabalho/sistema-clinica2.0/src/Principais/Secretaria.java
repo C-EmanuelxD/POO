@@ -1,5 +1,5 @@
 package Principais;
-//GERENCIAR PACIENTES E CONSULTA FEITO
+
 import Auxiliares.Buscas;
 import java.util.ArrayList;
 import clinica.tipos.TipoConsulta;
@@ -45,7 +45,7 @@ public class Secretaria {
         Paciente novoPaciente = new Paciente(cpf, nome, dataNascimento, endereco, email, sms, tipoConvenio);
         if (cpf != null) {
             pacientes.add(novoPaciente);
-            //System.out.println("Paciente cadastrado com sucesso");
+            System.out.println("Paciente cadastrado com sucesso");
             return;
         }
         System.out.println("Campo cpf vazio");
@@ -60,7 +60,7 @@ public class Secretaria {
             pacientes.get(index).setEmail(email);
             pacientes.get(index).setSms(sms);
             pacientes.get(index).setTipoConvenio(tipoConvenio);
-            //System.out.println("Paciente atualizado com sucesso");
+            System.out.println("Paciente atualizado com sucesso");
             return;
          }
         System.out.println("Paciente não encontrado");
@@ -83,7 +83,7 @@ public class Secretaria {
             Consulta novaConsulta = new Consulta(data, horario, medico, paciente, tipoConsulta);
             consultas.add(novaConsulta);
             medico.setConsulta(novaConsulta);
-            //System.out.println("Consulta cadastrada com sucesso");
+            System.out.println("Consulta cadastrada com sucesso");
             return;
         }
         System.out.println("Paciente e/ou Médico não encontrado");
@@ -96,6 +96,7 @@ public class Secretaria {
             consultas.get(index).setData(dataNova);
             consultas.get(index).setHorario(horarioNovo);
             consultas.get(index).setTipoConsulta(tipoConsulta);
+            System.out.println("Consulta atualizada com sucesso");
             return;
         }
         System.out.println("Consulta não encontrada");
@@ -106,6 +107,7 @@ public class Secretaria {
         if (consultaRemovida != null) {
             consultas.remove(consultaRemovida);
             consultaRemovida.getMedico().getConsulta().remove(consultaRemovida);
+            System.out.println("Consulta removida com sucesso");
             return;
         }
         System.out.println("Consulta não encontrada");
@@ -155,6 +157,7 @@ public class Secretaria {
         
         if (consultasDiaSeguinte.isEmpty()) {
             System.out.println("Nenhuma consulta");
+            return;
         }
         
         for(Consulta x : consultasDiaSeguinte) {

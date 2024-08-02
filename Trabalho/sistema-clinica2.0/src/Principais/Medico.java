@@ -3,15 +3,12 @@ package Principais;
 import Auxiliares.Buscas;
 import DadosPessoas.DadosAdicionais;
 import DadosPessoas.Prontuario;
-import Relatorios.Atestado;
-import Relatorios.Receita;
-import Relatorios.DeclaracaoAcompanhamento;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-//NAO FEITO AINDA
+
 public class Medico {
     private String nome;
     private String crm;
@@ -102,8 +99,6 @@ public class Medico {
         System.out.println("Atestado para: "+ paciente.getNome()+ "\nvalido de " + dataInicio +", ate " + dataFim);
         System.out.println("Pelo motivo de: " + justificativa + ".");
         System.out.println("Assinado por: " + nome+"\n");        
-        //Atestado atestado = new Atestado(dataInicio, dataFim, justificativa);
-        //atestado.imprimir(paciente.getNome(), nome);    
     }
     
     public void geraReceita(Map<String, String> remedios, String infoExtra, String data, String cpf){
@@ -115,8 +110,6 @@ public class Medico {
         System.out.println(infoExtra + ".");
         System.out.println("Para o paciente: " + paciente.getNome() + ".");
         System.out.println("Medico: "+ nome + " " + data + ".");       
-        //Receita receita = new Receita(remedios, infoExtra, data);
-        //receita.imprimir(paciente.getNome(), nome);
     }
     
     public void geraDeclaracaoAcompanhamento(String justificativa, String acompanhante, String data, String cpf){
@@ -124,10 +117,6 @@ public class Medico {
         
         System.out.println("Declaro que " + acompanhante + " esteve no dia " + data+ " acompanhando " + paciente.getNome() + " no atendimento");
         System.out.println("Assinado por " + nome + ".");
-
-        
-        //DeclaracaoAcompanhamento acompanhante1 = new DeclaracaoAcompanhamento(justificativa, acompanhante, data);
-        //acompanhante1.imprimir(paciente.getNome(), nome);
     }
  
     public String getNome() {
