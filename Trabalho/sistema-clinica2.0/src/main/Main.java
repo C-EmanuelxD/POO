@@ -172,13 +172,12 @@ public class Main {
             System.out.print("Insira o remedio: ");
             String remedio = sc.next();
             System.out.print("Insira a dosagem do remedio: ");
-            String dosagem = sc.next();
-            
+            String dosagem = sc.next();            
             remedios.put(remedio, dosagem);
         }
         System.out.print("Insira informacao extra: ");
         String infoExtra = sc.next();
-        System.out.print("Digite a data");
+        System.out.print("Digite a data: ");
         String data =sc.next();
         
         medico.geraReceita(remedios, infoExtra, data, paciente.getCpf());
