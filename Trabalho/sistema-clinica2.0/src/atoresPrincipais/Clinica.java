@@ -5,6 +5,7 @@ import atoresPrincipais.Secretaria;
 import gerenciadorMensagem.GerenciadorMensagem;
 import atoresSecundários.Consulta;
 import atoresSecundários.Paciente;
+import classesAuxiliares.Buscas;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,12 +63,23 @@ public class Clinica {
         System.out.println("Campo crm vazio");
     }
     
-    public void imprimirMedicos() {
-        for(Medico obj : medicos) {
-            System.out.print("Doutor -> ");
-            obj.imprimirMedico();
-            System.out.println();
+   public boolean verificaCRM(String crm){
+        for(char c : crm.toCharArray()){
+            if(Character.isLetter(c)){
+                return false;
+            }else{
+                return true;
+            }
         }
+        return false;
+    }
+    
+    public List<String> imprimirMedicos() {
+        List<String> meds = new ArrayList<>();
+        for(Medico obj : medicos) {
+            meds.add(obj.toString());
+        }
+        return meds;
     }
     
     public void imprimirMedicosPacientes() {
@@ -76,22 +88,34 @@ public class Clinica {
             obj.imprimirMedico();
             
             System.out.println("Pacientes:");
-            obj.imprimirPacientes();
+            //obj.imprimirPacientes();
             
             System.out.println();
         }
     }
     
-    public void imprimirSecretariaPacientes() {
+    public String imprimirSecretariaPacientes() {
+        String Pacs = "";
         for(Paciente obj : secretaria.getPacientes()) {
-            obj.imprimirPaciente();
+            Pacs = Pacs+obj.imprimirPaciente();
         }
+        return Pacs;
     }
     
-    public void imprimirSecretariaConsultas() {
+    public String imprimirSecretariaConsultas() {
+        String cons = "";
         for(Consulta obj : secretaria.getConsultas()) {
-            obj.imprimirConsulta();
-            System.out.println();
+            cons = cons+obj.imprimirConsulta();
+        }
+        return cons;
+    }
+    
+    public boolean testaPaciente(String cpf){
+        Paciente paciente = Buscas.buscaPaciente(secretaria.getPacientes(), cpf);
+        if(paciente != null){
+            return true;
+        }else{
+            return false;
         }
     }
 }

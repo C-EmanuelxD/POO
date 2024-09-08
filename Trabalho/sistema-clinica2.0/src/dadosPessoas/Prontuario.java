@@ -46,10 +46,10 @@ public class Prontuario {
         this.prescricao = prescricao;
     }
     
-    public void imprimirProntuario() {
-        System.out.println("\tData: " + data);
-        System.out.println("\tSintomas: " + sintomas);
-        System.out.println("\tDiagnostico: " + diagnostico);
-        System.out.println("\tPrescrição: " + prescricao);
+    public String imprimirProntuario() {
+        return ("Data: " + data + "\n" +
+                "Sintomas: " + sintomas + "\n" +
+                "Diagnostico: " + diagnostico + "\n" +
+                "Prescrição: " + prescricao + "\n\n");
     }
 }

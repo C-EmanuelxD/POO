@@ -164,18 +164,19 @@ public class Secretaria {
         return consultasDiaSeguinte;
     }
     
-    public void gerarRelatorioConsulta(String dataAtual){
+    public String gerarRelatorioConsulta(String dataAtual){
         List<Consulta> consultasDiaSeguinte = this.consultasDiaSeguinte(dataAtual);
+        String cons = "";
         
         if (consultasDiaSeguinte.isEmpty()) {
             System.out.println("Nenhuma consulta");
-            return;
+            return cons;
         }
         
         for(Consulta x : consultasDiaSeguinte) {
-            x.imprimirConsulta();
-            System.out.println();
+            cons = cons + x.imprimirConsulta();
         }
+        return cons;
     }     
 }      
 

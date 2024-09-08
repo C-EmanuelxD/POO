@@ -69,6 +69,7 @@ public class Buscas {
                 Paciente y = x.getPaciente();
                 return y;
             }
+            
         }
         return null;
     }

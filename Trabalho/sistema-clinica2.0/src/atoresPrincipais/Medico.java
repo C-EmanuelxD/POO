@@ -81,26 +81,27 @@ public class Medico {
         
     }
     
-    public void pacienteMes(String mes){
+    public String pacienteMes(String mes){
         int numPacientes = 0;
-        
+        String pacs = "";
         for(int i = 0; i < consultas.size(); i++){
             Consulta consulta = consultas.get(i);
             String data = consulta.getData();
             String[] parte = data.split("/");
+            
             if (mes.equals(parte[1])){
-                consulta.getPaciente().imprimirPaciente();
+                pacs = pacs+consulta.getPaciente().imprimirPaciente();
                 numPacientes++;
             }
         }
-        System.out.println("\tNúmero de pacientes atendidos no mês: " + numPacientes);
+        return pacs;
     }
-    public void geraAtestado(String dataInicio, String dataFim, String justificativa, String cpf){
+    public String geraAtestado(String dataInicio, String dataFim, String justificativa, String cpf){
         Paciente paciente = Buscas.buscaPacienteConsulta(consultas, cpf);
         
-        System.out.println("Atestado para: "+ paciente.getNome()+ "\nvalido de " + dataInicio +", ate " + dataFim);
-        System.out.println("Pelo motivo de: " + justificativa + ".");
-        System.out.println("Assinado por: " + nome+"\n");        
+        return "Atestado para: "+ paciente.getNome()+ "\nvalido de " + dataInicio +", ate " + dataFim + "\n" +
+                           "Pelo motivo de: " + justificativa + "." + "\n" + 
+                           "Assinado por: " + nome+"\n";  
     }
     
     public void geraReceita(Map<String, String> remedios, String infoExtra, String data, String cpf){
@@ -114,11 +115,11 @@ public class Medico {
         System.out.println("Medico: "+ nome + " " + data + ".");       
     }
     
-    public void geraDeclaracaoAcompanhamento(String justificativa, String acompanhante, String data, String cpf){
+    public String geraDeclaracaoAcompanhamento(String justificativa, String acompanhante, String data, String cpf){
         Paciente paciente = Buscas.buscaPacienteConsulta(consultas, cpf);
         
-        System.out.println("Declaro que " + acompanhante + " esteve no dia " + data+ " acompanhando " + paciente.getNome() + " no atendimento");
-        System.out.println("Assinado por " + nome + ".");
+        return "Declaro que " + acompanhante + " esteve no dia " + data+ " acompanhando " + paciente.getNome() + " no atendimento" + "\n" +
+        "Assinado por " + nome + ".";
     }
  
     public String getNome() {
@@ -157,21 +158,40 @@ public class Medico {
          System.out.println("Nome: " + nome + ", Crm: " + crm + ", Especialidade: " + especialidade);
     }
     
+    @Override
+    public String toString(){
+        return "Doutor -> Nome: " + nome + ", Crm: " + crm + ", Especialidade: " + especialidade;
+    }
+    
     // imprime todos os pacientes do medico, sem duplicacao.
-    public void imprimirPacientes() {
+    public List<String> imprimirNomePacientes() {
         Set<Paciente> pacientesImpressos = new HashSet<>();
-
+        List<String> pacs = new ArrayList<>();
         for (Consulta consulta : consultas) {
             Paciente paciente = consulta.getPaciente();
             if (!pacientesImpressos.contains(paciente)) {
                 pacientesImpressos.add(paciente);
-                System.out.println("\tNome: " + paciente.getNome() +
+                pacs.add(paciente.getCpf());
+            }
+        }
+        return pacs;
+    }
+    
+    public String imprimirPacientes() {
+        Set<Paciente> pacientesImpressos = new HashSet<>();
+        String PACS = "";
+        for (Consulta consulta : consultas) {
+            Paciente paciente = consulta.getPaciente();
+            if (!pacientesImpressos.contains(paciente)) {
+                pacientesImpressos.add(paciente);
+                PACS = PACS+("Nome: " + paciente.getNome() +
                                    ", Cpf: " + paciente.getCpf() +
-                                   ", Data de nascimento: " + paciente.getDataNascimento()
+                                   ", Data de nascimento: " + paciente.getDataNascimento() + "\n"
 
                 );
             }
         }
+        return PACS;
     }
     
 }

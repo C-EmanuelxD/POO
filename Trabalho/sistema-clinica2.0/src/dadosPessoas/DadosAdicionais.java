@@ -88,7 +88,7 @@ public class DadosAdicionais {
         this.alergias = alergias;
     }
     
-    public void imprimirDadosAdicionais() {
+    public String imprimirDadosAdicionais() {
         String fumaStr = (this.fuma) ? "Fuma; " : "";
         String bebeStr = (this.bebe) ? "Bebe; " : "";
         String colesterolStr = (this.colesterol) ? "Colesterol; " : "";
@@ -97,7 +97,7 @@ public class DadosAdicionais {
         String cirurgiasStr = (this.cirurgias != null) ? this.cirurgias.toString() : List.of("").toString();
         String alergiasStr = (this.alergias != null) ? this.alergias.toString() : List.of("").toString();
         String res = fumaStr + bebeStr + colesterolStr + diabeteStr + doencaCardiacaStr;
-        System.out.println("Dados adicionais do paciente: " + res + "Cirurgias: " + cirurgiasStr + "; " + "Alergias: " + alergiasStr + ";");
+        return "Dados adicionais do paciente:" + res + "Cirurgias: " + cirurgiasStr + "; " + "Alergias: " + alergiasStr + ";";
     }
 
 }

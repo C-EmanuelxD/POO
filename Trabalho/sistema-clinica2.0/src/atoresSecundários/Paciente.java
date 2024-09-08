@@ -109,15 +109,16 @@ public class Paciente {
         this.tipoConvenio = tipoConvenio;
     }
     
-    public void imprimirPaciente() {
-        System.out.println("\tNome: " + nome + ", Cpf: " + cpf + ", Data de Nascimento: " + dataNascimento + ", Endereco: " + endereco +", Email: " + email + ", SMS: " + sms + ", Convenio: " + tipoConvenio);
+    public String imprimirPaciente() {
+        return "Paciente - > Nome: " + nome + ", Cpf: " + cpf + ", Data de Nascimento: " + dataNascimento + ", Endereco: " + endereco +", Email: " + email + ", SMS: " + sms + ", Convenio: " + tipoConvenio + "\n\n";
     }
     
-    public void imprimirProntuarios() {
+    public String imprimirProntuarios() {
+        String pronts = "";
         for(Prontuario obj : prontuarios) {
-            obj.imprimirProntuario();
-            System.out.println();
+            pronts = pronts+obj.imprimirProntuario();
+            
         }
+        return pronts;
     }
-
 }
