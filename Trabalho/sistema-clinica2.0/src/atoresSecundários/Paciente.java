@@ -5,17 +5,48 @@ import dadosPessoas.DadosAdicionais;
 import clinicaTipos.TipoConvenio;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
+@Entity
+@Table(name="paciente")
 public class Paciente {
+    @Id
+     @Column(name = "cpf")
     private String cpf;
+
+    @Column(name = "nome", length = 100, nullable = false)
     private String nome;
+
+    @Column(name = "data_nascimento")
     private String dataNascimento;
+
+    @Column(name = "endereco", length = 255)
     private String endereco;
+
+    @Column(name = "email", length = 100)
     private String email;
+
+    @Column(name = "sms", length = 20)
     private String sms;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "tipo_convenio")
     private TipoConvenio tipoConvenio;
-    private DadosAdicionais dadosAdicionais; // verificar esta implemtentação
-    private List<Prontuario> prontuarios;
+
+    @OneToOne
+    @JoinColumn(name = "dados_adicionais_id")
+    private DadosAdicionais dadosAdicionais;
+
+    @OneToMany(mappedBy = "paciente")
+    private List<Prontuario> prontuarios = new ArrayList<>();
 
     public Paciente(String cpf, String nome, String dataNascimento, String endereco, String email, String sms, TipoConvenio tipoConvenio) {
         this.cpf = cpf;

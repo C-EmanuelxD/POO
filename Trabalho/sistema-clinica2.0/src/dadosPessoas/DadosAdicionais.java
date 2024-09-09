@@ -1,17 +1,50 @@
 package dadosPessoas;
 //NAO FEITO AINDA
 
-import java.util.Arrays;
+import atoresSecundários.Paciente;
 import java.util.List;
-
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+@Entity
+@Table(name="dados_adicionais")
 public class DadosAdicionais {
+    @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    private Integer id;
+    @Column(name = "fuma", nullable = false)
     private boolean fuma;
+
+    @Column(name = "bebe", nullable = false)
     private boolean bebe;
+
+    @Column(name = "colesterol", nullable = false)
     private boolean colesterol;
+
+    @Column(name = "diabete", nullable = false)
     private boolean diabete;
+
+    @Column(name = "doenca_cardiaca", nullable = false)
     private boolean doencaCardiaca;
+    
+    @ElementCollection
+    @CollectionTable(name = "cirurgias", joinColumns = @JoinColumn(name = "dados_adicionais_id"))
     private List<String> cirurgias;
+
+    @ElementCollection
+    @CollectionTable(name = "alergias", joinColumns = @JoinColumn(name = "dados_adicionais_id"))
     private List<String> alergias;
+
+    @OneToOne(mappedBy="dadosAdicionais")
+    @JoinColumn(name = "paciente_cpf")
+    private Paciente paciente;
 
     public DadosAdicionais(boolean fuma, boolean bebe, boolean colesterol, boolean diabete,
                             boolean doencaCardiaca, List<String> cirurgias, List<String> alergias) {

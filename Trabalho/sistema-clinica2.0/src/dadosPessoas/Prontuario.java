@@ -1,10 +1,37 @@
 package dadosPessoas;
-//NAO FEITO AINDA
+
+import atoresSecundários.Paciente;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="prontuario")
 public class Prontuario {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
+
+    @Column(name = "sintomas", length = 500)
     private String sintomas;
+
+    @Column(name = "diagnostico", length = 500)
     private String diagnostico;
+
+    @Column(name = "prescricao", length = 500)
     private String prescricao;
-    private String data;
+
+    @Column(name = "data", nullable = false)
+    private String data;  // Consider using a Date type if appropriate
+
+    @ManyToOne
+    @JoinColumn(name = "paciente_cpf", nullable = false)  // Foreign key to Paciente
+    private Paciente paciente;
 
     public Prontuario(String sintomas, String diagnostico, String prescricao, String data) {
         this.sintomas = sintomas;
