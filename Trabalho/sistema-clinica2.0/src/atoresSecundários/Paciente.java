@@ -19,7 +19,7 @@ import javax.persistence.Table;
 @Table(name="paciente")
 public class Paciente {
     @Id
-     @Column(name = "cpf")
+    @Column(name = "cpf")
     private String cpf;
 
     @Column(name = "nome", length = 100, nullable = false)
@@ -47,7 +47,9 @@ public class Paciente {
 
     @OneToMany(mappedBy = "paciente")
     private List<Prontuario> prontuarios = new ArrayList<>();
-
+    
+    public Paciente() {}
+    
     public Paciente(String cpf, String nome, String dataNascimento, String endereco, String email, String sms, TipoConvenio tipoConvenio) {
         this.cpf = cpf;
         this.nome = nome;
@@ -56,7 +58,7 @@ public class Paciente {
         this.email = email;
         this.sms = sms;
         this.tipoConvenio = tipoConvenio;
-        this.dadosAdicionais = null;
+        this.dadosAdicionais = new DadosAdicionais();
         this.prontuarios = new ArrayList<>();
     }
 

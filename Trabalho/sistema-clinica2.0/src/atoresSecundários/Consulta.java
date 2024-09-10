@@ -2,12 +2,40 @@ package atoresSecundários;
 
 import atoresPrincipais.Medico;
 import clinicaTipos.TipoConsulta;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
+@Entity
+@Table(name = "consulta")
 public class Consulta {
-    private String data;
-    private String horario;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+    
+    @Column(name = "data")
+    private String data;  // Parte da chave composta
+
+    @Column(name = "horario")
+    private String horario;  // Outra parte da chave composta
+
+    @ManyToOne
+    @JoinColumn(name = "medico_crm")
     private Medico medico;
+
+    @ManyToOne
+    @JoinColumn(name = "paciente_cpf")
     private Paciente paciente;
+
+    @Enumerated(EnumType.STRING)
     private TipoConsulta tipoConsulta;
 
     public Consulta(String data, String horario, Medico medico, Paciente paciente, TipoConsulta tipoConsulta) {

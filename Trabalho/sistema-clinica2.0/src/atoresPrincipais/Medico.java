@@ -10,12 +10,29 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
+@Entity
+@Table(name = "medico")
 public class Medico {
+
+    @Id
+    @Column(name = "crm", nullable = false, unique = true)
+    private String crm;  // CRM será a chave primária
+
+    @Column(name = "nome", nullable = false)
     private String nome;
-    private String crm;
+
+    @Column(name = "especialidade", nullable = false)
     private String especialidade;
-    private List<Consulta> consultas;
+
+    @OneToMany(mappedBy = "medico", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Consulta> consultas;  // Relacionamento One-to-Many com Consulta
     
     public Medico(String nome, String crm, String especialidade) {
         this.nome = nome;

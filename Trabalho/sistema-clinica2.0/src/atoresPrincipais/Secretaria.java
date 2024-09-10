@@ -8,11 +8,35 @@ import java.util.ArrayList;
 import clinicaTipos.TipoConsulta;
 import clinicaTipos.TipoConvenio;
 import java.util.List;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
+@Entity
+@Table(name = "secretaria")
 public class Secretaria {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Long id;
+
+    @Column(name = "nome", nullable = false)
     private String nome;
-    private List<Paciente> pacientes;
-    private List<Consulta> consultas;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "secretaria_id") // Cria uma coluna de FK na tabela paciente
+    private List<Paciente> pacientes; // Uma secretária pode gerenciar muitos pacientes
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "secretaria_id") // Cria uma coluna de FK na tabela consulta
+    private List<Consulta> consultas;  // Uma secretária pode gerenciar muitas consultas
 
     public Secretaria(String nome) {
         this.nome = nome;

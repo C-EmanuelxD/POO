@@ -19,19 +19,20 @@ public class DadosAdicionais {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Integer id;
-    @Column(name = "fuma", nullable = false)
+    
+    @Column(name = "fuma")
     private boolean fuma;
 
-    @Column(name = "bebe", nullable = false)
+    @Column(name = "bebe")
     private boolean bebe;
 
-    @Column(name = "colesterol", nullable = false)
+    @Column(name = "colesterol")
     private boolean colesterol;
 
-    @Column(name = "diabete", nullable = false)
+    @Column(name = "diabete")
     private boolean diabete;
 
-    @Column(name = "doenca_cardiaca", nullable = false)
+    @Column(name = "doenca_cardiaca")
     private boolean doencaCardiaca;
     
     @ElementCollection
@@ -45,7 +46,9 @@ public class DadosAdicionais {
     @OneToOne(mappedBy="dadosAdicionais")
     @JoinColumn(name = "paciente_cpf")
     private Paciente paciente;
-
+    
+    public DadosAdicionais() {}
+    
     public DadosAdicionais(boolean fuma, boolean bebe, boolean colesterol, boolean diabete,
                             boolean doencaCardiaca, List<String> cirurgias, List<String> alergias) {
         this.fuma = fuma;
@@ -55,6 +58,16 @@ public class DadosAdicionais {
         this.doencaCardiaca = doencaCardiaca;
         this.cirurgias = cirurgias;
         this.alergias = alergias;
+    }
+    
+    public DadosAdicionais(boolean fuma, boolean bebe, boolean colesterol, boolean diabete,
+                            boolean doencaCardiaca, Paciente paciente) {
+        this.fuma = fuma;
+        this.bebe = bebe;
+        this.colesterol = colesterol;
+        this.diabete = diabete;
+        this.doencaCardiaca = doencaCardiaca;
+        this.paciente = paciente;
     }
 
     public void cadastraCirurgia(String cirurgia){
