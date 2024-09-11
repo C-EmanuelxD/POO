@@ -16,7 +16,8 @@
       <property name="javax.persistence.jdbc.password" value="trabalhopoo"/>
       <property name="hibernate.cache.provider_class" value="org.hibernate.cache.NoCacheProvider"/>
       <property name="hibernate.dialect" value="org.hibernate.dialect.DerbyTenSevenDialect"/>
-       <!--<property name="hibernate.hbm2ddl.auto" value="update"/>-->
+      <!--<property name="hibernate.hbm2ddl.auto" value="update"/>-->
+      <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
     </properties>
   </persistence-unit>
 </persistence>
