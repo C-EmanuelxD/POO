@@ -1,36 +1,38 @@
 package programa;
 
-import atoresPrincipais.Medico;
+import atoresPrincipais.Clinica;
+import atoresPrincipais.Secretaria;
 import atoresSecundários.Paciente;
-import dadosPessoas.DadosAdicionais;
+import clinicaTipos.TipoConsulta;
+import clinicaTipos.TipoConvenio;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 public class BdTeste {
     public static void main(String[] args) {
-       EntityManagerFactory emf = Persistence.createEntityManagerFactory("CLINICAPU");
+        System.out.println("oi");
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("CLINICAPU");
 
         // Criação do EntityManager para gerenciar as transações
-        EntityManager em = emf.createEntityManager();
+       // EntityManager em = emf.createEntityManager();
+        Clinica clinica = new Clinica("Saude & Cia", new Secretaria("Vanessa"));
+        Secretaria sec = clinica.getSecretaria();
 
-        // Início da transação
-        em.getTransaction().begin();
+        sec.cadastraPaciente("231", "Antonio", "02/07/2001", "Mauricio Fé, 357", null, "9999-4444", TipoConvenio.PLANO, emf);
+       // sec.removePaciente("231", emf);
+       sec.atualizaPaciente("231", "zé", "Alecrim Dourado, 220", "jose@gmail.com", "8842-3233", TipoConvenio.PLANO, emf);        // Início da transação
+       // em.getTransaction().begin();
 
-        // Criar e configurar a entidade DadosAdicionais
-        DadosAdicionais dadosAdicionais = new DadosAdicionais();
-        // Configurar dadosAdicionais...
+        // Exemplo de criação de um novo paciente (dados fictícios)
+        
+       // Paciente paciente = new Paciente("12345678901", "João Silva", "1990-01-01", 
+         //       "Rua Exemplo, 123", "joao.silva@email.com", "987654321", TipoConvenio.PLANO);
 
-        em.persist(dadosAdicionais);
-
-        Paciente paciente = new Paciente();
-        paciente.setDadosAdicionais(dadosAdicionais);
-        paciente.setCpf("123");
-        Medico m = new Medico("Roberto", "153", "geral");
-
-        em.persist(paciente);
+        // Persistindo o objeto paciente no banco de dados
+        //em.persist(paciente);
 
         // Commit da transação
-        em.getTransaction().commit();
+        //em.getTransaction().commit();
     }
 }

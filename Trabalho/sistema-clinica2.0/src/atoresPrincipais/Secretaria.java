@@ -11,6 +11,8 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -68,76 +70,84 @@ public class Secretaria {
         this.consultas.add(consulta);
     }
 
-    public void cadastraPaciente(String cpf, String nome, String dataNascimento, String endereco, String email, String sms, TipoConvenio tipoConvenio) {
+    public void cadastraPaciente(String cpf, String nome, String dataNascimento, String endereco, String email, String sms, TipoConvenio tipoConvenio, EntityManagerFactory emf) {
         Paciente novoPaciente = new Paciente(cpf, nome, dataNascimento, endereco, email, sms, tipoConvenio);
         if (cpf != null) {
-            pacientes.add(novoPaciente);
-            System.out.println("Paciente cadastrado com sucesso");
-            return;
+            EntityManager em = emf.createEntityManager();
+            em.getTransaction().begin();
+            em.persist(novoPaciente);
+            em.getTransaction().commit();
+            em.close();
+        } else {
+            System.out.println("Campo cpf vazio");
         }
-        System.out.println("Campo cpf vazio");
-    }
-    
-    public void atualizaPaciente(String cpf, String nome, String endereco, String email, String sms, TipoConvenio tipoConvenio) {
-        Paciente atualizaPaciente = Buscas.buscaPaciente(pacientes, cpf);
-        int index = pacientes.indexOf(atualizaPaciente);
-        if (index != -1) {
-            pacientes.get(index).setNome(nome);
-            pacientes.get(index).setEndereco(endereco);
-            pacientes.get(index).setEmail(email);
-            pacientes.get(index).setSms(sms);
-            pacientes.get(index).setTipoConvenio(tipoConvenio);
-            System.out.println("Paciente atualizado com sucesso");
-            return;
-         }
-        System.out.println("Paciente não encontrado");
     }
 
-    public void removePaciente(String cpf) {
-        Paciente removerPaciente = Buscas.buscaPaciente(pacientes, cpf);
-        if (removerPaciente != null) {
-            Consulta consulta = buscaConsulta(consultas, cpf);
-            Medico medico;
-            pacientes.remove(removerPaciente);
-            while(consulta != null){
-                medico = consulta.getMedico();
-                medico.getConsulta().remove(consulta);
-                consultas.remove(consulta);
-                consulta = buscaConsulta(consultas, cpf);
-            }
-            System.out.println("Paciente Removido com sucesso");
-            return;
+    public void atualizaPaciente(String cpf, String nome, String endereco, String email, String sms, TipoConvenio tipoConvenio, EntityManagerFactory emf) {
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+        Paciente paciente = em.find(Paciente.class, cpf);
+        if (paciente != null) {
+            paciente.setNome(nome);
+            paciente.setEndereco(endereco);
+            paciente.setEmail(email);
+            paciente.setSms(sms);
+            paciente.setTipoConvenio(tipoConvenio);
+            em.merge(paciente);
+        } else {
+            System.out.println("Paciente não encontrado");
         }
-        System.out.println("Paciente não encontrado");
+        em.getTransaction().commit();
+        em.close();
     }
-    
-    public void cadastraConsulta(String data, String horario, String crm, String cpf, TipoConsulta tipoConsulta, List<Medico> medicos) {
-        Paciente paciente = Buscas.buscaPaciente(pacientes, cpf);
-        Medico medico = Buscas.buscaMedico(medicos, crm);
-        
+
+    public void removePaciente(String cpf, EntityManagerFactory emf) {
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+        Paciente paciente = em.find(Paciente.class, cpf);
+        if (paciente != null) {
+            em.remove(paciente);
+        }
+        em.getTransaction().commit();
+        em.close();
+    }
+
+    public void cadastraConsulta(String data, String horario, String crm, String cpf, TipoConsulta tipoConsulta, List<Medico> medicos, EntityManagerFactory emf) {
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+        Paciente paciente = em.find(Paciente.class, cpf);
+        Medico medico = em.find(Medico.class, crm);
         if (paciente != null && medico != null) {
             Consulta novaConsulta = new Consulta(data, horario, medico, paciente, tipoConsulta);
-            consultas.add(novaConsulta);
-            medico.setConsulta(novaConsulta);
+            em.persist(novaConsulta);
+            em.merge(medico);
+            em.getTransaction().commit();
             System.out.println("Consulta cadastrada com sucesso");
-            return;
+        } else {
+            System.out.println("Paciente e/ou Médico não encontrado");
         }
-        System.out.println("Paciente e/ou Médico não encontrado");
+        em.close();
     }
-    
-    public void atualizaConsulta(String crm, String data, String horario, String dataNova, String horarioNovo, TipoConsulta tipoConsulta) {
-        Consulta atualizarConsulta = Buscas.buscaConsulta(consultas, crm, data, horario);
-        int index = consultas.indexOf(atualizarConsulta);
-        if (index != -1) {
-            consultas.get(index).setData(dataNova);
-            consultas.get(index).setHorario(horarioNovo);
-            consultas.get(index).setTipoConsulta(tipoConsulta);
+
+    public void atualizaConsulta(String crm, String data, String horario, String dataNova, String horarioNovo, TipoConsulta tipoConsulta, EntityManagerFactory emf) {
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+
+        Consulta consulta = em.createQuery("SELECT c FROM Consulta c WHERE c.medico.crm = :crm AND c.data = :data AND c.horario = :horario", Consulta.class).setParameter("crm", crm).setParameter("data", data).setParameter("horario", horario).getSingleResult();
+        if (consulta != null) {
+            consulta.setData(dataNova);
+            consulta.setHorario(horarioNovo);
+            consulta.setTipoConsulta(tipoConsulta);
+
+            em.merge(consulta); //sincroniza legal ai dog
+            em.getTransaction().commit();
             System.out.println("Consulta atualizada com sucesso");
-            return;
+        } else {
+            System.out.println("Consulta não encontrada");
         }
-        System.out.println("Consulta não encontrada");
+        em.close();
     }
-    
+
     public void removeConsulta(String crm, String data, String horario) {
         Consulta consultaRemovida = Buscas.buscaConsulta(consultas, crm, data, horario);
         if (consultaRemovida != null) {
@@ -148,14 +158,14 @@ public class Secretaria {
         }
         System.out.println("Consulta não encontrada");
     }
-    
+
     public List<Consulta> consultasDiaSeguinte(String dataAtual) {
         String[] partes = dataAtual.split("/");
         int dia = Integer.parseInt(partes[0]);
         int mes = Integer.parseInt(partes[1]);
         int ano = Integer.parseInt(partes[2]);
-        
-        if (dia == 31){
+
+        if (dia == 31) {
             mes += 1;
             dia = 1;
         } else if (mes == 12 && dia == 31) {
@@ -163,47 +173,45 @@ public class Secretaria {
             mes = 1;
             dia = 1;
         } else {
-            dia+=1;
+            dia += 1;
         }
-                
+
         String prox_dia = String.format("%02d/%02d/%d", dia, mes, ano);
         List<Consulta> consultasDiaSeguinte = new ArrayList<>();
-        
+
         // Adiciona as consultas dos pacientes que tem email ou celular
-        for(Consulta x : consultas) {
-            if (x.getData().equals(prox_dia)){
-                if (x.getPaciente().getEmail() != null || x.getPaciente().getSms() != null)
-                consultasDiaSeguinte.add(x);
+        for (Consulta x : consultas) {
+            if (x.getData().equals(prox_dia)) {
+                if (x.getPaciente().getEmail() != null || x.getPaciente().getSms() != null) {
+                    consultasDiaSeguinte.add(x);
+                }
             }
         }
-        
+
         // Adiciona as consultas dos pacientes que nao tem email e celular
-        for(Consulta x : consultas) {
-            if (x.getData().equals(prox_dia)){
-                if (x.getPaciente().getEmail() == null && x.getPaciente().getSms() == null)
-                consultasDiaSeguinte.add(x);
+        for (Consulta x : consultas) {
+            if (x.getData().equals(prox_dia)) {
+                if (x.getPaciente().getEmail() == null && x.getPaciente().getSms() == null) {
+                    consultasDiaSeguinte.add(x);
+                }
             }
         }
-        
+
         return consultasDiaSeguinte;
     }
-    
-    public String gerarRelatorioConsulta(String dataAtual){
+
+    public String gerarRelatorioConsulta(String dataAtual) {
         List<Consulta> consultasDiaSeguinte = this.consultasDiaSeguinte(dataAtual);
         String cons = "";
-        
+
         if (consultasDiaSeguinte.isEmpty()) {
             System.out.println("Nenhuma consulta");
             return cons;
         }
-        
-        for(Consulta x : consultasDiaSeguinte) {
+
+        for (Consulta x : consultasDiaSeguinte) {
             cons = cons + x.imprimirConsulta();
         }
         return cons;
-    }     
-}      
-
-    
-
-
+    }
+}
