@@ -1,128 +1,149 @@
-package atoresPrincipais;
+package dadosPessoas;
+//NAO FEITO AINDA
 
-import atoresPrincipais.Medico;
-import atoresPrincipais.Secretaria;
-import gerenciadorMensagem.GerenciadorMensagem;
-import atoresSecundários.Consulta;
 import atoresSecundários.Paciente;
-import javax.persistence.Entity;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import classesAuxiliares.Buscas;
-import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+@Entity
+@Table(name="dados_adicionais")
+public class DadosAdicionais {
+    @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    private Integer id;
+    
+    @Column(name = "fuma")
+    private boolean fuma;
 
-public class Clinica {
-    private String nome;
-    private Secretaria secretaria;
-    private GerenciadorMensagem gerenciador;
-    private List<Medico> medicos;
+    @Column(name = "bebe")
+    private boolean bebe;
 
-    public Clinica(String nome, Secretaria secretaria) {
-        this.nome = nome;
-        this.secretaria = secretaria;
-        this.gerenciador = new GerenciadorMensagem(secretaria);
-        this.medicos = new ArrayList<>();
+    @Column(name = "colesterol")
+    private boolean colesterol;
+
+    @Column(name = "diabete")
+    private boolean diabete;
+
+    @Column(name = "doenca_cardiaca")
+    private boolean doencaCardiaca;
+    
+    @ElementCollection
+    @CollectionTable(name = "cirurgias", joinColumns = @JoinColumn(name = "dados_adicionais_id"))
+    private List<String> cirurgias;
+
+    @ElementCollection
+    @CollectionTable(name = "alergias", joinColumns = @JoinColumn(name = "dados_adicionais_id"))
+    private List<String> alergias;
+
+    @OneToOne(mappedBy="dadosAdicionais")
+    @JoinColumn(name = "paciente_cpf")
+    private Paciente paciente;
+    
+    public DadosAdicionais() {}
+    
+    public DadosAdicionais(boolean fuma, boolean bebe, boolean colesterol, boolean diabete,
+                            boolean doencaCardiaca, List<String> cirurgias, List<String> alergias) {
+        this.fuma = fuma;
+        this.bebe = bebe;
+        this.colesterol = colesterol;
+        this.diabete = diabete;
+        this.doencaCardiaca = doencaCardiaca;
+        this.cirurgias = cirurgias;
+        this.alergias = alergias;
+    }
+    
+    public DadosAdicionais(boolean fuma, boolean bebe, boolean colesterol, boolean diabete,
+                            boolean doencaCardiaca, Paciente paciente) {
+        this.fuma = fuma;
+        this.bebe = bebe;
+        this.colesterol = colesterol;
+        this.diabete = diabete;
+        this.doencaCardiaca = doencaCardiaca;
+        this.paciente = paciente;
     }
 
-    public GerenciadorMensagem getGerenciador() {
-        return gerenciador;
+    public void cadastraCirurgia(String cirurgia){
+        cirurgias.add(cirurgia);
+    }
+    
+    public void cadastraAlergia(String alergia){
+        alergias.add(alergia);
+    }
+    
+    public boolean isFuma() {
+        return fuma;
     }
 
-    public void setGerenciador(GerenciadorMensagem gerenciador) {
-        this.gerenciador = gerenciador;
-    }
-    
-    public Secretaria getSecretaria() {
-        return secretaria;
+    public void setFuma(boolean fuma) {
+        this.fuma = fuma;
     }
 
-    public void setSecretaria(Secretaria secretaria) {
-        this.secretaria = secretaria;
-    }
-    
-    public List<Medico> getMedicos() {
-        return medicos;
+    public boolean isBebe() {
+        return bebe;
     }
 
-    public void setMedicos(Medico medico) {
-        this.medicos.add(medico);
-    }
-    
-    public String getNome() {
-        return nome;
+    public void setBebe(boolean bebe) {
+        this.bebe = bebe;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public boolean getColesterol() {
+        return colesterol;
+    }
+
+    public void setColesterol(boolean colesterol) {
+        this.colesterol = colesterol;
+    }
+
+    public boolean getDiabete() {
+        return diabete;
+    }
+
+    public void setDiabete(boolean diabete) {
+        this.diabete = diabete;
+    }
+
+    public boolean getDoencaCardiaca() {
+        return doencaCardiaca;
+    }
+
+    public void setDoencaCardiaca(boolean doencaCardiaca) {
+        this.doencaCardiaca = doencaCardiaca;
+    }
+
+    public List<String> getCirurgias() {
+        return cirurgias;
+    }
+
+    public void setCirurgias(List<String> cirurgias) {
+        this.cirurgias = cirurgias;
+    }
+
+    public List<String> getAlergias() {
+        return alergias;
+    }
+
+    public void setAlergias(List<String> alergias) {
+        this.alergias = alergias;
     }
     
-        public void cadastraMedico(String crm, String nome, String especialidade, EntityManagerFactory emf) {
-            Medico novoMedico = new Medico(crm, nome, especialidade);
-            if (crm != null) { 
-                EntityManager em = emf.createEntityManager();
-                em.getTransaction().begin();
-                em.persist(novoMedico);
-                em.getTransaction().commit();
-                em.close();
-            } else {
-            System.out.println("Campo crm vazio");
-            }
-        }
-        
-       public boolean verificaCRM(String crm){
-        for(char c : crm.toCharArray()){
-            if(Character.isLetter(c)){
-                return false;
-            }else{
-                return true;
-            }
-        }
-        return false;
+    public String imprimirDadosAdicionais() {
+        String fumaStr = (this.fuma) ? "Fuma; " : "";
+        String bebeStr = (this.bebe) ? "Bebe; " : "";
+        String colesterolStr = (this.colesterol) ? "Colesterol; " : "";
+        String diabeteStr = (this.diabete) ? "Diabete; " : "";
+        String doencaCardiacaStr = (this.doencaCardiaca) ? "Doença Cardiaca; " : "";
+        String cirurgiasStr = (this.cirurgias != null) ? this.cirurgias.toString() : List.of("").toString();
+        String alergiasStr = (this.alergias != null) ? this.alergias.toString() : List.of("").toString();
+        String res = fumaStr + bebeStr + colesterolStr + diabeteStr + doencaCardiacaStr;
+        return "Dados adicionais do paciente:" + res + "Cirurgias: " + cirurgiasStr + "; " + "Alergias: " + alergiasStr + ";";
     }
-    
-    public List<String> imprimirMedicos() {
-        List<String> meds = new ArrayList<>();
-        for(Medico obj : medicos) {
-            meds.add(obj.toString());
-        }
-        return meds;
-    }
-    
-    public void imprimirMedicosPacientes() {
-        for(Medico obj : medicos) {
-            System.out.print("Doutor -> ");
-            obj.imprimirMedico();
-            
-            System.out.println("Pacientes:");
-            //obj.imprimirPacientes();
-            
-            System.out.println();
-        }
-    }
-    
-    public String imprimirSecretariaPacientes() {
-        String Pacs = "";
-        for(Paciente obj : secretaria.getPacientes()) {
-            Pacs = Pacs+obj.imprimirPaciente();
-        }
-        return Pacs;
-    }
-    
-    public String imprimirSecretariaConsultas() {
-        String cons = "";
-        for(Consulta obj : secretaria.getConsultas()) {
-            cons = cons+obj.imprimirConsulta();
-        }
-        return cons;
-    }
-    
-    public boolean testaPaciente(String cpf){
-        Paciente paciente = Buscas.buscaPaciente(secretaria.getPacientes(), cpf);
-        if(paciente != null){
-            return true;
-        }else{
-            return false;
-        }
-    }
+
 }
