@@ -1,144 +1,54 @@
 package atoresPrincipais;
 
-import classesAuxiliares.Buscas;
-import dadosPessoas.DadosAdicionais;
-import dadosPessoas.Prontuario;
+import atoresPrincipais.Medico;
+import atoresPrincipais.Secretaria;
+import gerenciadorMensagem.GerenciadorMensagem;
 import atoresSecundários.Consulta;
 import atoresSecundários.Paciente;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import classesAuxiliares.Buscas;
+import java.util.ArrayList;
+import java.util.List;
 
-@Entity
-@Table(name = "medico")
-public class Medico {
-
-    @Id
-    @Column(name = "crm", nullable = false, unique = true)
-    private String crm;  // CRM será a chave primária
-
-    @Column(name = "nome", nullable = false)
+public class Clinica {
     private String nome;
+    private Secretaria secretaria;
+    private GerenciadorMensagem gerenciador;
+    private List<Medico> medicos;
 
-    @Column(name = "especialidade", nullable = false)
-    private String especialidade;
-
-    @OneToMany(mappedBy = "medico", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Consulta> consultas;  // Relacionamento One-to-Many com Consulta
-    
-    public Medico(String nome, String crm, String especialidade) {
+    public Clinica(String nome, Secretaria secretaria) {
         this.nome = nome;
-        this.crm = crm;
-        this.especialidade = especialidade;
-        this.consultas = new ArrayList<>();
+        this.secretaria = secretaria;
+        this.gerenciador = new GerenciadorMensagem(secretaria);
+        this.medicos = new ArrayList<>();
     }
-    
-    public void cadastraDadosAdicionais(String cpf, boolean fuma, boolean bebe, boolean colesterol,
-        boolean diabete, boolean doencaCardiaca, List<String> cirurgias, List<String> alergias){
-        
-        Paciente paciente = Buscas.buscaPacienteConsulta(consultas, cpf);
-        paciente.setDadosAdicionais(new DadosAdicionais(fuma, bebe, colesterol, diabete, doencaCardiaca, cirurgias, alergias));
-        
-    }
-    
-    public void atualizaDadosAdicionais(String cpf,boolean fuma, boolean bebe, boolean colesterol,
-        boolean diabete, boolean doencaCardiaca, String cirurgia, String alergia){
-        Paciente paciente = Buscas.buscaPacienteConsulta(consultas, cpf);
-        
-        paciente.getDadosAdicionais().setFuma(fuma);
-        paciente.getDadosAdicionais().setBebe(bebe);
-        paciente.getDadosAdicionais().setColesterol(colesterol);
-        paciente.getDadosAdicionais().setDiabete(diabete);
-        paciente.getDadosAdicionais().setDoencaCardiaca(doencaCardiaca);
-        if (!"".equals(cirurgia)) {
-            paciente.getDadosAdicionais().cadastraCirurgia(cirurgia); // NAO TEM COMO DESFAZER CIRURGIAS
-        }
-        
-        if (!"".equals(alergia)) {
-            paciente.getDadosAdicionais().cadastraAlergia(alergia); // NAO TEM COMO CURAR ALERGIAS
-        }
-    }
-    
-    public void removeDadosAdicionais(String cpf){
-        Paciente paciente = Buscas.buscaPacienteConsulta(consultas, cpf);
-        
-        paciente.setDadosAdicionais(null);
-        
-    }
-    
-    public void cadastraProntuario(String cpf, String sintomas, String diagnostico, String preescricaoTratamento, String dataAdd){
-        Paciente paciente = Buscas.buscaPacienteConsulta(consultas, cpf);
-        
-        paciente.setProntuarios(new Prontuario(sintomas, diagnostico, preescricaoTratamento, dataAdd));
-        
-    }
-    
-    public void atualizaProntuario(String cpf, String data, String diagnostico, String Preescricao, String Sintoma){
-        Paciente paciente = Buscas.buscaPacienteConsulta(consultas, cpf);
 
-        int index = paciente.getProntuarios().indexOf(Buscas.buscaProntuario(paciente.getProntuarios(), data)); // data não pode ser atualizada
-        paciente.getProntuarios().get(index).setDiagnostico(diagnostico);
-        paciente.getProntuarios().get(index).setPrescricao(Preescricao);
-        paciente.getProntuarios().get(index).setSintomas(Sintoma);
+    public GerenciadorMensagem getGerenciador() {
+        return gerenciador;
+    }
+
+    public void setGerenciador(GerenciadorMensagem gerenciador) {
+        this.gerenciador = gerenciador;
     }
     
-    public void removeProntuario(String cpf, String data){
-        Paciente paciente = Buscas.buscaPacienteConsulta(consultas, cpf);
-        
-        int index = paciente.getProntuarios().indexOf(Buscas.buscaProntuario(paciente.getProntuarios(), data));
-        paciente.getProntuarios().remove(index);
-        
+    public Secretaria getSecretaria() {
+        return secretaria;
+    }
+
+    public void setSecretaria(Secretaria secretaria) {
+        this.secretaria = secretaria;
     }
     
-    public String pacienteMes(String mes){
-        int numPacientes = 0;
-        String pacs = "";
-        for(int i = 0; i < consultas.size(); i++){
-            Consulta consulta = consultas.get(i);
-            String data = consulta.getData();
-            String[] parte = data.split("/");
-            
-            if (mes.equals(parte[1])){
-                pacs = pacs+consulta.getPaciente().imprimirPaciente();
-                numPacientes++;
-            }
-        }
-        return pacs;
+    public List<Medico> getMedicos() {
+        return medicos;
     }
-    public String geraAtestado(String dataInicio, String dataFim, String justificativa, String cpf){
-        Paciente paciente = Buscas.buscaPacienteConsulta(consultas, cpf);
-        
-        return "Atestado para: "+ paciente.getNome()+ "\nvalido de " + dataInicio +", ate " + dataFim + "\n" +
-                           "Pelo motivo de: " + justificativa + "." + "\n" + 
-                           "Assinado por: " + nome+"\n";  
+
+    public void setMedicos(Medico medico) {
+        this.medicos.add(medico);
     }
     
-    public void geraReceita(Map<String, String> remedios, String infoExtra, String data, String cpf){
-        Paciente paciente = Buscas.buscaPacienteConsulta(consultas, cpf);
-        
-        for (String key : remedios.keySet()){
-            System.out.println(key + ": " + remedios.get(key));
-        }
-        System.out.println(infoExtra + ".");
-        System.out.println("Para o paciente: " + paciente.getNome() + ".");
-        System.out.println("Medico: "+ nome + " " + data + ".");       
-    }
-    
-    public String geraDeclaracaoAcompanhamento(String justificativa, String acompanhante, String data, String cpf){
-        Paciente paciente = Buscas.buscaPacienteConsulta(consultas, cpf);
-        
-        return "Declaro que " + acompanhante + " esteve no dia " + data+ " acompanhando " + paciente.getNome() + " no atendimento" + "\n" +
-        "Assinado por " + nome + ".";
-    }
- 
     public String getNome() {
         return nome;
     }
@@ -146,69 +56,73 @@ public class Medico {
     public void setNome(String nome) {
         this.nome = nome;
     }
-
-    public String getCrm() {
-        return crm;
-    }
-
-    public void setCrm(String crm) {
-        this.crm = crm;
-    }
-
-    public List<Consulta> getConsulta() {
-        return consultas;
-    }
-
-    public void setConsulta(Consulta consulta) {
-         this.consultas.add(consulta);
-    }
-
-    public String getEspecialidade() {
-        return especialidade;
-    }
-
-    public void setEspecialidade(String especialidade) {
-        this.especialidade = especialidade;
-    }
     
-    public void imprimirMedico() {
-         System.out.println("Nome: " + nome + ", Crm: " + crm + ", Especialidade: " + especialidade);
-    }
-    
-    @Override
-    public String toString(){
-        return "Doutor -> Nome: " + nome + ", Crm: " + crm + ", Especialidade: " + especialidade;
-    }
-    
-    // imprime todos os pacientes do medico, sem duplicacao.
-    public List<String> imprimirNomePacientes() {
-        Set<Paciente> pacientesImpressos = new HashSet<>();
-        List<String> pacs = new ArrayList<>();
-        for (Consulta consulta : consultas) {
-            Paciente paciente = consulta.getPaciente();
-            if (!pacientesImpressos.contains(paciente)) {
-                pacientesImpressos.add(paciente);
-                pacs.add(paciente.getCpf());
+        public void cadastraMedico(String crm, String nome, String especialidade, EntityManagerFactory emf) {
+            Medico novoMedico = new Medico(crm, nome, especialidade);
+            if (crm != null) { 
+                EntityManager em = emf.createEntityManager();
+                em.getTransaction().begin();
+                em.persist(novoMedico);
+                em.getTransaction().commit();
+                em.close();
+            } else {
+            System.out.println("Campo crm vazio");
             }
         }
-        return pacs;
-    }
-    
-    public String imprimirPacientes() {
-        Set<Paciente> pacientesImpressos = new HashSet<>();
-        String PACS = "";
-        for (Consulta consulta : consultas) {
-            Paciente paciente = consulta.getPaciente();
-            if (!pacientesImpressos.contains(paciente)) {
-                pacientesImpressos.add(paciente);
-                PACS = PACS+("Nome: " + paciente.getNome() +
-                                   ", Cpf: " + paciente.getCpf() +
-                                   ", Data de nascimento: " + paciente.getDataNascimento() + "\n"
-
-                );
+        
+       public boolean verificaCRM(String crm){
+        for(char c : crm.toCharArray()){
+            if(Character.isLetter(c)){
+                return false;
+            }else{
+                return true;
             }
         }
-        return PACS;
+        return false;
     }
     
+    public List<String> imprimirMedicos() {
+        List<String> meds = new ArrayList<>();
+        for(Medico obj : medicos) {
+            meds.add(obj.toString());
+        }
+        return meds;
+    }
+    
+    public void imprimirMedicosPacientes() {
+        for(Medico obj : medicos) {
+            System.out.print("Doutor -> ");
+            obj.imprimirMedico();
+            
+            System.out.println("Pacientes:");
+            //obj.imprimirPacientes();
+            
+            System.out.println();
+        }
+    }
+    
+    public String imprimirSecretariaPacientes() {
+        String Pacs = "";
+        for(Paciente obj : secretaria.getPacientes()) {
+            Pacs = Pacs+obj.imprimirPaciente();
+        }
+        return Pacs;
+    }
+    
+    public String imprimirSecretariaConsultas() {
+        String cons = "";
+        for(Consulta obj : secretaria.getConsultas()) {
+            cons = cons+obj.imprimirConsulta();
+        }
+        return cons;
+    }
+    
+    public boolean testaPaciente(String cpf){
+        Paciente paciente = Buscas.buscaPaciente(secretaria.getPacientes(), cpf);
+        if(paciente != null){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }
