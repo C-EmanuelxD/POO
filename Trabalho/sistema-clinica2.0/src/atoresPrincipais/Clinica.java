@@ -5,6 +5,9 @@ import atoresPrincipais.Secretaria;
 import gerenciadorMensagem.GerenciadorMensagem;
 import atoresSecundários.Consulta;
 import atoresSecundários.Paciente;
+import javax.persistence.Entity;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import classesAuxiliares.Buscas;
 import java.util.ArrayList;
 import java.util.List;
@@ -54,16 +57,20 @@ public class Clinica {
         this.nome = nome;
     }
     
-    public void cadastraMedico(String crm, String nome, String especialidade) {
-        if (crm != null) { 
-            this.setMedicos(new Medico(nome, crm, especialidade));
-            System.out.println("Medico cadastrado com sucesso");
-            return;
+        public void cadastraMedico(String crm, String nome, String especialidade, EntityManagerFactory emf) {
+            Medico novoMedico = new Medico(crm, nome, especialidade);
+            if (crm != null) { 
+                EntityManager em = emf.createEntityManager();
+                em.getTransaction().begin();
+                em.persist(novoMedico);
+                em.getTransaction().commit();
+                em.close();
+            } else {
+            System.out.println("Campo crm vazio");
+            }
         }
-        System.out.println("Campo crm vazio");
-    }
-    
-   public boolean verificaCRM(String crm){
+        
+       public boolean verificaCRM(String crm){
         for(char c : crm.toCharArray()){
             if(Character.isLetter(c)){
                 return false;
