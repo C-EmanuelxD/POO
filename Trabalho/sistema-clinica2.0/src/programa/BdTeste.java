@@ -1,4 +1,4 @@
-package programa;
+   package programa;
 
 import atoresPrincipais.Clinica;
 import atoresPrincipais.Secretaria;
@@ -29,7 +29,7 @@ public class BdTeste {
         System.out.println(med.getNome());
 
         sec.cadastraPaciente("231", "Antonio", "02/07/2001", "Mauricio Fé, 357", null, "9999-4444", TipoConvenio.PLANO, emf);
-        // sec.removePaciente("231", emf);
+         sec.removePaciente("ghj", emf);
         sec.atualizaPaciente("231", "zé", "Alecrim Dourado, 220", "jose@gmail.com", "8842-3233", TipoConvenio.PLANO, emf);        // Início da transação
         // em.getTransaction().begin();
         sec.cadastraPaciente("2313", "Antonio", "02/07/2001", "Mauricio Fé, 357", null, "9999-4444", TipoConvenio.PLANO, emf);

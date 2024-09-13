@@ -17,7 +17,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Query;
 import javax.persistence.Table;
+import javax.persistence.TypedQuery;
 
 @Entity
 @Table(name = "medico")
@@ -153,33 +155,29 @@ public class Medico {
         }
     }
 
-    public String pacienteMes(String mes) {
-        int numPacientes = 0;
-        String pacs = "";
-        for (int i = 0; i < consultas.size(); i++) {
-            Consulta consulta = consultas.get(i);
-            String data = consulta.getData();
-            String[] parte = data.split("/");
-
-            if (mes.equals(parte[1])) {
-                pacs = pacs + consulta.getPaciente().imprimirPaciente();
-                numPacientes++;
-            }
-        }
-        return pacs;
+    public Long pacienteMes(EntityManagerFactory emf) {
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+        List<Paciente> pacientesEncontrados = em.createQuery("select p FROM Paciente p").getResultList();
+        long total = pacientesEncontrados.size();
+        em.getTransaction().commit();
+        em.close();
+        return total;
     }
 
-    public String geraAtestado(String dataInicio, String dataFim, String justificativa, String cpf) {
-        Paciente paciente = Buscas.buscaPacienteConsulta(consultas, cpf);
-
+    public String geraAtestado(String dataInicio, String dataFim, String justificativa, String cpf, EntityManagerFactory emf) {
+        EntityManager em = emf.createEntityManager();
+        Paciente paciente = em.createQuery("SELECT p FROM Paciente p WHERE p.cpf = :cpfPaciente", Paciente.class).setParameter("cpfPaciente", cpf).getSingleResult();
+        em.close();
         return "Atestado para: " + paciente.getNome() + "\nvalido de " + dataInicio + ", ate " + dataFim + "\n"
                 + "Pelo motivo de: " + justificativa + "." + "\n"
                 + "Assinado por: " + nome + "\n";
     }
 
-    public void geraReceita(Map<String, String> remedios, String infoExtra, String data, String cpf) {
-        Paciente paciente = Buscas.buscaPacienteConsulta(consultas, cpf);
-
+    public void geraReceita(Map<String, String> remedios, String infoExtra, String data, String cpf, EntityManagerFactory emf) {
+        EntityManager em = emf.createEntityManager();
+        Paciente paciente = em.createQuery("SELECT p FROM Paciente p WHERE p.cpf = :cpfPaciente", Paciente.class).setParameter("cpfPaciente", cpf).getSingleResult();
+        em.close();
         for (String key : remedios.keySet()) {
             System.out.println(key + ": " + remedios.get(key));
         }
@@ -188,8 +186,10 @@ public class Medico {
         System.out.println("Medico: " + nome + " " + data + ".");
     }
 
-    public String geraDeclaracaoAcompanhamento(String justificativa, String acompanhante, String data, String cpf) {
-        Paciente paciente = Buscas.buscaPacienteConsulta(consultas, cpf);
+    public String geraDeclaracaoAcompanhamento(String justificativa, String acompanhante, String data, String cpf, EntityManagerFactory emf) {
+        EntityManager em = emf.createEntityManager();
+        Paciente paciente = em.createQuery("SELECT p FROM Paciente p WHERE p.cpf = :cpfPaciente", Paciente.class).setParameter("cpfPaciente", cpf).getSingleResult();
+        em.close();
 
         return "Declaro que " + acompanhante + " esteve no dia " + data + " acompanhando " + paciente.getNome() + " no atendimento" + "\n"
                 + "Assinado por " + nome + ".";
@@ -236,7 +236,6 @@ public class Medico {
         return "Doutor -> Nome: " + nome + ", Crm: " + crm + ", Especialidade: " + especialidade;
     }
 
-    // imprime todos os pacientes do medico, sem duplicacao.
     public List<String> imprimirNomePacientes() {
         Set<Paciente> pacientesImpressos = new HashSet<>();
         List<String> pacs = new ArrayList<>();

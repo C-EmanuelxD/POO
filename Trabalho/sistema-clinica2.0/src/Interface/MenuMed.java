@@ -194,7 +194,7 @@ public class MenuMed extends javax.swing.JFrame {
 
     private void jButtonPacientesNoMesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPacientesNoMesActionPerformed
         String  data = JOptionPane.showInputDialog(null, "Digite o mês que deseja consultar: (0x)", "Pacientes no mês", JOptionPane.INFORMATION_MESSAGE);
-        String pacientes = medico.pacienteMes(data);
+        Long pacientes = medico.pacienteMes(emf);
         JOptionPane.showMessageDialog(null, pacientes, "Pacientes atendidos no mês", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_jButtonPacientesNoMesActionPerformed
 

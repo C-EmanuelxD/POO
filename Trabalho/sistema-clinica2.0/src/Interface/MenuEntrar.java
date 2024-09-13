@@ -238,8 +238,8 @@ public class MenuEntrar extends javax.swing.JFrame {
     }//GEN-LAST:event_btnMenuLoginActionPerformed
 
     private void btnExibirMedicosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExibirMedicosActionPerformed
-
-        List<String> meds = clinica.imprimirMedicos();
+ 
+        List<String> meds = clinica.imprimirMedicos(emf);
         String impressao = "";
         for (String i : meds) {
             impressao = impressao + i + "\n";

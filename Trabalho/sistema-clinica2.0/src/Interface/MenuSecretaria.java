@@ -782,12 +782,9 @@ public class MenuSecretaria extends javax.swing.JFrame {
     private void jButtonRemoverPacActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRemoverPacActionPerformed
         String cpf = JOptionPane.showInputDialog(null, "Escreva o cpf do paciente", "Remover", JOptionPane.INFORMATION_MESSAGE);
 
-        if (clinica.testaPaciente(cpf)) {
-            clinica.getSecretaria().removePaciente(cpf, emf);
-            JOptionPane.showMessageDialog(null, "Removido com sucesso", "Removido", JOptionPane.INFORMATION_MESSAGE);
-        } else {
-            JOptionPane.showMessageDialog(null, "Não encontrado!", "ERRO", JOptionPane.ERROR_MESSAGE);
-        }
+        clinica.getSecretaria().removePaciente(cpf, emf);
+        JOptionPane.showMessageDialog(null, "Removido com sucesso", "Removido", JOptionPane.INFORMATION_MESSAGE);
+
 
     }//GEN-LAST:event_jButtonRemoverPacActionPerformed
 

@@ -1,18 +1,13 @@
 package programa;
 
 import Interface.MenuEntrar;
-import classesAuxiliares.Buscas;
-import dadosPessoas.Prontuario;
 import atoresPrincipais.Clinica;
-import atoresPrincipais.Medico;
-import atoresSecundários.Paciente;
 import atoresPrincipais.Secretaria;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-// JA FORAM DEIADOS ALGUNS TESTES DE CADASTRO, OS TESTES PODEM SER REMOVIDOS E VÃO DA LINHA 25 ATÉ A LINHA 49
 public class Main {
 
     public static void main(String[] args) {

@@ -23,7 +23,8 @@ public class MenuMedPac extends javax.swing.JFrame {
     Paciente paciente;
     Medico medico;
     EntityManagerFactory emf;
-    public MenuMedPac(EntityManagerFactory emf,Clinica clinica, Medico medico, Paciente paciente) {
+
+    public MenuMedPac(EntityManagerFactory emf, Clinica clinica, Medico medico, Paciente paciente) {
         this.clinica = clinica;
         this.paciente = paciente;
         this.medico = medico;
@@ -354,16 +355,15 @@ public class MenuMedPac extends javax.swing.JFrame {
         dispose();
         MenuMedPacDaAd mDados = new MenuMedPacDaAd(emf, clinica, medico, paciente);
         mDados.setVisible(true);
-        
+
     }//GEN-LAST:event_jButtonDadoAdicionalActionPerformed
 
     private void jButtonSalvarAtestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarAtestActionPerformed
         String dataIni = jFormattedTextFieldDataIni.getText();
         String dataFim = jFormattedTextFieldDatafim.getText();
         String Justif = jTextAreaJust.getText();
-        
-        JOptionPane.showMessageDialog(null, medico.geraAtestado(dataIni, dataFim, Justif, paciente.getCpf()),"Atestado" , HEIGHT);
-        
+        JOptionPane.showMessageDialog(null, medico.geraAtestado(dataIni, dataFim, Justif, paciente.getCpf(), emf), "Atestado", HEIGHT);
+
         jFormattedTextFieldDataIni.setText("");
         jFormattedTextFieldDatafim.setText("");
         jTextAreaJust.setText("");
@@ -386,14 +386,13 @@ public class MenuMedPac extends javax.swing.JFrame {
         String justif = jTextAreaJustifi.getText();
         String nomeAcomp = jTextFieldNome.getText();
         String data = jFormattedTextFieldData.getText();
-        
-        
-        JOptionPane.showMessageDialog(null, medico.geraDeclaracaoAcompanhamento(justif, nomeAcomp, data, paciente.getCpf()), "Declaração de acompanhamento", HEIGHT);
-        
+
+        JOptionPane.showMessageDialog(null, medico.geraDeclaracaoAcompanhamento(justif, nomeAcomp, data, paciente.getCpf(), emf), "Declaração de acompanhamento", HEIGHT);
+
         jTextAreaJustifi.setText("");
         jTextFieldNome.setText("");
         jFormattedTextFieldData.setText("");
-        
+
         jFrameGeraAcomp.dispose();
     }//GEN-LAST:event_jButtonSalvarAcompActionPerformed
 
@@ -406,7 +405,6 @@ public class MenuMedPac extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAnterior;

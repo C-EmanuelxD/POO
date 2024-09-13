@@ -13,12 +13,11 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.swing.JOptionPane;
 
-
 public class MenuLogin extends javax.swing.JFrame {
 
     Clinica clinica;
     EntityManagerFactory emf;
-    
+
     public MenuLogin(EntityManagerFactory emf, Clinica clinica) {
         this.clinica = clinica;
         this.emf = emf;
@@ -199,9 +198,9 @@ public class MenuLogin extends javax.swing.JFrame {
 
     private void jComboBoxSecrMedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxSecrMedActionPerformed
         String selecionado = (String) jComboBoxSecrMed.getSelectedItem();
-        if(selecionado.equals("Secretária")){
+        if (selecionado.equals("Secretária")) {
             jPanelCRM.setVisible(false);
-        }else{
+        } else {
             jPanelCRM.setVisible(true);
         }
     }//GEN-LAST:event_jComboBoxSecrMedActionPerformed
@@ -210,23 +209,23 @@ public class MenuLogin extends javax.swing.JFrame {
         EntityManager em = emf.createEntityManager();
 
         String selecionado = (String) jComboBoxSecrMed.getSelectedItem();
-        if(selecionado.equals("Secretária")){
+        if (selecionado.equals("Secretária")) {
             dispose();
             MenuSecretaria menuSec = new MenuSecretaria(emf, clinica);
             menuSec.setVisible(true);
-            
-        }else{
+
+        } else {
             String crm = textfieldCrmLogin.getText();
             Medico medico = em.find(Medico.class, crm);
-            if(medico != null){
+            if (medico != null) {
                 dispose();
                 MenuMed menuMed = new MenuMed(emf, clinica, medico);
                 menuMed.setVisible(true);
-            }else{
+            } else {
                 textfieldCrmLogin.setText("");
                 JOptionPane.showMessageDialog(null, "Médico não encontrado! ", "ERRO", JOptionPane.ERROR_MESSAGE);
             }
-            
+
         }
     }//GEN-LAST:event_btnEntrarActionPerformed
 
@@ -246,7 +245,6 @@ public class MenuLogin extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAnterior;

@@ -107,10 +107,12 @@ public class Secretaria {
         em.getTransaction().begin();
         Paciente paciente = em.find(Paciente.class, cpf);
         if (paciente != null) {
+
             em.remove(paciente);
+            em.getTransaction().commit();
+            em.close();
         }
-        em.getTransaction().commit();
-        em.close();
+
     }
 
     public void cadastraConsulta(String data, String horario, String crm, String cpf, TipoConsulta tipoConsulta, EntityManagerFactory emf) {
@@ -155,12 +157,12 @@ public class Secretaria {
         if (consulta != null) {
             em.remove(consulta);
             em.getTransaction().commit();
+            em.close();
             System.out.println("Consulta removida com sucesso");
         } else {
             System.out.println("Consulta não encontrada");
 
         }
-        em.close();
     }
 
     // ta meio feito fe com fe ta em 
