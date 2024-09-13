@@ -31,7 +31,7 @@ public class BdTeste {
        
         med.cadastraProntuario("231", "muito diabates", "dormir", "dorme", "02/07/2001", emf);
         med.cadastraDadosAdicionais("231", false, false, false, true, true, Arrays.asList("Apendicite", "Pedra no rim"), Arrays.asList((String) null), emf);
-        sec.cadastraConsulta("02/03/2024", "09:30", "21234", "231", TipoConsulta.NORMAL, emf);
+        sec.cadastraConsulta("02/03/2024", "09:30", "11111", "231", TipoConsulta.NORMAL, emf);
         //med.cadastraDadosAdicionais("231", false, false, false, true, true, Arrays.asList("Apendicite", "Pedra no rim"), null, emf);
         // Exemplo de criação de um novo paciente (dados fictícios)
         
