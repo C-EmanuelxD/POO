@@ -8,6 +8,8 @@ import atoresPrincipais.Clinica;
 import atoresPrincipais.Secretaria;
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
 /**
  *
@@ -15,19 +17,18 @@ import javax.swing.JOptionPane;
  */
 public class MenuEntrar extends javax.swing.JFrame {
 
-    /**
-     * Creates new form MenuEntrar
-     */
+    private final EntityManagerFactory emf = Persistence.createEntityManagerFactory("CLINICAPU");
+
     Clinica clinica = new Clinica("Saude & CIA", new Secretaria("Vanessa"));
+
     public MenuEntrar() {
         initComponents();
     }
-    
+
     public MenuEntrar(Clinica clinica) {
         this.clinica = clinica;
         initComponents();
     }
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -253,11 +254,11 @@ public class MenuEntrar extends javax.swing.JFrame {
 
         List<String> meds = clinica.imprimirMedicos();
         String impressao = "";
-        for(String i : meds){
-            impressao = impressao+i+"\n";
+        for (String i : meds) {
+            impressao = impressao + i + "\n";
         }
         System.out.println(meds);
-        
+
         JOptionPane.showMessageDialog(null, impressao, "Médicos", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_btnExibirMedicosActionPerformed
 
@@ -266,49 +267,46 @@ public class MenuEntrar extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCadastroMedicoActionPerformed
 
     private void jButtonCadastraMedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCadastraMedActionPerformed
-        
-        if(jTextFieldCRM.getText().isEmpty() || jTextFieldNome.getText().isEmpty() || !(clinica.verificaCRM(jTextFieldCRM.getText()))){
+
+        if (jTextFieldCRM.getText().isEmpty() || jTextFieldNome.getText().isEmpty() || !(clinica.verificaCRM(jTextFieldCRM.getText()))) {
             JOptionPane.showMessageDialog(null, "Erro no Cadastro", "Erro", JOptionPane.ERROR_MESSAGE);
-        }else{
+        } else {
             String esp = (String) jComboBoxEspecialidade.getSelectedItem();
-            clinica.cadastraMedico(jTextFieldCRM.getText(), jTextFieldNome.getText(), esp);
-        
+            clinica.cadastraMedico(jTextFieldCRM.getText(), jTextFieldNome.getText(), esp, emf);
+
             JOptionPane.showMessageDialog(null, "Cadastrado com sucesso!");
             jTextFieldCRM.setText("");
             jTextFieldNome.setText("");
         }
-        
-        
-       
-        
-        
+
+
     }//GEN-LAST:event_jButtonCadastraMedActionPerformed
 
     private void btnGerenciadorMensagemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGerenciadorMensagemActionPerformed
-        
+
         jFrameEmailSms.setVisible(true);
-        
-        
+
+
     }//GEN-LAST:event_btnGerenciadorMensagemActionPerformed
 
     private void jFrameEmailSmsComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jFrameEmailSmsComponentShown
         String data = JOptionPane.showInputDialog("Escreva a data atual:");
-        List<String> emails;
-        List<String> SMS;
-        emails = clinica.getGerenciador().enviarEmail(data);
-        SMS = clinica.getGerenciador().enviarSMS(data);
+        //List<String> emails;
+        //List<String> SMS;
+        //emails = clinica.getGerenciador().enviarEmail(data);
+        //SMS = clinica.getGerenciador().enviarSMS(data);
         String imprimiEmail = "";
         String imprimiSms = "";
-        
-        for(String i : emails){
-            imprimiEmail = imprimiEmail+i+"\n";
-        }
-        for(String j : SMS){
-            imprimiSms = imprimiSms+j+"\n";
-        }
-        jTextAreaImprimirEmails.setText(imprimiEmail);
-        jTextAreaImprimirSMS.setText(imprimiSms);
-        
+
+////        for (String i : emails) {
+////            imprimiEmail = imprimiEmail + i + "\n";
+////        }
+////        for (String j : SMS) {
+////            imprimiSms = imprimiSms + j + "\n";
+//        }
+//        jTextAreaImprimirEmails.setText(imprimiEmail);
+//        jTextAreaImprimirSMS.setText(imprimiSms);
+
     }//GEN-LAST:event_jFrameEmailSmsComponentShown
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

@@ -9,6 +9,8 @@ import atoresPrincipais.Medico;
 import atoresSecundários.Paciente;
 import classesAuxiliares.Buscas;
 import dadosPessoas.Prontuario;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.swing.JOptionPane;
 
 /**
@@ -17,9 +19,8 @@ import javax.swing.JOptionPane;
  */
 public class MenuMedPacProntu extends javax.swing.JFrame {
 
-    /**
-     * Creates new form MenuMedPacProntu
-     */
+    private final EntityManagerFactory emf = Persistence.createEntityManagerFactory("CLINICAPU");
+
     
     Clinica clinica;
     Medico medico;
@@ -241,7 +242,7 @@ public class MenuMedPacProntu extends javax.swing.JFrame {
 
     private void jButtonSalvarCadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarCadActionPerformed
         medico.cadastraProntuario(paciente.getCpf(), jTextFieldSintomas.getText(), jTextFieldDiagnostico.getText(), jTextFieldPreescricao.getText(), 
-                            jTextFieldData.getText());
+                            jTextFieldData.getText(), emf);
         
         JOptionPane.showConfirmDialog(null, "Cadastrado com sucesso!", "Cadastro", JOptionPane.INFORMATION_MESSAGE);
         jTextFieldSintomas.setText("");
@@ -255,7 +256,7 @@ public class MenuMedPacProntu extends javax.swing.JFrame {
         Prontuario prontRemovido = Buscas.buscaProntuario(paciente.getProntuarios(), data);
         
         if(prontRemovido != null){
-            medico.removeProntuario(paciente.getCpf(), data);
+            medico.removeProntuario(paciente.getCpf(), data, emf);
             JOptionPane.showMessageDialog(null, "Removido com sucesso!", "Remoção", JOptionPane.INFORMATION_MESSAGE);
         }else{
             JOptionPane.showMessageDialog(null, ("Erro - Não existe o prontuario para:" + data), "ERRO", JOptionPane.ERROR_MESSAGE);

@@ -8,6 +8,10 @@ import atoresPrincipais.Clinica;
 import clinicaTipos.TipoConsulta;
 import clinicaTipos.TipoConvenio;
 import javax.swing.JOptionPane;
+import javax.persistence.Entity;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
 /**
  *
@@ -15,10 +19,8 @@ import javax.swing.JOptionPane;
  */
 public class MenuSecretaria extends javax.swing.JFrame {
 
-    /**
-     * Creates new form MenuSecretaria
-     */
-    
+    private final EntityManagerFactory emf = Persistence.createEntityManagerFactory("CLINICAPU");
+
     Clinica clinica;
     
     public MenuSecretaria(Clinica clinica){
@@ -495,7 +497,7 @@ public class MenuSecretaria extends javax.swing.JFrame {
         String cpf = JOptionPane.showInputDialog(null, "Escreva o cpf do paciente", "Remover", JOptionPane.INFORMATION_MESSAGE);
    
         if(clinica.testaPaciente(cpf)){
-            clinica.getSecretaria().removePaciente(cpf);
+            clinica.getSecretaria().removePaciente(cpf, emf);
             JOptionPane.showMessageDialog(null, "Removido com sucesso", "Removido", JOptionPane.INFORMATION_MESSAGE);
         }else{
             JOptionPane.showMessageDialog(null, "Não encontrado!", "ERRO", JOptionPane.ERROR_MESSAGE);
@@ -522,7 +524,7 @@ public class MenuSecretaria extends javax.swing.JFrame {
         String horario = JOptionPane.showInputDialog(null, "Escreva o horario", "Inserir horario", HEIGHT);
         String crm = JOptionPane.showInputDialog(null, "Escreva o crm:", "Inserir CRM", HEIGHT);
         
-        clinica.getSecretaria().removeConsulta(crm, data, horario);
+        clinica.getSecretaria().removeConsulta(crm, data, horario, emf);
         
         JOptionPane.showMessageDialog(null, "Removido com sucesso!", "Remoção", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_jButtonRemoveConsActionPerformed
@@ -552,9 +554,9 @@ public class MenuSecretaria extends javax.swing.JFrame {
     private void jButtonConsDiaSegActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConsDiaSegActionPerformed
         String data = JOptionPane.showInputDialog("Escreva a data de hoje: ");
         
-        String consultas = clinica.getSecretaria().gerarRelatorioConsulta(data);
+      //  String consultas = clinica.getSecretaria().gerarRelatorioConsulta(data);
         
-        JOptionPane.showMessageDialog(null, consultas, "Consultas do dia Seguinte", JOptionPane.INFORMATION_MESSAGE);
+        //JOptionPane.showMessageDialog(null, consultas, "Consultas do dia Seguinte", JOptionPane.INFORMATION_MESSAGE);
         
         
     }//GEN-LAST:event_jButtonConsDiaSegActionPerformed
@@ -584,9 +586,9 @@ public class MenuSecretaria extends javax.swing.JFrame {
         
         
         if(jRadioBtnPlano.isSelected()){
-            clinica.getSecretaria().cadastraPaciente(cpf, nome, dataNasc, Endereco, Email, telefone, TipoConvenio.PLANO);
+            clinica.getSecretaria().cadastraPaciente(cpf, nome, dataNasc, Endereco, Email, telefone, TipoConvenio.PLANO, emf);
         }else{
-            clinica.getSecretaria().cadastraPaciente(cpf, nome, dataNasc, Endereco, Email, telefone, TipoConvenio.PARTICULAR);
+            clinica.getSecretaria().cadastraPaciente(cpf, nome, dataNasc, Endereco, Email, telefone, TipoConvenio.PARTICULAR, emf);
         }
         jTextNome.setText("");
         jTextCpf.setText("");
@@ -604,11 +606,11 @@ public class MenuSecretaria extends javax.swing.JFrame {
         String crm = jTextFieldCrmMed.getText();
         String horario = jTextFieldHorario.getText();
         
-        if(jRadioButtonNormal.isSelected()){
-            clinica.getSecretaria().cadastraConsulta(data, horario, crm, cpf, TipoConsulta.NORMAL, clinica.getMedicos());
-        }else{
-            clinica.getSecretaria().cadastraConsulta(data, horario, crm, cpf, TipoConsulta.RETORNO, clinica.getMedicos());
-        }
+//        if(jRadioButtonNormal.isSelected()){
+//            clinica.getSecretaria().cadastraConsulta(data, horario, crm, cpf, TipoConsulta.NORMAL, clinica.getMedicos(), emf);
+//        }else{
+//            clinica.getSecretaria().cadastraConsulta(data, horario, crm, cpf, TipoConsulta.RETORNO, clinica.getMedicos(), emf);
+//        }
         jTextFieldData.setText("");
         jTextFieldCpfPac.setText("");
         jTextFieldCrmMed.setText("");

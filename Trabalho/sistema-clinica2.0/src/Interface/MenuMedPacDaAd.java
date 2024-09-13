@@ -9,17 +9,14 @@ import atoresPrincipais.Medico;
 import atoresSecundários.Paciente;
 import java.util.Arrays;
 import java.util.List;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author Emanuel
- */
 public class MenuMedPacDaAd extends javax.swing.JFrame {
 
-    /**
-     * Creates new form MenuMedPacDaAd
-     */
+    private final EntityManagerFactory emf = Persistence.createEntityManagerFactory("CLINICAPU");
+
     Clinica clinica;
     Medico medico;
     Paciente paciente;
@@ -258,7 +255,7 @@ public class MenuMedPacDaAd extends javax.swing.JFrame {
         
         List<String> alergias = Arrays.asList(jTextFieldAlergia.getText().split("\\s*,\\s*"));
         
-        medico.cadastraDadosAdicionais(paciente.getCpf(), fuma, bebe, colesterol, diabetes, doenca, Cirurgias, alergias);
+        medico.cadastraDadosAdicionais(paciente.getCpf(), fuma, bebe, colesterol, diabetes, doenca, Cirurgias, alergias, emf);
         JOptionPane.showMessageDialog(null, "Cadastrado com sucesso", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
         }else{
              JOptionPane.showMessageDialog(null, "Dados já cadastrados!", "Erro", JOptionPane.ERROR_MESSAGE);
@@ -266,7 +263,7 @@ public class MenuMedPacDaAd extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonSalvarCadActionPerformed
 
     private void jButtonRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRemoverActionPerformed
-        medico.removeDadosAdicionais(paciente.getCpf());
+        medico.removeDadosAdicionais(paciente.getCpf(), emf);
         JOptionPane.showMessageDialog(null, "Dados removidos!", "Remoção de dados adicionais", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_jButtonRemoverActionPerformed
 

@@ -8,18 +8,16 @@ import atoresPrincipais.Clinica;
 import atoresPrincipais.Medico;
 import classesAuxiliares.Buscas;
 import static classesAuxiliares.Buscas.buscaMedico;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author Emanuel
- */
+
 public class MenuLogin extends javax.swing.JFrame {
 
-    /**
-     * Creates new form MenuLogin
-     * @param clinica
-     */
+    private final EntityManagerFactory emf = Persistence.createEntityManagerFactory("CLINICAPU");
+
     
     Clinica clinica;
     
@@ -210,6 +208,8 @@ public class MenuLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_jComboBoxSecrMedActionPerformed
 
     private void btnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarActionPerformed
+        EntityManager em = emf.createEntityManager();
+
         String selecionado = (String) jComboBoxSecrMed.getSelectedItem();
         if(selecionado.equals("Secretária")){
             dispose();
@@ -218,7 +218,7 @@ public class MenuLogin extends javax.swing.JFrame {
             
         }else{
             String crm = textfieldCrmLogin.getText();
-            Medico medico = buscaMedico(clinica.getMedicos(), crm);
+            Medico medico = em.find(Medico.class, crm);
             if(medico != null){
                 dispose();
                 MenuMed menuMed = new MenuMed(clinica, medico);

@@ -187,9 +187,6 @@ public class MenuMed extends javax.swing.JFrame {
         for(String x: pacientesMed){
             jComboBoxPacienteEsco.addItem(x);
         }
-       
-        
-        
     }//GEN-LAST:event_jButtonAcessarPacientesActionPerformed
 
     private void jButtonPacientesNoMesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPacientesNoMesActionPerformed
