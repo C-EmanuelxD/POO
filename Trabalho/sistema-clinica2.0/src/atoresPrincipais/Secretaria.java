@@ -184,7 +184,22 @@ public class Secretaria {
         String prox_dia = String.format("%02d/%02d/%d", dia, mes, ano);
         EntityManager em = emf.createEntityManager();
         // tem que colocar filtro para email/sms quem tem ou nao easy
-        List<Consulta> consultas = em.createQuery("SELECT c FROM Consulta c WHERE c.data = :data", Consulta.class).setParameter("data", prox_dia).getResultList();
+        List<Consulta> consultas = em.createQuery("SELECT c FROM Consulta c WHERE c.data = :data",
+                Consulta.class)
+                .setParameter("data", prox_dia)
+                .getResultList();
+
+        List<Consulta> consultasComContato = em.createQuery(
+                "SELECT c FROM Consulta c WHERE c.data = :data AND c.paciente.email IS NOT NULL AND c.paciente.celular IS NOT NULL",
+                Consulta.class)
+                .setParameter("data", prox_dia)
+                .getResultList();
+
+        List<Consulta> consultasSemContato = em.createQuery(
+                "SELECT c FROM Consulta c WHERE c.data = :data AND (c.paciente.email IS NULL OR c.paciente.celular IS NULL)",
+                Consulta.class)
+                .setParameter("data", prox_dia)
+                .getResultList();
         em.close();
         return consultas;
     }
@@ -192,7 +207,10 @@ public class Secretaria {
     public List<Consulta> gerarRelatorioConsulta(String dataAtual, EntityManagerFactory emf) {
         EntityManager em = emf.createEntityManager();
 
-        List<Consulta> consultas = em.createQuery("SELECT c FROM Consulta c WHERE c.data = :data", Consulta.class).setParameter("data", dataAtual).getResultList();
+        List<Consulta> consultas = em.createQuery("SELECT c FROM Consulta c WHERE c.data = :data",
+                Consulta.class)
+                .setParameter("data", dataAtual)
+                .getResultList();
         em.close();
 
         return consultas;
