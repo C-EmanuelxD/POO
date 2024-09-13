@@ -51,16 +51,20 @@ public class Medico {
         em.getTransaction().begin();
         Paciente paciente = em.find(Paciente.class, cpf);
         if (paciente != null) {
-            DadosAdicionais dadosAdicionais = new DadosAdicionais(fuma, bebe, colesterol, diabete, doencaCardiaca, cirurgias, alergias);
-            em.getTransaction().begin();
-            em.persist(dadosAdicionais);
+            DadosAdicionais dadosAdicionais = new DadosAdicionais(fuma, bebe, colesterol, diabete, doencaCardiaca, new ArrayList<>(cirurgias), new ArrayList<>(alergias));
+            paciente.setDadosAdicionais(dadosAdicionais); // Associe os dados adicionais ao paciente
+            em.persist(dadosAdicionais); // Salve os dados adicionais
+            em.merge(paciente); // Atualize o paciente com a nova referência
         }
+
+        em.getTransaction().commit();
         em.close();
     }
 
-    public void atualizaDadosAdicionais(String cpf, boolean fuma, boolean bebe, boolean colesterol, boolean diabete, boolean doencaCardiaca, String cirurgia, String alergia, EntityManagerFactory emf) {
+    public void atualizaDadosAdicionais(String cpf, boolean fuma, boolean bebe, boolean colesterol, boolean diabete, boolean doencaCardiaca, List<String> cirurgias, List<String> alergias, EntityManagerFactory emf) {
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
+
         Paciente paciente = em.find(Paciente.class, cpf);
         if (paciente != null) {
             DadosAdicionais dadosAdicionais = paciente.getDadosAdicionais();
@@ -70,14 +74,15 @@ public class Medico {
                 dadosAdicionais.setColesterol(colesterol);
                 dadosAdicionais.setDiabete(diabete);
                 dadosAdicionais.setDoencaCardiaca(doencaCardiaca);
-                if (!"".equals(cirurgia)) {// nao sei se ta certo daqui pra baixo me basiei no mdico la ai nao sei se com db funciona igual
-                    dadosAdicionais.cadastraCirurgia(cirurgia);
-                }
-                if (!"".equals(alergia)) {
-                    dadosAdicionais.cadastraAlergia(alergia);
-                }
+
+                // Atualize as listas de cirurgias e alergias, evitando NullPointerException
+                dadosAdicionais.setCirurgias(cirurgias != null ? new ArrayList<>(cirurgias) : new ArrayList<>());
+                dadosAdicionais.setAlergias(alergias != null ? new ArrayList<>(alergias) : new ArrayList<>());
+
+                em.merge(dadosAdicionais); // Atualize os dados adicionais
             }
         }
+
         em.getTransaction().commit();
         em.close();
     }
@@ -85,12 +90,15 @@ public class Medico {
     public void removeDadosAdicionais(String cpf, EntityManagerFactory emf) {
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
+
         Paciente paciente = em.find(Paciente.class, cpf);
         if (paciente != null && paciente.getDadosAdicionais() != null) {
             DadosAdicionais dadosAdicionais = paciente.getDadosAdicionais();
-            paciente.setDadosAdicionais(null);  // Remove a relação no paciente
-            em.remove(em.contains(dadosAdicionais) ? dadosAdicionais : em.merge(dadosAdicionais));  // Remove dados adicionais
+            paciente.setDadosAdicionais(null); // Desassocia os dados adicionais do paciente
+
+            em.remove(em.contains(dadosAdicionais) ? dadosAdicionais : em.merge(dadosAdicionais)); // Remove os dados adicionais
         }
+
         em.getTransaction().commit();
         em.close();
     }

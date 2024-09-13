@@ -5,6 +5,7 @@ import dadosPessoas.DadosAdicionais;
 import clinicaTipos.TipoConvenio;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -16,10 +17,11 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="paciente")
+@Table(name = "paciente")
 public class Paciente {
+
     @Id
-     @Column(name = "cpf")
+    @Column(name = "cpf")
     private String cpf;
 
     @Column(name = "nome", length = 100, nullable = false)
@@ -41,14 +43,15 @@ public class Paciente {
     @Column(name = "tipo_convenio")
     private TipoConvenio tipoConvenio;
 
-    @OneToOne
-    @JoinColumn(name = "dados_adicionais_id")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "dados_adicionais_id") // id em dados adicionais
     private DadosAdicionais dadosAdicionais;
 
     @OneToMany(mappedBy = "paciente")
     private List<Prontuario> prontuarios = new ArrayList<>();
 
-    public Paciente() {}
+    public Paciente() {
+    }
 
     public Paciente(String cpf, String nome, String dataNascimento, String endereco, String email, String sms, TipoConvenio tipoConvenio) {
         this.cpf = cpf;
@@ -90,7 +93,7 @@ public class Paciente {
         return prontuarios;
     }
 
-    public void setProntuarios(Prontuario prontuario){
+    public void setProntuarios(Prontuario prontuario) {
         this.prontuarios.add(prontuario);
     }
 
@@ -101,7 +104,7 @@ public class Paciente {
     public void setDadosAdicionais(DadosAdicionais dadosAdicionais) {
         this.dadosAdicionais = dadosAdicionais;
     }
-    
+
     public String getNome() {
         return nome;
     }
@@ -141,16 +144,16 @@ public class Paciente {
     public void setTipoPlano(TipoConvenio tipoConvenio) {
         this.tipoConvenio = tipoConvenio;
     }
-    
+
     public String imprimirPaciente() {
-        return "Paciente - > Nome: " + nome + ", Cpf: " + cpf + ", Data de Nascimento: " + dataNascimento + ", Endereco: " + endereco +", Email: " + email + ", SMS: " + sms + ", Convenio: " + tipoConvenio + "\n\n";
+        return "Paciente - > Nome: " + nome + ", Cpf: " + cpf + ", Data de Nascimento: " + dataNascimento + ", Endereco: " + endereco + ", Email: " + email + ", SMS: " + sms + ", Convenio: " + tipoConvenio + "\n\n";
     }
-    
+
     public String imprimirProntuarios() {
         String pronts = "";
-        for(Prontuario obj : prontuarios) {
-            pronts = pronts+obj.imprimirProntuario();
-            
+        for (Prontuario obj : prontuarios) {
+            pronts = pronts + obj.imprimirProntuario();
+
         }
         return pronts;
     }

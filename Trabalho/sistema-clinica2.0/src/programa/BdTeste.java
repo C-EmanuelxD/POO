@@ -3,11 +3,8 @@ package programa;
 import atoresPrincipais.Clinica;
 import atoresPrincipais.Secretaria;
 import atoresPrincipais.Medico;
-import atoresSecundários.Paciente;
-import classesAuxiliares.Buscas;
 import clinicaTipos.TipoConsulta;
 import clinicaTipos.TipoConvenio;
-import dadosPessoas.DadosAdicionais;
 import java.util.Arrays;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -19,7 +16,7 @@ public class BdTeste {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("CLINICAPU");
 
         // Criação do EntityManager para gerenciar as transações
-       EntityManager em = emf.createEntityManager();
+        EntityManager em = emf.createEntityManager();
         Clinica clinica = new Clinica("Saude & Cia", new Secretaria("Vanessa"));
         Secretaria sec = clinica.getSecretaria();
         clinica.cadastraMedico("Fabio", "11111", "Oftalmologista", emf);
@@ -33,6 +30,8 @@ public class BdTeste {
        // em.getTransaction().begin();
        
         med.cadastraProntuario("231", "muito diabates", "dormir", "dorme", "02/07/2001", emf);
+        med.cadastraDadosAdicionais("231", false, false, false, true, true, Arrays.asList("Apendicite", "Pedra no rim"), Arrays.asList((String) null), emf);
+        sec.cadastraConsulta("02/03/2024", "09:30", "21234", "231", TipoConsulta.NORMAL, emf);
         //med.cadastraDadosAdicionais("231", false, false, false, true, true, Arrays.asList("Apendicite", "Pedra no rim"), null, emf);
         // Exemplo de criação de um novo paciente (dados fictícios)
         

@@ -113,7 +113,7 @@ public class Secretaria {
         em.close();
     }
 
-    public void cadastraConsulta(String data, String horario, String crm, String cpf, TipoConsulta tipoConsulta, List<Medico> medicos, EntityManagerFactory emf) {
+    public void cadastraConsulta(String data, String horario, String crm, String cpf, TipoConsulta tipoConsulta, EntityManagerFactory emf) {
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
         Paciente paciente = em.find(Paciente.class, cpf);

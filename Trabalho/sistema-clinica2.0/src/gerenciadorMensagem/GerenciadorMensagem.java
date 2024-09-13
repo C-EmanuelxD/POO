@@ -25,34 +25,34 @@ public class GerenciadorMensagem {
         this.secretaria = secretaria;
     }
     
-    public List<String> enviarEmail(String dataAtual) {
-        List<Consulta> consultasMensagem = secretaria.consultasDiaSeguinte(dataAtual);
-        List<String> emails = new ArrayList<>();
-        int index = 0;
-        while (index < consultasMensagem.size()) {
-            Consulta consulta = consultasMensagem.get(index);
-            Paciente paciente = consulta.getPaciente();
-            if (paciente.getEmail() != null) {
-                emails.add(email.enviaEmail(consulta));
-            }
-            index++;
-        }
-        return emails;
-    }
+//    public List<String> enviarEmail(String dataAtual) {
+//        List<Consulta> consultasMensagem = secretaria.consultasDiaSeguinte(dataAtual);
+//        List<String> emails = new ArrayList<>();
+//        int index = 0;
+//        while (index < consultasMensagem.size()) {
+//            Consulta consulta = consultasMensagem.get(index);
+//            Paciente paciente = consulta.getPaciente();
+//            if (paciente.getEmail() != null) {
+//                emails.add(email.enviaEmail(consulta));
+//            }
+//            index++;
+//        }
+//        return emails;
+//    }
     
-    public List<String> enviarSMS(String dataAtual) {
-        List<Consulta> consultasMensagem = secretaria.consultasDiaSeguinte(dataAtual);
-        List<String> SMSs = new ArrayList<>();
-        
-        int index = 0;
-        while (index < consultasMensagem.size()) {
-            Consulta consulta = consultasMensagem.get(index);
-            Paciente paciente = consulta.getPaciente();
-            if (paciente.getSms() != null) {
-                SMSs.add(sms.enviaSMS(consulta));
-            }
-            index++;
-        }
-        return SMSs;
-    }
+//    public List<String> enviarSMS(String dataAtual) {
+//        List<Consulta> consultasMensagem = secretaria.consultasDiaSeguinte(dataAtual);
+//        List<String> SMSs = new ArrayList<>();
+//        
+//        int index = 0;
+//        while (index < consultasMensagem.size()) {
+//            Consulta consulta = consultasMensagem.get(index);
+//            Paciente paciente = consulta.getPaciente();
+//            if (paciente.getSms() != null) {
+//                SMSs.add(sms.enviaSMS(consulta));
+//            }
+//            index++;
+//        }
+//        return SMSs;
+//    }
 }

@@ -2,6 +2,7 @@ package dadosPessoas;
 //NAO FEITO AINDA
 
 import atoresSecundários.Paciente;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
@@ -37,14 +38,13 @@ public class DadosAdicionais {
     
     @ElementCollection
     @CollectionTable(name = "cirurgias", joinColumns = @JoinColumn(name = "dados_adicionais_id"))
-    private List<String> cirurgias;
+    private List<String> cirurgias = new ArrayList<>();
 
     @ElementCollection
     @CollectionTable(name = "alergias", joinColumns = @JoinColumn(name = "dados_adicionais_id"))
-    private List<String> alergias;
+    private List<String> alergias = new ArrayList<>();
 
-    @OneToOne(mappedBy="dadosAdicionais")
-    @JoinColumn(name = "paciente_cpf")
+    @OneToOne(mappedBy = "dadosAdicionais")
     private Paciente paciente;
     
     public DadosAdicionais() {}
