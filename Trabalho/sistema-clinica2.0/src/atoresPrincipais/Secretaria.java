@@ -18,6 +18,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.Query;
 import javax.persistence.Table;
 
 @Entity
@@ -148,18 +149,26 @@ public class Secretaria {
         em.close();
     }
 
-    public void removeConsulta(String crm, String data, String horario) {
-        Consulta consultaRemovida = Buscas.buscaConsulta(consultas, crm, data, horario);
-        if (consultaRemovida != null) {
-            consultas.remove(consultaRemovida);
-            consultaRemovida.getMedico().getConsulta().remove(consultaRemovida);
+    public void removeConsulta(String crm, String data, String horario, EntityManagerFactory emf) {
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+        Consulta consulta = em.createQuery("SELECT c FROM Consulta c WHERE c.medico.crm = :crm AND c.data = :data AND c.horario = :horario", Consulta.class).setParameter("crm", crm).setParameter("data", data).setParameter("horario", horario).getSingleResult();
+        if (consulta != null) {
+            em.remove(consulta);
+            Medico medico = consulta.getMedico();
+            medico.getConsulta().remove(consulta);  // Presumindo que Medico tenha uma lista de consultas vai bugar!!
+            em.merge(medico);  // Sincroniza as alterações do médico com o banco de dados
+            em.getTransaction().commit();
             System.out.println("Consulta removida com sucesso");
-            return;
+        } else {
+            System.out.println("Consulta não encontrada");
+
         }
-        System.out.println("Consulta não encontrada");
+        em.close();
     }
 
-    public List<Consulta> consultasDiaSeguinte(String dataAtual) {
+    // ta meio feito fe com fe ta em 
+    public List<Consulta> consultasDiaSeguinte(String dataAtual, EntityManagerFactory emf) {
         String[] partes = dataAtual.split("/");
         int dia = Integer.parseInt(partes[0]);
         int mes = Integer.parseInt(partes[1]);
@@ -177,41 +186,19 @@ public class Secretaria {
         }
 
         String prox_dia = String.format("%02d/%02d/%d", dia, mes, ano);
-        List<Consulta> consultasDiaSeguinte = new ArrayList<>();
-
-        // Adiciona as consultas dos pacientes que tem email ou celular
-        for (Consulta x : consultas) {
-            if (x.getData().equals(prox_dia)) {
-                if (x.getPaciente().getEmail() != null || x.getPaciente().getSms() != null) {
-                    consultasDiaSeguinte.add(x);
-                }
-            }
-        }
-
-        // Adiciona as consultas dos pacientes que nao tem email e celular
-        for (Consulta x : consultas) {
-            if (x.getData().equals(prox_dia)) {
-                if (x.getPaciente().getEmail() == null && x.getPaciente().getSms() == null) {
-                    consultasDiaSeguinte.add(x);
-                }
-            }
-        }
-
-        return consultasDiaSeguinte;
+        EntityManager em = emf.createEntityManager();
+        // tem que colocar filtro para email/sms quem tem ou nao easy
+        List<Consulta> consultas = em.createQuery("SELECT c FROM Consulta c WHERE c.data = :data", Consulta.class).setParameter("data", prox_dia).getResultList();
+        em.close();
+        return consultas;
     }
 
-    public String gerarRelatorioConsulta(String dataAtual) {
-        List<Consulta> consultasDiaSeguinte = this.consultasDiaSeguinte(dataAtual);
-        String cons = "";
+    public List<Consulta> gerarRelatorioConsulta(String dataAtual, EntityManagerFactory emf) {
+        EntityManager em = emf.createEntityManager();
 
-        if (consultasDiaSeguinte.isEmpty()) {
-            System.out.println("Nenhuma consulta");
-            return cons;
-        }
+        List<Consulta> consultas = em.createQuery("SELECT c FROM Consulta c WHERE c.data = :data", Consulta.class).setParameter("data", dataAtual).getResultList();
+        em.close();
 
-        for (Consulta x : consultasDiaSeguinte) {
-            cons = cons + x.imprimirConsulta();
-        }
-        return cons;
+        return consultas;
     }
 }

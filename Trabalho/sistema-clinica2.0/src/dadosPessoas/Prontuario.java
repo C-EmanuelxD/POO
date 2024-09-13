@@ -33,11 +33,12 @@ public class Prontuario {
     @JoinColumn(name = "paciente_cpf", nullable = false)  // Foreign key to Paciente
     private Paciente paciente;
 
-    public Prontuario(String sintomas, String diagnostico, String prescricao, String data) {
+    public Prontuario(String sintomas, String diagnostico, String prescricao, String data, Paciente paciente) {
         this.sintomas = sintomas;
         this.diagnostico = diagnostico;
         this.prescricao = prescricao;
         this.data = data; //CHAVE PRIMARIA PARA BUSCAS DE PRONTUARIO
+        this.paciente = paciente;
     }
 
     public String getData() {
@@ -47,7 +48,6 @@ public class Prontuario {
     public void setData(String data) {
         this.data = data;
     }
-    
     
     public String getSintomas() {
         return sintomas;
@@ -78,5 +78,5 @@ public class Prontuario {
                 "Sintomas: " + sintomas + "\n" +
                 "Diagnostico: " + diagnostico + "\n" +
                 "Prescrição: " + prescricao + "\n\n");
-    }
+    } 
 }
