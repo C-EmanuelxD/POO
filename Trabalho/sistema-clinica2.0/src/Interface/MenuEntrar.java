@@ -7,15 +7,16 @@ package Interface;
 import atoresPrincipais.Clinica;
 import atoresPrincipais.Secretaria;
 import java.util.List;
+import javax.persistence.EntityManager;
 import javax.swing.JOptionPane;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 public class MenuEntrar extends javax.swing.JFrame {
 
-    private final EntityManagerFactory emf = Persistence.createEntityManagerFactory("CLINICAPU");
-
-   Clinica clinica = new Clinica("Saude & CIA", new Secretaria("Vanessa"));
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory("CLINICAPU");
+    EntityManager em = emf.createEntityManager();
+    Clinica clinica = new Clinica("Saude & CIA", new Secretaria("Vanessa"));
 
     public MenuEntrar() {
         initComponents();

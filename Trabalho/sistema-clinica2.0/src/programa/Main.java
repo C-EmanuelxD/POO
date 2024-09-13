@@ -23,7 +23,7 @@ public class Main {
         Secretaria sec = clinica.getSecretaria();
         em.getTransaction().begin();
         em.persist(sec);
-        new MenuEntrar(emf, clinica, sec).setvisible(true);
+        //new MenuEntrar(emf, clinica, sec).setvisible(true);
         em.getTransaction().commit();
         em.close();
     }
