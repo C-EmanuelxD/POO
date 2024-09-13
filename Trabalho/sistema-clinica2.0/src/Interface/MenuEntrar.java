@@ -332,7 +332,7 @@ public class MenuEntrar extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 //new MenuEntrar().setVisible(true);
-                EntityManagerFactory emf = Persistence.createEntityManagerFactory("CLINICAPU");
+                EntityManagerFactory emf = Persistence.createEntityManagerFactory("sample");
 
                 // Criação do EntityManager para gerenciar as transações
                 EntityManager em = emf.createEntityManager();

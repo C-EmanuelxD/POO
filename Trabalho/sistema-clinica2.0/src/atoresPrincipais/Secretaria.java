@@ -1,7 +1,5 @@
 package atoresPrincipais;
 
-import classesAuxiliares.Buscas;
-import static classesAuxiliares.Buscas.buscaConsulta;
 import atoresSecundários.Consulta;
 import atoresSecundários.Paciente;
 import java.util.ArrayList;
@@ -18,7 +16,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
-import javax.persistence.Query;
 import javax.persistence.Table;
 
 @Entity
@@ -153,7 +150,8 @@ public class Secretaria {
     public void removeConsulta(String crm, String data, String horario, EntityManagerFactory emf) {
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
-        Consulta consulta = em.createQuery("SELECT c FROM Consulta c WHERE c.medico.crm = :crm AND c.data = :data AND c.horario = :horario", Consulta.class).setParameter("crm", crm).setParameter("data", data).setParameter("horario", horario).getSingleResult();
+        Consulta consulta = em.createQuery("SELECT c FROM Consulta c WHERE c.medico.crm = :crm AND c.data = :data AND c.horario = :horario",
+                Consulta.class).setParameter("crm", crm).setParameter("data", data).setParameter("horario", horario).getSingleResult();
         if (consulta != null) {
             em.remove(consulta);
             em.getTransaction().commit();
@@ -185,12 +183,7 @@ public class Secretaria {
 
         String prox_dia = String.format("%02d/%02d/%d", dia, mes, ano);
         EntityManager em = emf.createEntityManager();
-        // tem que colocar filtro para email/sms quem tem ou nao easy
-        List<Consulta> consultas = em.createQuery("SELECT c FROM Consulta c WHERE c.data = :data",
-                Consulta.class)
-                .setParameter("data", prox_dia)
-                .getResultList();
-
+        // tem que colocar filtro para email/sms
         List<Consulta> consultasComContato = em.createQuery(
                 "SELECT c FROM Consulta c WHERE c.data = :data AND c.paciente.email IS NOT NULL AND c.paciente.celular IS NOT NULL",
                 Consulta.class)
@@ -203,7 +196,7 @@ public class Secretaria {
                 .setParameter("data", prox_dia)
                 .getResultList();
         em.close();
-        return consultas;
+        return consultasComContato;
     }
 
     public List<Consulta> gerarRelatorioConsulta(String dataAtual, EntityManagerFactory emf) {

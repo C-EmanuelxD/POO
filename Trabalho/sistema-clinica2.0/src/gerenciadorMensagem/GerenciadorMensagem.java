@@ -20,7 +20,7 @@ public class GerenciadorMensagem {
         this.email = new Email();
         this.sms = new SMS();
     }
-    EntityManagerFactory emf = Persistence.createEntityManagerFactory("CLINICAPU");
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory("sample");
     EntityManager em = emf.createEntityManager();
 
     public Secretaria getSecretaria() {
