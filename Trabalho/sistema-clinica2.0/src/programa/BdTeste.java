@@ -32,7 +32,9 @@ public class BdTeste {
         // sec.removePaciente("231", emf);
         sec.atualizaPaciente("231", "zé", "Alecrim Dourado, 220", "jose@gmail.com", "8842-3233", TipoConvenio.PLANO, emf);        // Início da transação
         // em.getTransaction().begin();
+        sec.cadastraPaciente("2313", "Antonio", "02/07/2001", "Mauricio Fé, 357", null, "9999-4444", TipoConvenio.PLANO, emf);
 
+        sec.removePaciente("jg", emf);
         med.cadastraProntuario("231", "muito diabates", "dormir", "dorme", "02/07/2001", emf);
         med.cadastraDadosAdicionais("231", false, false, false, true, true, Arrays.asList("Apendicite", "Pedra no rim"), Arrays.asList((String) null), emf);
         sec.cadastraConsulta("02/03/2024", "09:30", "11111", "231", TipoConsulta.NORMAL, emf);

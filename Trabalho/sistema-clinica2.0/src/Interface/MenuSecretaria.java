@@ -554,9 +554,9 @@ public class MenuSecretaria extends javax.swing.JFrame {
     private void jButtonConsDiaSegActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConsDiaSegActionPerformed
         String data = JOptionPane.showInputDialog("Escreva a data de hoje: ");
         
-      //  String consultas = clinica.getSecretaria().gerarRelatorioConsulta(data);
+        //String consultas = clinica.getSecretaria().gerarRelatorioConsulta(data);
         
-        //JOptionPane.showMessageDialog(null, consultas, "Consultas do dia Seguinte", JOptionPane.INFORMATION_MESSAGE);
+       // JOptionPane.showMessageDialog(null, consultas, "Consultas do dia Seguinte", JOptionPane.INFORMATION_MESSAGE);
         
         
     }//GEN-LAST:event_jButtonConsDiaSegActionPerformed
@@ -606,11 +606,11 @@ public class MenuSecretaria extends javax.swing.JFrame {
         String crm = jTextFieldCrmMed.getText();
         String horario = jTextFieldHorario.getText();
         
-//        if(jRadioButtonNormal.isSelected()){
-//            clinica.getSecretaria().cadastraConsulta(data, horario, crm, cpf, TipoConsulta.NORMAL, clinica.getMedicos(), emf);
-//        }else{
-//            clinica.getSecretaria().cadastraConsulta(data, horario, crm, cpf, TipoConsulta.RETORNO, clinica.getMedicos(), emf);
-//        }
+        if(jRadioButtonNormal.isSelected()){
+            //clinica.getSecretaria().cadastraConsulta(data, horario, crm, cpf, TipoConsulta.NORMAL, clinica.getMedicos(), emf);
+        }else{
+            //clinica.getSecretaria().cadastraConsulta(data, horario, crm, cpf, TipoConsulta.RETORNO, clinica.getMedicos(), emf);
+        }
         jTextFieldData.setText("");
         jTextFieldCpfPac.setText("");
         jTextFieldCrmMed.setText("");

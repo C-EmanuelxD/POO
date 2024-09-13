@@ -11,15 +11,11 @@ import javax.swing.JOptionPane;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-/**
- *
- * @author Emanuel
- */
 public class MenuEntrar extends javax.swing.JFrame {
 
     private final EntityManagerFactory emf = Persistence.createEntityManagerFactory("CLINICAPU");
 
-    Clinica clinica = new Clinica("Saude & CIA", new Secretaria("Vanessa"));
+   Clinica clinica = new Clinica("Saude & CIA", new Secretaria("Vanessa"));
 
     public MenuEntrar() {
         initComponents();
@@ -54,7 +50,6 @@ public class MenuEntrar extends javax.swing.JFrame {
         jTextAreaImprimirEmails = new javax.swing.JTextArea();
         jTextAreaImprimirSMS = new javax.swing.JTextArea();
         jButton1 = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         btnMenuLogin = new javax.swing.JButton();
         btnGerenciadorMensagem = new javax.swing.JButton();
@@ -162,9 +157,6 @@ public class MenuEntrar extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Menu Inicial");
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Interface/Saude & CIA true.jpg"))); // NOI18N
-        jLabel1.setText("jLabel1");
-
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel2.setText("Escolha uma opção:");
 
@@ -218,17 +210,11 @@ public class MenuEntrar extends javax.swing.JFrame {
                             .addComponent(btnExibirMedicos, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(12, 12, 12)))
                 .addGap(45, 45, 45))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(173, 173, 173)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addComponent(jLabel1)
-                .addGap(18, 18, 18)
+                .addGap(122, 122, 122)
                 .addComponent(jLabel2)
                 .addGap(37, 37, 37)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -291,21 +277,21 @@ public class MenuEntrar extends javax.swing.JFrame {
 
     private void jFrameEmailSmsComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jFrameEmailSmsComponentShown
         String data = JOptionPane.showInputDialog("Escreva a data atual:");
-        //List<String> emails;
-        //List<String> SMS;
-        //emails = clinica.getGerenciador().enviarEmail(data);
-        //SMS = clinica.getGerenciador().enviarSMS(data);
+        List<String> emails;
+        List<String> SMS;
+        emails = clinica.getGerenciador().enviarEmail(data);
+        SMS = clinica.getGerenciador().enviarSMS(data);
         String imprimiEmail = "";
         String imprimiSms = "";
 
-////        for (String i : emails) {
-////            imprimiEmail = imprimiEmail + i + "\n";
-////        }
-////        for (String j : SMS) {
-////            imprimiSms = imprimiSms + j + "\n";
-//        }
-//        jTextAreaImprimirEmails.setText(imprimiEmail);
-//        jTextAreaImprimirSMS.setText(imprimiSms);
+        for (String i : emails) {
+            imprimiEmail = imprimiEmail + i + "\n";
+        }
+        for (String j : SMS) {
+            imprimiSms = imprimiSms + j + "\n";
+        }
+        jTextAreaImprimirEmails.setText(imprimiEmail);
+        jTextAreaImprimirSMS.setText(imprimiSms);
 
     }//GEN-LAST:event_jFrameEmailSmsComponentShown
 
@@ -359,7 +345,6 @@ public class MenuEntrar extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> jComboBoxEspecialidade;
     private javax.swing.JFrame jFrameCadastroMed;
     private javax.swing.JFrame jFrameEmailSms;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
