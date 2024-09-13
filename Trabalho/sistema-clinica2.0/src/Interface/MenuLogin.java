@@ -16,13 +16,12 @@ import javax.swing.JOptionPane;
 
 public class MenuLogin extends javax.swing.JFrame {
 
-    private final EntityManagerFactory emf = Persistence.createEntityManagerFactory("CLINICAPU");
-
-    
     Clinica clinica;
+    EntityManagerFactory emf;
     
-    public MenuLogin(Clinica clinica) {
+    public MenuLogin(EntityManagerFactory emf, Clinica clinica) {
         this.clinica = clinica;
+        this.emf = emf;
         initComponents();
     }
 
@@ -213,7 +212,7 @@ public class MenuLogin extends javax.swing.JFrame {
         String selecionado = (String) jComboBoxSecrMed.getSelectedItem();
         if(selecionado.equals("Secretária")){
             dispose();
-            MenuSecretaria menuSec = new MenuSecretaria(clinica);
+            MenuSecretaria menuSec = new MenuSecretaria(emf, clinica);
             menuSec.setVisible(true);
             
         }else{
@@ -221,7 +220,7 @@ public class MenuLogin extends javax.swing.JFrame {
             Medico medico = em.find(Medico.class, crm);
             if(medico != null){
                 dispose();
-                MenuMed menuMed = new MenuMed(clinica, medico);
+                MenuMed menuMed = new MenuMed(emf, clinica, medico);
                 menuMed.setVisible(true);
             }else{
                 textfieldCrmLogin.setText("");
@@ -233,14 +232,14 @@ public class MenuLogin extends javax.swing.JFrame {
 
     private void btnAnteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnteriorActionPerformed
         dispose();
-        MenuEntrar main = new MenuEntrar(clinica);
+        MenuEntrar main = new MenuEntrar(emf, clinica);
         main.setVisible(true);
     }//GEN-LAST:event_btnAnteriorActionPerformed
 
     private void btnHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomeActionPerformed
 
         dispose();
-        MenuEntrar main = new MenuEntrar(clinica);
+        MenuEntrar main = new MenuEntrar(emf, clinica);
         main.setVisible(true);
     }//GEN-LAST:event_btnHomeActionPerformed
 

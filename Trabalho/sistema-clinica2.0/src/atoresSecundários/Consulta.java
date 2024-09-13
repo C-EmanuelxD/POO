@@ -20,7 +20,7 @@ public class Consulta {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    
+
     @Column(name = "data")
     private String data;  // Parte da chave composta
 
@@ -37,6 +37,9 @@ public class Consulta {
 
     @Enumerated(EnumType.STRING)
     private TipoConsulta tipoConsulta;
+
+    public Consulta() {
+    }
 
     public Consulta(String data, String horario, Medico medico, Paciente paciente, TipoConsulta tipoConsulta) {
         this.data = data;
@@ -85,11 +88,11 @@ public class Consulta {
     public void setTipoConsulta(TipoConsulta tipoConsulta) {
         this.tipoConsulta = tipoConsulta;
     }
-    
+
     public String imprimirConsulta() {
-        return ("Consulta -> Data: " + data + ", Horario: " + horario + ", Tipo Consulta: " + tipoConsulta + "\n" +
-        "Medico -> " + "Nome: " + medico.getNome() + ", Crm: " + medico.getCrm() + ", Especialidade: " + medico.getEspecialidade()+ "\n" +
-        "Paciente -> " + "Nome: " + paciente.getNome() + ", Cpf: " + paciente.getCpf() + ", Data de nascimento: " +
-                paciente.getDataNascimento() + ", Endereço: " + paciente.getEndereco() + ", Convênio: " + paciente.getTipoPlano()+"\n\n");
+        return ("Consulta -> Data: " + data + ", Horario: " + horario + ", Tipo Consulta: " + tipoConsulta + "\n"
+                + "Medico -> " + "Nome: " + medico.getNome() + ", Crm: " + medico.getCrm() + ", Especialidade: " + medico.getEspecialidade() + "\n"
+                + "Paciente -> " + "Nome: " + paciente.getNome() + ", Cpf: " + paciente.getCpf() + ", Data de nascimento: "
+                + paciente.getDataNascimento() + ", Endereço: " + paciente.getEndereco() + ", Convênio: " + paciente.getTipoPlano() + "\n\n");
     }
 }

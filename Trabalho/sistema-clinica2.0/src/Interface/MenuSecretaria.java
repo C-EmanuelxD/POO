@@ -8,27 +8,19 @@ import atoresPrincipais.Clinica;
 import clinicaTipos.TipoConsulta;
 import clinicaTipos.TipoConvenio;
 import javax.swing.JOptionPane;
-import javax.persistence.Entity;
-import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 
-/**
- *
- * @author Emanuel
- */
 public class MenuSecretaria extends javax.swing.JFrame {
 
-    private final EntityManagerFactory emf = Persistence.createEntityManagerFactory("CLINICAPU");
-
     Clinica clinica;
-    
-    public MenuSecretaria(Clinica clinica){
+    EntityManagerFactory emf;
+
+    public MenuSecretaria(EntityManagerFactory emf, Clinica clinica) {
         initComponents();
         this.clinica = clinica;
-       
+        this.emf = emf;
+
     }
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -72,6 +64,38 @@ public class MenuSecretaria extends javax.swing.JFrame {
         jTextFieldCpfPac = new javax.swing.JTextField();
         jTextFieldCrmMed = new javax.swing.JTextField();
         jTextFieldHorario = new javax.swing.JTextField();
+        atualizarPaciente = new javax.swing.JFrame();
+        jLabel18 = new javax.swing.JLabel();
+        CPFATUALIZARP = new javax.swing.JTextField();
+        jLabel19 = new javax.swing.JLabel();
+        jLabel20 = new javax.swing.JLabel();
+        jLabel21 = new javax.swing.JLabel();
+        jLabel22 = new javax.swing.JLabel();
+        jLabel23 = new javax.swing.JLabel();
+        Emailatualizar = new javax.swing.JTextField();
+        NOMEatualizar1 = new javax.swing.JTextField();
+        SMSatualizar = new javax.swing.JTextField();
+        EnderecoAtualizar1 = new javax.swing.JTextField();
+        Plano = new javax.swing.JRadioButton();
+        Convenio = new javax.swing.JRadioButton();
+        SalvarAtualizarPaciente = new javax.swing.JButton();
+        buttonGroup2 = new javax.swing.ButtonGroup();
+        AtualizarConsulta = new javax.swing.JFrame();
+        jLabel24 = new javax.swing.JLabel();
+        jLabel25 = new javax.swing.JLabel();
+        jLabel26 = new javax.swing.JLabel();
+        jLabel27 = new javax.swing.JLabel();
+        DATANOVACON = new javax.swing.JLabel();
+        jLabel29 = new javax.swing.JLabel();
+        HORARIONOVOTUALIZACon = new javax.swing.JTextField();
+        DATAATUCON = new javax.swing.JTextField();
+        DATAATUA = new javax.swing.JTextField();
+        HORARIOATU = new javax.swing.JTextField();
+        CRMATUALIZACon = new javax.swing.JTextField();
+        RETORNOATUCON = new javax.swing.JRadioButton();
+        NORMALATUCON = new javax.swing.JRadioButton();
+        jButton3 = new javax.swing.JButton();
+        buttonGroup3 = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
         jButtonAttPacientes = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
@@ -319,6 +343,268 @@ public class MenuSecretaria extends javax.swing.JFrame {
                 .addGap(32, 32, 32))
         );
 
+        jLabel18.setText("CPF:");
+
+        CPFATUALIZARP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CPFATUALIZARPActionPerformed(evt);
+            }
+        });
+
+        jLabel19.setText("Nome:");
+
+        jLabel20.setText("Email:");
+
+        jLabel21.setText("ENDERECO:");
+
+        jLabel22.setText("SMS:");
+
+        jLabel23.setText("TipoConsulta:");
+
+        Emailatualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EmailatualizarActionPerformed(evt);
+            }
+        });
+
+        NOMEatualizar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                NOMEatualizar1ActionPerformed(evt);
+            }
+        });
+
+        SMSatualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SMSatualizarActionPerformed(evt);
+            }
+        });
+
+        EnderecoAtualizar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EnderecoAtualizar1ActionPerformed(evt);
+            }
+        });
+
+        buttonGroup2.add(Plano);
+        Plano.setText("Plano");
+
+        buttonGroup2.add(Convenio);
+        Convenio.setText("Convenio");
+
+        SalvarAtualizarPaciente.setText("Salvar");
+        SalvarAtualizarPaciente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SalvarAtualizarPacienteActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout atualizarPacienteLayout = new javax.swing.GroupLayout(atualizarPaciente.getContentPane());
+        atualizarPaciente.getContentPane().setLayout(atualizarPacienteLayout);
+        atualizarPacienteLayout.setHorizontalGroup(
+            atualizarPacienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(atualizarPacienteLayout.createSequentialGroup()
+                .addGap(38, 38, 38)
+                .addGroup(atualizarPacienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(atualizarPacienteLayout.createSequentialGroup()
+                        .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(Plano)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(Convenio))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, atualizarPacienteLayout.createSequentialGroup()
+                        .addGroup(atualizarPacienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(atualizarPacienteLayout.createSequentialGroup()
+                                .addGroup(atualizarPacienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel20)
+                                    .addComponent(jLabel19)
+                                    .addComponent(jLabel22, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                            .addGroup(atualizarPacienteLayout.createSequentialGroup()
+                                .addComponent(jLabel18)
+                                .addGap(76, 76, 76)))
+                        .addGroup(atualizarPacienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(CPFATUALIZARP, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(NOMEatualizar1, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Emailatualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(SMSatualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(atualizarPacienteLayout.createSequentialGroup()
+                        .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(EnderecoAtualizar1, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(56, 56, 56))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, atualizarPacienteLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(SalvarAtualizarPaciente)
+                .addGap(15, 15, 15))
+        );
+        atualizarPacienteLayout.setVerticalGroup(
+            atualizarPacienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(atualizarPacienteLayout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addGroup(atualizarPacienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel18)
+                    .addComponent(CPFATUALIZARP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(atualizarPacienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel19)
+                    .addComponent(NOMEatualizar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(atualizarPacienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel20)
+                    .addComponent(Emailatualizar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(atualizarPacienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel22)
+                    .addComponent(SMSatualizar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(atualizarPacienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel21)
+                    .addComponent(EnderecoAtualizar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(atualizarPacienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel23)
+                    .addComponent(Plano)
+                    .addComponent(Convenio))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
+                .addComponent(SalvarAtualizarPaciente)
+                .addGap(24, 24, 24))
+        );
+
+        jLabel24.setText("CRM:");
+
+        jLabel25.setText("HORARIO:");
+
+        jLabel26.setText("DATA:");
+
+        jLabel27.setText("Tipo Consulta:");
+
+        DATANOVACON.setText("DATA NOVA:");
+
+        jLabel29.setText("HORARIO NOVO:");
+
+        HORARIONOVOTUALIZACon.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                HORARIONOVOTUALIZAConActionPerformed(evt);
+            }
+        });
+
+        DATAATUCON.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DATAATUCONActionPerformed(evt);
+            }
+        });
+
+        DATAATUA.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DATAATUAActionPerformed(evt);
+            }
+        });
+
+        HORARIOATU.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                HORARIOATUActionPerformed(evt);
+            }
+        });
+
+        CRMATUALIZACon.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CRMATUALIZAConActionPerformed(evt);
+            }
+        });
+
+        buttonGroup3.add(RETORNOATUCON);
+        RETORNOATUCON.setText("RETORNO");
+
+        buttonGroup3.add(NORMALATUCON);
+        NORMALATUCON.setText("NORMAl");
+
+        jButton3.setText("Salvar");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout AtualizarConsultaLayout = new javax.swing.GroupLayout(AtualizarConsulta.getContentPane());
+        AtualizarConsulta.getContentPane().setLayout(AtualizarConsultaLayout);
+        AtualizarConsultaLayout.setHorizontalGroup(
+            AtualizarConsultaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(AtualizarConsultaLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(AtualizarConsultaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(AtualizarConsultaLayout.createSequentialGroup()
+                        .addComponent(DATANOVACON, javax.swing.GroupLayout.DEFAULT_SIZE, 76, Short.MAX_VALUE)
+                        .addGap(318, 318, 318))
+                    .addGroup(AtualizarConsultaLayout.createSequentialGroup()
+                        .addGroup(AtualizarConsultaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(AtualizarConsultaLayout.createSequentialGroup()
+                                .addGroup(AtualizarConsultaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(jLabel27, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel25, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGroup(AtualizarConsultaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(AtualizarConsultaLayout.createSequentialGroup()
+                                        .addGap(18, 18, 18)
+                                        .addComponent(RETORNOATUCON)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(NORMALATUCON))
+                                    .addGroup(AtualizarConsultaLayout.createSequentialGroup()
+                                        .addGap(38, 38, 38)
+                                        .addGroup(AtualizarConsultaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(CRMATUALIZACon)
+                                            .addGroup(AtualizarConsultaLayout.createSequentialGroup()
+                                                .addComponent(DATAATUA, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(0, 0, Short.MAX_VALUE))
+                                            .addComponent(HORARIOATU)))))
+                            .addGroup(AtualizarConsultaLayout.createSequentialGroup()
+                                .addComponent(jLabel29, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(AtualizarConsultaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(DATAATUCON)
+                                    .addComponent(HORARIONOVOTUALIZACon))))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(AtualizarConsultaLayout.createSequentialGroup()
+                        .addGroup(AtualizarConsultaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel26))
+                        .addGap(0, 0, Short.MAX_VALUE))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, AtualizarConsultaLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton3)
+                .addGap(24, 24, 24))
+        );
+        AtualizarConsultaLayout.setVerticalGroup(
+            AtualizarConsultaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(AtualizarConsultaLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(AtualizarConsultaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel24)
+                    .addComponent(CRMATUALIZACon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(2, 2, 2)
+                .addGroup(AtualizarConsultaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel26)
+                    .addComponent(DATAATUA, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(AtualizarConsultaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel25)
+                    .addComponent(HORARIOATU, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(AtualizarConsultaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(DATANOVACON, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(DATAATUCON, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(7, 7, 7)
+                .addGroup(AtualizarConsultaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel29, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(HORARIONOVOTUALIZACon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(AtualizarConsultaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(RETORNOATUCON)
+                    .addComponent(NORMALATUCON))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
+                .addComponent(jButton3)
+                .addGap(25, 25, 25))
+        );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
@@ -490,24 +776,24 @@ public class MenuSecretaria extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonAttPacientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAttPacientesActionPerformed
-        // A FAZER DEPOIS DE TERMINAR O BD
+        atualizarPaciente.setVisible(true);
     }//GEN-LAST:event_jButtonAttPacientesActionPerformed
 
     private void jButtonRemoverPacActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRemoverPacActionPerformed
         String cpf = JOptionPane.showInputDialog(null, "Escreva o cpf do paciente", "Remover", JOptionPane.INFORMATION_MESSAGE);
-   
-        if(clinica.testaPaciente(cpf)){
+
+        if (clinica.testaPaciente(cpf)) {
             clinica.getSecretaria().removePaciente(cpf, emf);
             JOptionPane.showMessageDialog(null, "Removido com sucesso", "Removido", JOptionPane.INFORMATION_MESSAGE);
-        }else{
+        } else {
             JOptionPane.showMessageDialog(null, "Não encontrado!", "ERRO", JOptionPane.ERROR_MESSAGE);
         }
-        
+
     }//GEN-LAST:event_jButtonRemoverPacActionPerformed
 
     private void jButtonImprimirPacActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonImprimirPacActionPerformed
         String Pacs = clinica.imprimirSecretariaPacientes();
-        
+
         JOptionPane.showMessageDialog(null, Pacs, "Pacientes", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_jButtonImprimirPacActionPerformed
 
@@ -523,9 +809,9 @@ public class MenuSecretaria extends javax.swing.JFrame {
         String data = JOptionPane.showInputDialog(null, "Escreva a data:", "Inserir Data", HEIGHT);
         String horario = JOptionPane.showInputDialog(null, "Escreva o horario", "Inserir horario", HEIGHT);
         String crm = JOptionPane.showInputDialog(null, "Escreva o crm:", "Inserir CRM", HEIGHT);
-        
+
         clinica.getSecretaria().removeConsulta(crm, data, horario, emf);
-        
+
         JOptionPane.showMessageDialog(null, "Removido com sucesso!", "Remoção", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_jButtonRemoveConsActionPerformed
 
@@ -535,34 +821,32 @@ public class MenuSecretaria extends javax.swing.JFrame {
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
         String cons = clinica.imprimirSecretariaConsultas();
-        
+
         JOptionPane.showMessageDialog(null, cons, "Consultas", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void jButtonHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonHomeActionPerformed
         dispose();
-        MenuEntrar main = new MenuEntrar(clinica);
+        MenuEntrar main = new MenuEntrar(emf, clinica);
         main.setVisible(true);
     }//GEN-LAST:event_jButtonHomeActionPerformed
 
     private void jButtonAnteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAnteriorActionPerformed
         dispose();
-        MenuLogin log = new MenuLogin(clinica);
+        MenuLogin log = new MenuLogin(emf, clinica);
         log.setVisible(true);
     }//GEN-LAST:event_jButtonAnteriorActionPerformed
 
     private void jButtonConsDiaSegActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConsDiaSegActionPerformed
         String data = JOptionPane.showInputDialog("Escreva a data de hoje: ");
-        
+
         //String consultas = clinica.getSecretaria().gerarRelatorioConsulta(data);
-        
-       // JOptionPane.showMessageDialog(null, consultas, "Consultas do dia Seguinte", JOptionPane.INFORMATION_MESSAGE);
-        
-        
+        // JOptionPane.showMessageDialog(null, consultas, "Consultas do dia Seguinte", JOptionPane.INFORMATION_MESSAGE);
+
     }//GEN-LAST:event_jButtonConsDiaSegActionPerformed
 
     private void jRadioBtnConvenioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioBtnConvenioActionPerformed
-        
+
     }//GEN-LAST:event_jRadioBtnConvenioActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -572,22 +856,21 @@ public class MenuSecretaria extends javax.swing.JFrame {
         String dataNasc = jTextDataNasc.getText();
         String Endereco = jTextEndereco.getText();
         String Email = jTextEmail.getText();
-        
+
         System.out.println(telefone + " " + Email);
-        
-        if(telefone.isEmpty()){
+
+        if (telefone.isEmpty()) {
             System.out.println("Entrou tel");
             telefone = null;
         }
-        if(Email.isEmpty()){
+        if (Email.isEmpty()) {
             System.out.println("Entrou Eamail");
             Email = null;
         }
-        
-        
-        if(jRadioBtnPlano.isSelected()){
+
+        if (jRadioBtnPlano.isSelected()) {
             clinica.getSecretaria().cadastraPaciente(cpf, nome, dataNasc, Endereco, Email, telefone, TipoConvenio.PLANO, emf);
-        }else{
+        } else {
             clinica.getSecretaria().cadastraPaciente(cpf, nome, dataNasc, Endereco, Email, telefone, TipoConvenio.PARTICULAR, emf);
         }
         jTextNome.setText("");
@@ -597,7 +880,7 @@ public class MenuSecretaria extends javax.swing.JFrame {
         jTextEndereco.setText("");
         jTextEmail.setText("");
         jFrameCadastroPac.dispose();
-        
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -605,29 +888,131 @@ public class MenuSecretaria extends javax.swing.JFrame {
         String cpf = jTextFieldCpfPac.getText();
         String crm = jTextFieldCrmMed.getText();
         String horario = jTextFieldHorario.getText();
-        
-        if(jRadioButtonNormal.isSelected()){
-            //clinica.getSecretaria().cadastraConsulta(data, horario, crm, cpf, TipoConsulta.NORMAL, clinica.getMedicos(), emf);
-        }else{
-            //clinica.getSecretaria().cadastraConsulta(data, horario, crm, cpf, TipoConsulta.RETORNO, clinica.getMedicos(), emf);
+
+        if (jRadioButtonNormal.isSelected()) {
+            clinica.getSecretaria().cadastraConsulta(data, horario, crm, cpf, TipoConsulta.NORMAL, emf);
+        } else {
+            clinica.getSecretaria().cadastraConsulta(data, horario, crm, cpf, TipoConsulta.RETORNO, emf);
         }
         jTextFieldData.setText("");
         jTextFieldCpfPac.setText("");
         jTextFieldCrmMed.setText("");
         jTextFieldHorario.setText("");
         jFrameCadConsulta.dispose();
-        
+
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void CPFATUALIZARPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CPFATUALIZARPActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_CPFATUALIZARPActionPerformed
+
+    private void EmailatualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EmailatualizarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_EmailatualizarActionPerformed
+
+    private void NOMEatualizar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NOMEatualizar1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_NOMEatualizar1ActionPerformed
+
+    private void SMSatualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SMSatualizarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_SMSatualizarActionPerformed
+
+    private void EnderecoAtualizar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EnderecoAtualizar1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_EnderecoAtualizar1ActionPerformed
+
+    private void SalvarAtualizarPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SalvarAtualizarPacienteActionPerformed
+        String CPF = CPFATUALIZARP.getText();
+        String nome = Emailatualizar.getText();
+        String endereco = SMSatualizar.getText();
+        String sms = EnderecoAtualizar1.getText();
+        String email = Emailatualizar.getText();
+        if (Convenio.isEnabled()) {
+            clinica.getSecretaria().atualizaPaciente(CPF, nome, endereco, email, sms, TipoConvenio.PLANO, emf);
+        } else {
+            clinica.getSecretaria().atualizaPaciente(CPF, nome, endereco, email, sms, TipoConvenio.PARTICULAR, emf);
+        }
+        CPFATUALIZARP.setText("");
+        Emailatualizar.setText("");
+        SMSatualizar.setText("");
+        EnderecoAtualizar1.setText("");
+        Emailatualizar.setText("");
+        jFrameCadConsulta.dispose();
+        JOptionPane.showMessageDialog(null, "Atualizado com Sucesso.");
+    }//GEN-LAST:event_SalvarAtualizarPacienteActionPerformed
+
+    private void HORARIONOVOTUALIZAConActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HORARIONOVOTUALIZAConActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_HORARIONOVOTUALIZAConActionPerformed
+
+    private void DATAATUCONActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DATAATUCONActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_DATAATUCONActionPerformed
+
+    private void DATAATUAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DATAATUAActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_DATAATUAActionPerformed
+
+    private void HORARIOATUActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HORARIOATUActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_HORARIOATUActionPerformed
+
+    private void CRMATUALIZAConActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CRMATUALIZAConActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_CRMATUALIZAConActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        String CRM = CRMATUALIZACon.getText();
+        String data = DATAATUA.getText();
+        String horario = HORARIOATU.getText();
+        String datanova = DATAATUCON.getText();
+        String horarionovo = HORARIONOVOTUALIZACon.getText();
+        if (RETORNOATUCON.isEnabled()) {
+            clinica.getSecretaria().atualizaConsulta(CRM, data, horario, datanova, horarionovo, TipoConsulta.RETORNO, emf);
+        } else {
+            clinica.getSecretaria().atualizaConsulta(CRM, data, horario, datanova, horarionovo, TipoConsulta.NORMAL, emf);
+
+        }
+        CRMATUALIZACon.setText("");
+        DATAATUA.setText("");
+        HORARIOATU.setText("");
+        DATAATUCON.setText("");
+        HORARIONOVOTUALIZACon.setText("");
+        jFrameCadConsulta.dispose();
+        JOptionPane.showMessageDialog(null, "Atualizado com Sucesso.");
+
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JFrame AtualizarConsulta;
+    private javax.swing.JTextField CPFATUALIZARP;
+    private javax.swing.JTextField CRMATUALIZACon;
+    private javax.swing.JRadioButton Convenio;
+    private javax.swing.JTextField DATAATUA;
+    private javax.swing.JTextField DATAATUCON;
+    private javax.swing.JLabel DATANOVACON;
+    private javax.swing.JTextField Emailatualizar;
+    private javax.swing.JTextField EnderecoAtualizar1;
+    private javax.swing.JTextField HORARIOATU;
+    private javax.swing.JTextField HORARIONOVOTUALIZACon;
+    private javax.swing.JTextField NOMEatualizar1;
+    private javax.swing.JRadioButton NORMALATUCON;
+    private javax.swing.JRadioButton Plano;
+    private javax.swing.JRadioButton RETORNOATUCON;
+    private javax.swing.JTextField SMSatualizar;
+    private javax.swing.JButton SalvarAtualizarPaciente;
+    private javax.swing.JFrame atualizarPaciente;
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.ButtonGroup buttonGroup2;
+    private javax.swing.ButtonGroup buttonGroup3;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButtonAnterior;
     private javax.swing.JButton jButtonAttConsulta;
@@ -650,7 +1035,18 @@ public class MenuSecretaria extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;

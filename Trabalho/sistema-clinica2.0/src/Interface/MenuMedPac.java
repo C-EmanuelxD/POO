@@ -7,6 +7,7 @@ package Interface;
 import atoresPrincipais.Clinica;
 import atoresPrincipais.Medico;
 import atoresSecundários.Paciente;
+import javax.persistence.EntityManagerFactory;
 import javax.swing.JOptionPane;
 
 /**
@@ -21,10 +22,12 @@ public class MenuMedPac extends javax.swing.JFrame {
     Clinica clinica;
     Paciente paciente;
     Medico medico;
-    public MenuMedPac(Clinica clinica, Medico medico, Paciente paciente) {
+    EntityManagerFactory emf;
+    public MenuMedPac(EntityManagerFactory emf,Clinica clinica, Medico medico, Paciente paciente) {
         this.clinica = clinica;
         this.paciente = paciente;
         this.medico = medico;
+        this.emf = emf;
         initComponents();
     }
 
@@ -333,13 +336,13 @@ public class MenuMedPac extends javax.swing.JFrame {
 
     private void jButtonHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonHomeActionPerformed
         dispose();
-        MenuEntrar main = new MenuEntrar(clinica);
+        MenuEntrar main = new MenuEntrar(emf, clinica);
         main.setVisible(true);
     }//GEN-LAST:event_jButtonHomeActionPerformed
 
     private void jButtonAnteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAnteriorActionPerformed
         dispose();
-        MenuMed menMed = new MenuMed(clinica, medico);
+        MenuMed menMed = new MenuMed(emf, clinica, medico);
         menMed.setVisible(true);
     }//GEN-LAST:event_jButtonAnteriorActionPerformed
 
@@ -349,7 +352,7 @@ public class MenuMedPac extends javax.swing.JFrame {
 
     private void jButtonDadoAdicionalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDadoAdicionalActionPerformed
         dispose();
-        MenuMedPacDaAd mDados = new MenuMedPacDaAd(clinica, medico, paciente);
+        MenuMedPacDaAd mDados = new MenuMedPacDaAd(emf, clinica, medico, paciente);
         mDados.setVisible(true);
         
     }//GEN-LAST:event_jButtonDadoAdicionalActionPerformed
@@ -396,7 +399,7 @@ public class MenuMedPac extends javax.swing.JFrame {
 
     private void jButtonProntuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonProntuarioActionPerformed
         dispose();
-        MenuMedPacProntu MenuPront = new MenuMedPacProntu(clinica, medico, paciente);
+        MenuMedPacProntu MenuPront = new MenuMedPacProntu(emf, clinica, medico, paciente);
         MenuPront.setVisible(true);
     }//GEN-LAST:event_jButtonProntuarioActionPerformed
 

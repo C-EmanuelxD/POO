@@ -9,6 +9,7 @@ import atoresPrincipais.Medico;
 import atoresSecundários.Paciente;
 import static classesAuxiliares.Buscas.buscaPacienteConsulta;
 import java.util.List;
+import javax.persistence.EntityManagerFactory;
 import javax.swing.JOptionPane;
 /**
  *
@@ -22,9 +23,11 @@ public class MenuMed extends javax.swing.JFrame {
     
     Clinica clinica;
     Medico medico;
-    public MenuMed(Clinica clinica, Medico medico) {
+    EntityManagerFactory emf;
+    public MenuMed(EntityManagerFactory emf, Clinica clinica, Medico medico) {
         this.clinica = clinica;
         this.medico = medico;
+        this.emf =emf;
         initComponents();
     }
 
@@ -197,13 +200,13 @@ public class MenuMed extends javax.swing.JFrame {
 
     private void jButtonHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonHomeActionPerformed
         dispose();
-        MenuEntrar main = new MenuEntrar(clinica);
+        MenuEntrar main = new MenuEntrar(emf, clinica);
         main.setVisible(true);
     }//GEN-LAST:event_jButtonHomeActionPerformed
 
     private void jButtonAnteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAnteriorActionPerformed
         dispose();
-        MenuLogin log = new MenuLogin(clinica);
+        MenuLogin log = new MenuLogin(emf, clinica);
         log.setVisible(true);
     }//GEN-LAST:event_jButtonAnteriorActionPerformed
 
@@ -213,7 +216,7 @@ public class MenuMed extends javax.swing.JFrame {
         
         Paciente paciente = buscaPacienteConsulta(medico.getConsulta(), cpf);
         
-        MenuMedPac menuPac = new MenuMedPac(clinica, medico, paciente);
+        MenuMedPac menuPac = new MenuMedPac(emf, clinica, medico, paciente);
         menuPac.setVisible(true);
         jPanelEscolhaPac.dispose();
         dispose();

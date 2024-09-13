@@ -15,16 +15,17 @@ import javax.swing.JOptionPane;
 
 public class MenuMedPacDaAd extends javax.swing.JFrame {
 
-    private final EntityManagerFactory emf = Persistence.createEntityManagerFactory("CLINICAPU");
+    EntityManagerFactory emf;
 
     Clinica clinica;
     Medico medico;
     Paciente paciente;
-    
-    public MenuMedPacDaAd(Clinica clinica, Medico medico, Paciente paciente) {
+
+    public MenuMedPacDaAd(EntityManagerFactory emf, Clinica clinica, Medico medico, Paciente paciente) {
         this.clinica = clinica;
         this.medico = medico;
         this.paciente = paciente;
+        this.emf = emf;
         initComponents();
     }
 
@@ -232,33 +233,33 @@ public class MenuMedPacDaAd extends javax.swing.JFrame {
 
     private void jButtonHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonHomeActionPerformed
         dispose();
-        MenuEntrar main = new MenuEntrar(clinica);
+        MenuEntrar main = new MenuEntrar(emf, clinica);
         main.setVisible(true);
     }//GEN-LAST:event_jButtonHomeActionPerformed
 
     private void jButtonAnteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAnteriorActionPerformed
         dispose();
-        MenuMedPac menMedP = new MenuMedPac(clinica, medico, paciente);
+        MenuMedPac menMedP = new MenuMedPac(emf, clinica, medico, paciente);
         menMedP.setVisible(true);
     }//GEN-LAST:event_jButtonAnteriorActionPerformed
 
     private void jButtonSalvarCadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarCadActionPerformed
-        
-        if(paciente.getDadosAdicionais() == null){
-        boolean fuma = jCheckBoxFuma.isEnabled();
-        boolean bebe = jCheckBoxBebe.isEnabled();
-        boolean doenca = jCheckBoxDoenca.isEnabled();
-        boolean diabetes = jCheckBoxDiabete.isEnabled();
-        boolean colesterol = jCheckBoxColesterol.isEnabled();
-        
-        List<String> Cirurgias = Arrays.asList(jTextFieldCirurgia.getText().split("\\s*,\\s*"));
-        
-        List<String> alergias = Arrays.asList(jTextFieldAlergia.getText().split("\\s*,\\s*"));
-        
-        medico.cadastraDadosAdicionais(paciente.getCpf(), fuma, bebe, colesterol, diabetes, doenca, Cirurgias, alergias, emf);
-        JOptionPane.showMessageDialog(null, "Cadastrado com sucesso", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
-        }else{
-             JOptionPane.showMessageDialog(null, "Dados já cadastrados!", "Erro", JOptionPane.ERROR_MESSAGE);
+
+        if (paciente.getDadosAdicionais() == null) {
+            boolean fuma = jCheckBoxFuma.isEnabled();
+            boolean bebe = jCheckBoxBebe.isEnabled();
+            boolean doenca = jCheckBoxDoenca.isEnabled();
+            boolean diabetes = jCheckBoxDiabete.isEnabled();
+            boolean colesterol = jCheckBoxColesterol.isEnabled();
+
+            List<String> Cirurgias = Arrays.asList(jTextFieldCirurgia.getText().split("\\s*,\\s*"));
+
+            List<String> alergias = Arrays.asList(jTextFieldAlergia.getText().split("\\s*,\\s*"));
+
+            medico.cadastraDadosAdicionais(paciente.getCpf(), fuma, bebe, colesterol, diabetes, doenca, Cirurgias, alergias, emf);
+            JOptionPane.showMessageDialog(null, "Cadastrado com sucesso", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, "Dados já cadastrados!", "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButtonSalvarCadActionPerformed
 
@@ -268,19 +269,18 @@ public class MenuMedPacDaAd extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonRemoverActionPerformed
 
     private void jButtonImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonImprimirActionPerformed
-        if(paciente.getDadosAdicionais() == null){
+        if (paciente.getDadosAdicionais() == null) {
             JOptionPane.showMessageDialog(null, "Sem dados adicionais", "Erro", JOptionPane.ERROR_MESSAGE);
-        }else{
+        } else {
             JOptionPane.showMessageDialog(null, paciente.getDadosAdicionais().imprimirDadosAdicionais(), "Dados Adicionais", JOptionPane.INFORMATION_MESSAGE);
         }
-        
-        
+
+
     }//GEN-LAST:event_jButtonImprimirActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAnterior;

@@ -1,5 +1,6 @@
 package programa;
 
+import Interface.MenuEntrar;
 import classesAuxiliares.Buscas;
 import dadosPessoas.Prontuario;
 import atoresPrincipais.Clinica;
@@ -23,7 +24,7 @@ public class Main {
         Secretaria sec = clinica.getSecretaria();
         em.getTransaction().begin();
         em.persist(sec);
-        //new MenuEntrar(emf, clinica, sec).setvisible(true);
+        new MenuEntrar(emf, clinica).setvisible(true);
         em.getTransaction().commit();
         em.close();
     }

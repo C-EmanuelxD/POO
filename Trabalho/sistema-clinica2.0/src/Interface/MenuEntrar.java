@@ -14,16 +14,16 @@ import javax.persistence.Persistence;
 
 public class MenuEntrar extends javax.swing.JFrame {
 
-    EntityManagerFactory emf = Persistence.createEntityManagerFactory("CLINICAPU");
-    EntityManager em = emf.createEntityManager();
-    Clinica clinica = new Clinica("Saude & CIA", new Secretaria("Vanessa"));
+    Clinica clinica;
+    EntityManagerFactory emf;
 
     public MenuEntrar() {
         initComponents();
     }
 
-    public MenuEntrar(Clinica clinica) {
+    public MenuEntrar(EntityManagerFactory emf, Clinica clinica) {
         this.clinica = clinica;
+        this.emf = emf;
         initComponents();
     }
 
@@ -233,7 +233,7 @@ public class MenuEntrar extends javax.swing.JFrame {
 
     private void btnMenuLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenuLoginActionPerformed
         dispose();
-        MenuLogin log = new MenuLogin(clinica);
+        MenuLogin log = new MenuLogin(emf, clinica);
         log.setVisible(true);
     }//GEN-LAST:event_btnMenuLoginActionPerformed
 
@@ -331,7 +331,18 @@ public class MenuEntrar extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MenuEntrar().setVisible(true);
+                //new MenuEntrar().setVisible(true);
+                EntityManagerFactory emf = Persistence.createEntityManagerFactory("CLINICAPU");
+
+                // Criação do EntityManager para gerenciar as transações
+                EntityManager em = emf.createEntityManager();
+                Clinica clinica = new Clinica("Saude & Cia", new Secretaria("Vanessa"));
+                Secretaria sec = clinica.getSecretaria();
+                em.getTransaction().begin();
+                em.persist(sec);
+                new MenuEntrar(emf, clinica).setVisible(true);
+                em.getTransaction().commit();
+                em.close();
             }
         });
     }
@@ -358,4 +369,8 @@ public class MenuEntrar extends javax.swing.JFrame {
     private javax.swing.JTextField jTextFieldCRM;
     private javax.swing.JTextField jTextFieldNome;
     // End of variables declaration//GEN-END:variables
+
+    public void setvisible(boolean b) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }

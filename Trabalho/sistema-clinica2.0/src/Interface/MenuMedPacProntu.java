@@ -19,7 +19,7 @@ import javax.swing.JOptionPane;
  */
 public class MenuMedPacProntu extends javax.swing.JFrame {
 
-    private final EntityManagerFactory emf = Persistence.createEntityManagerFactory("CLINICAPU");
+    EntityManagerFactory emf;
 
     
     Clinica clinica;
@@ -27,10 +27,11 @@ public class MenuMedPacProntu extends javax.swing.JFrame {
     Paciente paciente;
   
     
-    public MenuMedPacProntu(Clinica clinica, Medico medico, Paciente paciente) {
+    public MenuMedPacProntu(EntityManagerFactory emf, Clinica clinica, Medico medico, Paciente paciente) {
         this.clinica = clinica;
         this.paciente = paciente;
         this.medico = medico;
+        this.emf = emf;
         initComponents();
     }
 
@@ -230,13 +231,13 @@ public class MenuMedPacProntu extends javax.swing.JFrame {
 
     private void jButtonHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonHomeActionPerformed
         dispose();
-        MenuEntrar main = new MenuEntrar(clinica);
+        MenuEntrar main = new MenuEntrar(emf, clinica);
         main.setVisible(true);
     }//GEN-LAST:event_jButtonHomeActionPerformed
 
     private void jButtonAnteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAnteriorActionPerformed
         dispose();
-        MenuMedPac menMedP = new MenuMedPac(clinica, medico, paciente);
+        MenuMedPac menMedP = new MenuMedPac(emf, clinica, medico, paciente);
         menMedP.setVisible(true);
     }//GEN-LAST:event_jButtonAnteriorActionPerformed
 

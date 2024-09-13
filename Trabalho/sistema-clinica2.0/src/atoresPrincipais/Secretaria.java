@@ -139,7 +139,6 @@ public class Secretaria {
             consulta.setData(dataNova);
             consulta.setHorario(horarioNovo);
             consulta.setTipoConsulta(tipoConsulta);
-
             em.merge(consulta); //sincroniza legal ai dog
             em.getTransaction().commit();
             System.out.println("Consulta atualizada com sucesso");
@@ -155,9 +154,6 @@ public class Secretaria {
         Consulta consulta = em.createQuery("SELECT c FROM Consulta c WHERE c.medico.crm = :crm AND c.data = :data AND c.horario = :horario", Consulta.class).setParameter("crm", crm).setParameter("data", data).setParameter("horario", horario).getSingleResult();
         if (consulta != null) {
             em.remove(consulta);
-            Medico medico = consulta.getMedico();
-            medico.getConsulta().remove(consulta);  // Presumindo que Medico tenha uma lista de consultas vai bugar!!
-            em.merge(medico);  // Sincroniza as alterações do médico com o banco de dados
             em.getTransaction().commit();
             System.out.println("Consulta removida com sucesso");
         } else {
